@@ -15,10 +15,10 @@
 		<input type="number" nbInput style="width: 250px;" status="basic" placeholder="Score" [formControl]="scoreControl">
 		<br>
 
-		<label>Where To Play</label>
+		<label>Where To Stream</label>
 		<br>
-		<nb-select multiple style="width: 250px;" placeholder="Genre" [formControl]="playControl">
-			<nb-option *ngFor="let location of whereToPlay" [value]="location">{{location}}</nb-option>
+		<nb-select multiple style="width: 250px;" placeholder="Genre" [formControl]="streamControl">
+			<nb-option *ngFor="let location of whereToStream" [value]="location">{{location}}</nb-option>
 		</nb-select>
 		<br>
 		<br>
@@ -26,37 +26,21 @@
 		<label>Genre</label>
 		<br>
 		<nb-select multiple style="width: 250px;" placeholder="Genre" [formControl]="genreControl">
-			<nb-option *ngFor="let genre of gameGenres" [value]="genre">{{genre}}</nb-option>
+			<nb-option *ngFor="let genre of movieGenres" [value]="genre">{{genre}}</nb-option>
 		</nb-select>
 		<br>
 
 		<br>
 
-		<label>SinglePlayer</label>
+		<label>Watch With GF</label>
 		<br>
 		<br>
-		<nb-checkbox [formControl]="singleControl" style="margin-top: 20px;"></nb-checkbox>
+		<nb-checkbox [formControl]="watchWithControl" style="margin-top: 20px;"></nb-checkbox>
 
 		<br>
 		<br>
 
-		<label>MultiPlayer</label>
-		<br>
-		<br>
-		<nb-checkbox [formControl]="multiControl" style="margin-top: 20px;"></nb-checkbox>
-
-		<br>
-		<br>
-
-		<label>Recommended</label>
-		<br>
-		<br>
-		<nb-checkbox [formControl]="recommendedControl" style="margin-top: 20px;"></nb-checkbox>
-
-		<br>
-		<br>
-
-		<label>Played</label>
+		<label>Watched</label>
 		<br>
 		<br>
 		<nb-checkbox [formControl]="checkboxControl" style="margin-top: 20px;"></nb-checkbox>

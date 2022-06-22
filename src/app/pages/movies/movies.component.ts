@@ -4,6 +4,7 @@ import { NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder, NbS
 import * as saveAs from 'file-saver';
 import { TreeNode, IList, IMovieList } from 'src/shared/models/lists.model';
 import moviesList from '../../../files/moviesList.json'
+import { MoviesEditboxDialog } from './movies-editbox/movies-editbox.component';
 
 @Component({
 	selector: 'app-movies',
@@ -86,11 +87,50 @@ export class MoviesComponent implements OnInit {
 	}
 
 	add() {
+		this.dialogService.open(MoviesEditboxDialog, {
+			context: {
+				data : {
+					name: '',
+					score:  -1,
+					watchWithGF: false,
+					whereToStream: [],
+					genre: [],
+					checkbox: false,
+				}
+			}
+		}).onClose.subscribe(res => {
+			if (!res) {
+				return;
+			}
 
+			this.data.push({
+				data: res,
+			} as TreeNode<IMovieList>);
+			this.saveToLocalStorage();
+		});
 	}
 
-	edit(index: number, row: TreeNode<IList>) {
+	edit(index: number, row: TreeNode<IMovieList>) {
+		const data = row.data;
+		this.dialogService.open(MoviesEditboxDialog, {context : {
+			data: {
+				name: data.name,
+				score:  data.score,
+				watchWithGF: data.watchWithGF,
+				whereToStream: data.whereToStream,
+				genre: data.genre,
+				checkbox: data.checkbox,
+			}
+		}}).onClose.subscribe(res => {
+			if (!res) {
+				return;
+			}
 
+			this.data[index] = {
+				data: res,
+			} as TreeNode<IMovieList>;
+			this.saveToLocalStorage();
+		})
 	}
 
 	deleteEntry(index: number) {
@@ -100,7 +140,7 @@ export class MoviesComponent implements OnInit {
 
 	saveToLocalStorage() {
 		localStorage.setItem('moviesList', JSON.stringify(this.data));
-		this.router.navigate(['list/movies']);
+		this.dataSource = this.dataSourceBuilder.create(this.data);
 	}
 
 	save() {

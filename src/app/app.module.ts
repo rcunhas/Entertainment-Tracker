@@ -12,6 +12,7 @@ import { BooksComponent } from './pages/books/books.component';
 import { BooksEditboxDialog } from './pages/books/books-editbox/books-editbox.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GamesEditboxDialog } from './pages/games/games-editbox/games-editbox.component';
+import { MoviesEditboxDialog } from './pages/movies/movies-editbox/movies-editbox.component';
 
 @NgModule({
 	declarations: [
@@ -21,6 +22,7 @@ import { GamesEditboxDialog } from './pages/games/games-editbox/games-editbox.co
 		BooksComponent,
 		BooksEditboxDialog,
  		GamesEditboxDialog,
+   		MoviesEditboxDialog,
 	],
 	imports: [
 		BrowserModule,

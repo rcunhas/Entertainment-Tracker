@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { NbDialogRef, NbGlobalPhysicalPosition, NbOptionComponent, NbToastrService } from '@nebular/theme';
+import { NbDialogRef, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
 import { BOOK_GENRES, IBookList,  } from 'src/shared/models/lists.model';
 
 @Component({
@@ -15,7 +15,7 @@ export class BooksEditboxDialog implements OnInit {
 	nameControl!: FormControl;
 	scoreControl!: FormControl;
 	authorControl!: FormControl;
-	selectedControl!: FormControl;
+	genreControl!: FormControl;
 	checkboxControl!: FormControl;
 
 	bookGenres: string[] = BOOK_GENRES;
@@ -30,7 +30,7 @@ export class BooksEditboxDialog implements OnInit {
 		this.nameControl = new FormControl(this.data?.name || '', Validators.required);
 		this.scoreControl = new FormControl(this.data?.score || -1, Validators.compose([Validators.min(-1), Validators.max(10), Validators.required]));
 		this.authorControl = new FormControl(this.data?.author || '', Validators.required);
-		this.selectedControl = new FormControl(this.data?.genre || [], Validators.required);
+		this.genreControl = new FormControl(this.data?.genre || [], Validators.required);
 		this.checkboxControl = new FormControl(this.data?.checkbox || false);
 	}
 
@@ -44,7 +44,7 @@ export class BooksEditboxDialog implements OnInit {
 		this.data.name = this.nameControl.value;
 		this.data.score = this.scoreControl.value;
 		this.data.author = this.authorControl.value;
-		this.data.genre = this.selectedControl.value;
+		this.data.genre = this.genreControl.value;
 		this.data.checkbox = this.checkboxControl.value;
 
 		if (this.data.name === '') {
@@ -66,7 +66,7 @@ export class BooksEditboxDialog implements OnInit {
 		}
 
 		if (this.data.genre.length === 0) {
-			this.selectedControl.markAllAsTouched();
+			this.genreControl.markAllAsTouched();
 			this.toastrService.danger('Must select at least one genre', 'Genre Control', { position: NbGlobalPhysicalPosition.BOTTOM_RIGHT})
 			canSubmit = false;
 		}

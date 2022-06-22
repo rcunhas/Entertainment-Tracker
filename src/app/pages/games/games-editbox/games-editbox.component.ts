@@ -15,7 +15,7 @@ export class GamesEditboxDialog implements OnInit {
 
 	nameControl!: FormControl;
 	scoreControl!: FormControl;
-	selectedControl!: FormControl;
+	genreControl!: FormControl;
 	playControl!: FormControl;
 	singleControl!: FormControl;
 	multiControl!: FormControl;
@@ -34,7 +34,7 @@ export class GamesEditboxDialog implements OnInit {
 	ngOnInit(): void {
 		this.nameControl = new FormControl(this.data?.name || '', Validators.required);
 		this.scoreControl = new FormControl(this.data?.score || -1, Validators.compose([Validators.min(-1), Validators.max(10), Validators.required]));
-		this.selectedControl = new FormControl(this.data?.genre || [], Validators.required);
+		this.genreControl = new FormControl(this.data?.genre || [], Validators.required);
 		this.playControl = new FormControl(this.data?.whereToPlay || [], Validators.required);
 		this.singleControl = new FormControl(this.data?.singleplayer || false);
 		this.multiControl = new FormControl(this.data?.multiplayer || false);
@@ -51,7 +51,7 @@ export class GamesEditboxDialog implements OnInit {
 
 		this.data.name = this.nameControl.value;
 		this.data.score = this.scoreControl.value;
-		this.data.genre = this.selectedControl.value;
+		this.data.genre = this.genreControl.value;
 		this.data.whereToPlay = this.playControl.value;
 		this.data.checkbox = this.checkboxControl.value;
 		this.data.singleplayer = this.singleControl.value;
@@ -77,7 +77,7 @@ export class GamesEditboxDialog implements OnInit {
 		}
 
 		if (this.data.genre.length === 0) {
-			this.selectedControl.markAllAsTouched();
+			this.genreControl.markAllAsTouched();
 			this.toastrService.danger('Must select at least one genre', 'Genre Control', { position: NbGlobalPhysicalPosition.BOTTOM_RIGHT})
 			canSubmit = false;
 		}

@@ -22,7 +22,7 @@
 
 		<label>Genre</label>
 		<br>
-		<nb-select multiple style="width: 250px;" placeholder="Genre" [formControl]="selectedControl">
+		<nb-select multiple style="width: 250px;" placeholder="Genre" [formControl]="genreControl">
 			<nb-option *ngFor="let genre of bookGenres" [value]="genre">{{genre}}</nb-option>
 		</nb-select>
 		<br>
