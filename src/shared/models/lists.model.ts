@@ -18,6 +18,7 @@ export interface IGameList extends IList {
 	genre: string[];
 	singleplayer: boolean;
 	multiplayer: boolean;
+	recommended: boolean;
 }
 
 export interface IMovieList extends IList {
@@ -34,3 +35,7 @@ export interface TreeNode<T> {
 
 
 export const BOOK_GENRES = ['Action and Adventure', 'Classic', 'Comic Book or Manga', 'Mystery', 'Fantasy', 'Fiction', 'Horror', 'Romance', 'Sci-Fi', 'Short Stories', 'Thriller', 'History', 'True Crime']
+
+export const WHERE_TO_PLAY = ['Ubisoft', 'EA', 'Game Pass', 'Steam', 'Epic', 'Battle.net', 'Fitgirl'];
+
+export const GAME_GENRES = ['Action', 'Adventure', 'Arcade', "Beat'em Up", 'City Building', 'Co-op', 'Horror', 'Open World', 'Other', 'Platform', 'Puzzle', 'Racing', 'RTS', 'RPG', 'Shooter', 'Simulation', 'Sports', 'Survival', 'TD', 'Turn Based'];

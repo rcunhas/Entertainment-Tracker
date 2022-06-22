@@ -1,0 +1,70 @@
+<nb-card>
+	<nb-card-header>
+		Game Info
+	</nb-card-header>
+
+	<nb-card-body>
+
+		<label>Name</label>
+		<br>
+		<input type="text" nbInput style="width: 250px;" status="basic" placeholder="Name" [formControl]="nameControl">
+		<br>
+
+		<label>Score</label>
+		<br>
+		<input type="number" nbInput style="width: 250px;" status="basic" placeholder="Score" [formControl]="scoreControl">
+		<br>
+
+		<label>Where To Play</label>
+		<br>
+		<nb-select multiple style="width: 250px;" placeholder="Genre" [formControl]="playControl">
+			<nb-option *ngFor="let location of whereToPlay" [value]="location">{{location}}</nb-option>
+		</nb-select>
+		<br>
+		<br>
+
+		<label>Genre</label>
+		<br>
+		<nb-select multiple style="width: 250px;" placeholder="Genre" [formControl]="selectedControl">
+			<nb-option *ngFor="let genre of gameGenres" [value]="genre">{{genre}}</nb-option>
+		</nb-select>
+		<br>
+
+		<br>
+
+		<label>SinglePlayer</label>
+		<br>
+		<br>
+		<nb-checkbox [formControl]="singleControl" style="margin-top: 20px;"></nb-checkbox>
+
+		<br>
+		<br>
+
+		<label>MultiPlayer</label>
+		<br>
+		<br>
+		<nb-checkbox [formControl]="multiControl" style="margin-top: 20px;"></nb-checkbox>
+
+		<br>
+		<br>
+
+		<label>Recommended</label>
+		<br>
+		<br>
+		<nb-checkbox [formControl]="recommendedControl" style="margin-top: 20px;"></nb-checkbox>
+
+		<br>
+		<br>
+
+		<label>Played</label>
+		<br>
+		<br>
+		<nb-checkbox [formControl]="checkboxControl" style="margin-top: 20px;"></nb-checkbox>
+
+	</nb-card-body>
+
+	<nb-card-footer>
+		<button nbButton status="danger" style="margin-right: 10px;" (click)="close()">Cancel</button>
+		<button nbButton status="success" (click)="submit()">Submit</button>
+	</nb-card-footer>
+  </nb-card>

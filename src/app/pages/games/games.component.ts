@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder, NbSortRequest, NbDialogService } from '@nebular/theme';
 import * as saveAs from 'file-saver';
+import gamesList from '../../../files/gamesList.json'
+
 import { TreeNode, IList, IGameList } from 'src/shared/models/lists.model';
+import { GamesEditboxDialog } from './games-editbox/games-editbox.component';
 
 @Component({
 	selector: 'app-games',
@@ -13,7 +16,7 @@ export class GamesComponent implements OnInit {
 
 	data : TreeNode<IGameList>[] = []
 
-	allColumns: string[] = [ 'Actions', 'Name', 'Score', 'Where To Play', 'Genre', 'SinglePlayer', 'MultiPlayer', 'Played'];
+	allColumns: string[] = [ 'Actions', 'Name', 'Score', 'Where To Play', 'Genre', 'SinglePlayer', 'MultiPlayer', 'Recommended', 'Played'];
 
 	dataSource: NbTreeGridDataSource<TreeNode<IList>>;
 
@@ -27,6 +30,8 @@ export class GamesComponent implements OnInit {
 		private dataSourceBuilder: NbTreeGridDataSourceBuilder<TreeNode<IGameList>>,
 		private dialogService: NbDialogService,
 	) {
+		const storage = localStorage.getItem('gamesList');
+		this.data = (storage !== null ? JSON.parse(storage) : gamesList) as TreeNode<IGameList>[];
 		this.dataSource = this.dataSourceBuilder.create(this.data);
 	}
 
@@ -71,6 +76,8 @@ export class GamesComponent implements OnInit {
 				return 'whereToStream';
 			case 'Watch With GF':
 				return 'watchWithGF';
+			case 'Recommended':
+				return 'recommended';
 			case 'Read':
 			case 'Watched':
 			case 'Played':
@@ -81,11 +88,54 @@ export class GamesComponent implements OnInit {
 	}
 
 	add() {
+		this.dialogService.open(GamesEditboxDialog, {
+			context: {
+				data : {
+					name: '',
+					score:  -1,
+					singleplayer: false,
+					multiplayer: false,
+					recommended: false,
+					whereToPlay: [],
+					genre: [],
+					checkbox: false,
+				}
+			}
+		}).onClose.subscribe(res => {
+			if (!res) {
+				return;
+			}
 
+			this.data.push({
+				data: res,
+			} as TreeNode<IGameList>);
+			this.saveToLocalStorage();
+		});
 	}
 
-	edit(index: number, row: TreeNode<IList>) {
+	edit(index: number, row: TreeNode<IGameList>) {
+		const data = row.data;
+		this.dialogService.open(GamesEditboxDialog, {context : {
+			data: {
+				name: data.name,
+				score:  data.score,
+				singleplayer: data.singleplayer,
+				multiplayer: data.multiplayer,
+				recommended: data.recommended,
+				whereToPlay: data.whereToPlay,
+				genre: data.genre,
+				checkbox: data.checkbox,
+			}
+		}}).onClose.subscribe(res => {
+			if (!res) {
+				return;
+			}
 
+			this.data[index] = {
+				data: res,
+			} as TreeNode<IGameList>;
+			this.saveToLocalStorage();
+		})
 	}
 
 	deleteEntry(index: number) {
@@ -95,7 +145,7 @@ export class GamesComponent implements OnInit {
 
 	saveToLocalStorage() {
 		localStorage.setItem('gamesList', JSON.stringify(this.data));
-		this.router.navigate(['list/games']);
+		this.dataSource = this.dataSourceBuilder.create(this.data);
 	}
 
 	save() {
