@@ -31,3 +31,6 @@ export interface TreeNode<T> {
 	children?: TreeNode<T>[];
 	expanded?: boolean;
   }
+
+
+export const BOOK_GENRES = ['Action and Adventure', 'Classic', 'Comic Book or Manga', 'Mystery', 'Fantasy', 'Fiction', 'Horror', 'Romance', 'Sci-Fi', 'Short Stories', 'Thriller', 'History', 'True Crime']

@@ -4,6 +4,7 @@ import { NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder, NbS
 import * as saveAs from 'file-saver';
 import { IBookList, IList, TreeNode } from 'src/shared/models/lists.model';
 import booksList from '../../../files/booksList.json'
+import { BooksEditboxDialog } from './books-editbox/books-editbox.component';
 
 @Component({
 	selector: 'app-books',
@@ -84,11 +85,48 @@ export class BooksComponent implements OnInit {
 	}
 
 	add() {
+		this.dialogService.open(BooksEditboxDialog, {
+			context: {
+				data : {
+					name: '',
+					author: '',
+					score:  -1,
+					genre: [],
+					checkbox: false,
+				}
+			}
+		}).onClose.subscribe(res => {
+			if (!res) {
+				return;
+			}
 
+			this.data.push({
+				data: res,
+			} as TreeNode<IBookList>);
+			this.saveToLocalStorage();
+		});
 	}
 
-	edit(index: number, row: TreeNode<IList>) {
+	edit(index: number, row: TreeNode<IBookList>) {
+		const data = row.data;
+		this.dialogService.open(BooksEditboxDialog, {context : {
+			data: {
+				name: data.name,
+				author: data.author,
+				score:  data.score,
+				genre: data.genre,
+				checkbox: data.checkbox,
+			}
+		}}).onClose.subscribe(res => {
+			if (!res) {
+				return;
+			}
 
+			this.data[index] = {
+				data: res,
+			} as TreeNode<IBookList>;
+			this.saveToLocalStorage();
+		})
 	}
 
 	deleteEntry(index: number) {
@@ -98,7 +136,7 @@ export class BooksComponent implements OnInit {
 
 	saveToLocalStorage() {
 		localStorage.setItem('booksList', JSON.stringify(this.data));
-		this.router.navigate(['list/books']);
+		this.dataSource = this.dataSourceBuilder.create(this.data);
 	}
 
 	save() {
