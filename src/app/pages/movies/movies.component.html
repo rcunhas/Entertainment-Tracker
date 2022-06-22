@@ -1,0 +1,42 @@
+<nb-card>
+	<nb-card-body>
+
+		<input nbInput [nbFilterInput]="dataSource" id="search" class="search-input">
+
+		<button nbButton ghost (click)="add()"><nb-icon icon="plus-outline"></nb-icon></button>
+		<button nbButton ghost (click)="saveToLocalStorage()"><nb-icon icon="save-outline"></nb-icon></button>
+		<button nbButton ghost (click)="save()"><nb-icon icon="arrow-circle-down-outline"></nb-icon></button>
+
+		<table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)">
+
+			<tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+			<tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
+
+			<ng-container *ngFor="let column of allColumns; let index = index"
+                    [nbTreeGridColumnDef]="column">
+
+				<th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
+				{{column}}
+				</th>
+
+				<td nbTreeGridCell *nbTreeGridCellDef="let row; let i = index">
+
+					<div *ngIf="column === 'Actions'">
+						<button nbButton ghost (click)="deleteEntry(i)"><nb-icon icon="trash-2-outline"></nb-icon></button>
+						<button nbButton ghost (click)="edit(i, row)"><nb-icon icon="edit-outline"></nb-icon></button>
+					</div>
+
+					<div *ngIf="convert(column) !== 'checkbox' && column != 'Actions'">
+						<p>
+							{{getValue(row, column)}}
+						</p>
+					</div>
+
+					<nb-checkbox *ngIf="convert(column) === 'checkbox'" [checked]="row.data[convert(column)]" disabled></nb-checkbox>
+				</td>
+			</ng-container>
+
+		</table>
+
+	</nb-card-body>
+</nb-card>
