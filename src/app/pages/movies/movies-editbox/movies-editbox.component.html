@@ -17,7 +17,7 @@
 
 		<label>Where To Stream</label>
 		<br>
-		<nb-select multiple style="width: 250px;" placeholder="Genre" [formControl]="streamControl">
+		<nb-select multiple style="width: 250px;" placeholder="Where To Stream" [formControl]="streamControl">
 			<nb-option *ngFor="let location of whereToStream" [value]="location">{{location}}</nb-option>
 		</nb-select>
 		<br>

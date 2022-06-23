@@ -17,7 +17,7 @@
 
 		<label>Where To Play</label>
 		<br>
-		<nb-select multiple style="width: 250px;" placeholder="Genre" [formControl]="playControl">
+		<nb-select multiple style="width: 250px;" placeholder="Where To Play" [formControl]="playControl">
 			<nb-option *ngFor="let location of whereToPlay" [value]="location">{{location}}</nb-option>
 		</nb-select>
 		<br>
