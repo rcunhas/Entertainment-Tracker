@@ -16,7 +16,7 @@ export class GamesComponent implements OnInit {
 
 	data : TreeNode<IGameList>[] = []
 
-	allColumns: string[] = [ 'Actions', 'name', 'score', 'whereToPlay', 'genre', 'singleplayer', 'multiplayer', 'recommended', 'played', 'starred'];
+	allColumns: string[] = [ 'Actions', 'name', 'score', 'whereToPlay', 'genre', 'singleplayer', 'multiplayer', 'recommended', 'checkbox', 'starred'];
 
 	dataSource: NbTreeGridDataSource<TreeNode<IList>>;
 
@@ -52,7 +52,14 @@ export class GamesComponent implements OnInit {
 
 	getValue(row: TreeNode<IGameList>, column: string) {
 		const data = row.data;
-		const columnData = (data as any)[this.convert(column)];
+		const columnData = (data as any)[column];
+		if (Array.isArray(columnData)) {
+			let value = '';
+			for (let entry of columnData) {
+				value += `${entry}\n`;
+			}
+			return value;
+		}
 		return columnData === -1 ? '-' : columnData;
 	}
 

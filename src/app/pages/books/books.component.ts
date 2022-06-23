@@ -52,6 +52,13 @@ export class BooksComponent implements OnInit {
 	getValue(row: TreeNode<IList>, column: string) {
 		const data = row.data;
 		const columnData = (data as any)[column];
+		if (Array.isArray(columnData)) {
+			let value = '';
+			for (let entry of columnData) {
+				value += `${entry}\n`;
+			}
+			return value;
+		}
 		return columnData === -1 ? '-' : columnData;
 	}
 

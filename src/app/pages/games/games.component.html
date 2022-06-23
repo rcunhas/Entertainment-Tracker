@@ -27,9 +27,9 @@
 					</div>
 
 					<div *ngIf="!['checkbox', 'recommended', 'singleplayer', 'multiplayer', 'starred'].includes(column) && column != 'Actions'">
-						<p>
+						<div style="white-space: pre-line">
 							{{getValue(row, column)}}
-						</p>
+						</div>
 					</div>
 
 					<nb-checkbox *ngIf="['checkbox', 'recommended', 'singleplayer', 'multiplayer', 'starred'].includes(column)" [checked]="row.data[column]" disabled></nb-checkbox>
