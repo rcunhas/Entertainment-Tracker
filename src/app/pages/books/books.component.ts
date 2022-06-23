@@ -15,7 +15,7 @@ export class BooksComponent implements OnInit {
 
 	data : TreeNode<IBookList>[] = []
 
-	allColumns: string[] = [ 'Actions', 'Name', 'Score', 'Author', 'Genre', 'Read', 'Starred'];
+	allColumns: string[] = [ 'Actions', 'name', 'score', 'author', 'genre', 'checkbox', 'starred'];
 
 	dataSource: NbTreeGridDataSource<TreeNode<IList>>;
 
@@ -51,38 +51,26 @@ export class BooksComponent implements OnInit {
 
 	getValue(row: TreeNode<IList>, column: string) {
 		const data = row.data;
-		const columnData = (data as any)[this.convert(column)];
+		const columnData = (data as any)[column];
 		return columnData === -1 ? '-' : columnData;
 	}
 
 	convert(column: string) : string {
 		switch(column) {
-			case 'Name':
-				return 'name';
-			case 'Score':
-				return 'score';
-			case 'Author':
-				return 'author';
-			case 'Genre':
-				return 'genre';
-			case 'Where To Play':
-				return 'whereToPlay';
-			case 'SinglePlayer':
-				return 'singleplayer';
-			case 'MultiPlayer':
-				return 'multiplayer';
-			case 'Where To Stream':
-				return 'whereToStream';
-			case 'Watch With GF':
-				return 'watchWithGF';
-			case 'Starred':
-				return 'starred';
-			case 'Read':
-			case 'Watched':
-			case 'Played':
-				return 'checkbox';
+			case 'name':
+				return 'Name';
+			case 'score':
+				return 'Score';
+			case 'author':
+				return 'Author';
+			case 'genre':
+				return 'Genre';
+			case 'starred':
+				return 'Starred';
+			case 'checkbox':
+				return 'Read';
 			default:
-				return '';
+				return column;
 		}
 	}
 

@@ -16,7 +16,7 @@ export class GamesComponent implements OnInit {
 
 	data : TreeNode<IGameList>[] = []
 
-	allColumns: string[] = [ 'Actions', 'Name', 'Score', 'Where To Play', 'Genre', 'SinglePlayer', 'MultiPlayer', 'Recommended', 'Played', 'Starred'];
+	allColumns: string[] = [ 'Actions', 'name', 'score', 'whereToPlay', 'genre', 'singleplayer', 'multiplayer', 'recommended', 'played', 'starred'];
 
 	dataSource: NbTreeGridDataSource<TreeNode<IList>>;
 
@@ -58,32 +58,26 @@ export class GamesComponent implements OnInit {
 
 	convert(column: string) : string {
 		switch(column) {
-			case 'Name':
-				return 'name';
-			case 'Score':
-				return 'score';
-			case 'Author':
-				return 'author';
-			case 'Genre':
-				return 'genre';
-			case 'Where To Play':
-				return 'whereToPlay';
-			case 'SinglePlayer':
-				return 'singleplayer';
-			case 'MultiPlayer':
-				return 'multiplayer';
-			case 'Where To Stream':
-				return 'whereToStream';
-			case 'Watch With GF':
-				return 'watchWithGF';
-			case 'Recommended':
-				return 'recommended';
-			case 'Starred':
-				return 'starred';
-			case 'Read':
-			case 'Watched':
-			case 'Played':
-				return 'checkbox';
+			case 'name':
+				return 'Name';
+			case 'score':
+				return 'Score';
+			case 'author':
+				return 'Author';
+			case 'genre':
+				return 'Genre';
+			case 'whereToPlay':
+				return 'Where To Play';
+			case 'singleplayer':
+				return 'SinglePlayer';
+			case 'multiplayer':
+				return 'MultiPlayer';
+			case 'recommended':
+				return 'Recommended';
+			case 'starred':
+				return 'Starred';
+			case 'checkbox':
+				return 'Played';
 			default:
 				return '';
 		}

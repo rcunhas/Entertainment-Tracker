@@ -15,7 +15,7 @@ export class MoviesComponent implements OnInit {
 
 	data : TreeNode<IMovieList>[] = []
 
-	allColumns: string[] = [ 'Actions', 'Name', 'Score', 'Where To Stream', 'Genre', 'Watch With GF', 'Watched', 'Starred'];
+	allColumns: string[] = [ 'Actions', 'name', 'score', 'whereToStream', 'genre', 'watchWithGF', 'watched', 'starred'];
 
 	dataSource: NbTreeGridDataSource<TreeNode<IList>>;
 
@@ -59,32 +59,22 @@ export class MoviesComponent implements OnInit {
 
 	convert(column: string) : string {
 		switch(column) {
-			case 'Name':
-				return 'name';
-			case 'Score':
-				return 'score';
-			case 'Author':
-				return 'author';
-			case 'Genre':
-				return 'genre';
-			case 'Where To Play':
-				return 'whereToPlay';
-			case 'SinglePlayer':
-				return 'singleplayer';
-			case 'MultiPlayer':
-				return 'multiplayer';
-			case 'Where To Stream':
-				return 'whereToStream';
-			case 'Watch With GF':
-				return 'watchWithGF';
-			case 'Starred':
-				return 'starred';
-			case 'Read':
-			case 'Watched':
-			case 'Played':
-				return 'checkbox';
+			case 'name':
+				return 'Name';
+			case 'score':
+				return 'Score';
+			case 'genre':
+				return 'Genre';
+			case 'whereToStream':
+				return 'Where To Stream';
+			case 'watchWithGF':
+				return 'Watch With GF';
+			case 'starred':
+				return 'Starred';
+			case 'checkbox':
+				return 'Watched';
 			default:
-				return '';
+				return column;
 		}
 	}
 

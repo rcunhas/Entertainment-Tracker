@@ -16,7 +16,7 @@
                     [nbTreeGridColumnDef]="column">
 
 				<th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
-				{{column}}
+				{{convert(column)}}
 				</th>
 
 				<td nbTreeGridCell *nbTreeGridCellDef="let row; let i = index">
@@ -26,13 +26,13 @@
 						<button nbButton ghost (click)="edit(i, row)"><nb-icon icon="edit-outline"></nb-icon></button>
 					</div>
 
-					<div *ngIf="!['checkbox', 'recommended', 'singleplayer', 'multiplayer', 'starred'].includes(convert(column)) && column != 'Actions'">
+					<div *ngIf="!['checkbox', 'recommended', 'singleplayer', 'multiplayer', 'starred'].includes(column) && column != 'Actions'">
 						<p>
 							{{getValue(row, column)}}
 						</p>
 					</div>
 
-					<nb-checkbox *ngIf="['checkbox', 'recommended', 'singleplayer', 'multiplayer', 'starred'].includes(convert(column))" [checked]="row.data[convert(column)]" disabled></nb-checkbox>
+					<nb-checkbox *ngIf="['checkbox', 'recommended', 'singleplayer', 'multiplayer', 'starred'].includes(column)" [checked]="row.data[column]" disabled></nb-checkbox>
 				</td>
 			</ng-container>
 
