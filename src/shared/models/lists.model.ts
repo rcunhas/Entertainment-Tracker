@@ -35,11 +35,11 @@ export interface TreeNode<T> {
   }
 
 
-export const BOOK_GENRES = ['Action and Adventure', 'Classic', 'Comic Book or Manga', 'Mystery', 'Fantasy', 'Fiction', 'Horror', 'Post-Apocalyptic', 'Romance', 'Sci-Fi', 'Short Stories', 'Thriller', 'History', 'True Crime']
+export const BOOK_GENRES = ['Action and Adventure', 'Classic', 'Comic Book or Manga', 'Drama', 'Fantasy', 'Fiction', 'Horror', 'Mystery', 'Post-Apocalyptic', 'Romance', 'Sci-Fi', 'Short Stories', 'Thriller', 'History', 'True Crime', 'Cyberpunk']
 
 export const WHERE_TO_PLAY = ['Ubisoft', 'EA', 'Game Pass', 'Steam', 'Epic', 'Battle.net', 'Fitgirl'];
 
-export const GAME_GENRES = ['Action', 'Adventure', 'Arcade', "Beat'em Up", 'City Building', 'Co-op', 'Horror', 'Open World', 'Other', 'Platform', 'Puzzle', 'Racing', 'RTS', 'RPG', 'Shooter', 'Simulation', 'Sports', 'Survival', 'TD', 'Turn Based'];
+export const GAME_GENRES = ['Action', 'Adventure', 'Arcade', "Beat'em Up", 'City Building', 'Co-op', 'Horror', 'Open World', 'Other', 'Platform', 'Puzzle', 'Racing', 'RTS', 'RPG', 'Shooter', 'Simulation', 'Sports', 'Survival', 'TD', 'Turn Based', 'Cyberpunk'];
 
 export const WHERE_TO_STREAM = ['Netflix', 'Prime Video', 'HBO Max', 'Disney+', 'Crunchyroll'];
 

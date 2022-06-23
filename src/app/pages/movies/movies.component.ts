@@ -115,12 +115,14 @@ export class MoviesComponent implements OnInit {
 				checkbox: data.checkbox,
 				starred: data.starred,
 			}
-		}}).onClose.subscribe(res => {
+		}}).onClose.subscribe((res: IMovieList) => {
 			if (!res) {
 				return;
 			}
 
-			this.data[index] = {
+			const dataIndex = this.data.findIndex(data => data.data.name === row.data.name);
+
+			this.data[dataIndex] = {
 				data: res,
 			} as TreeNode<IMovieList>;
 			this.saveToLocalStorage();
@@ -139,7 +141,7 @@ export class MoviesComponent implements OnInit {
 
 	save() {
 		const blob = new Blob([JSON.stringify(this.data)], {type: "application/json"});
-		saveAs(blob, "movies.json");
+		saveAs(blob, "moviesList.json");
 	}
 
 }

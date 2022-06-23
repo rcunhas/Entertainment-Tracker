@@ -124,12 +124,14 @@ export class GamesComponent implements OnInit {
 				checkbox: data.checkbox,
 				starred: data.starred,
 			}
-		}}).onClose.subscribe(res => {
+		}}).onClose.subscribe((res : IGameList) => {
 			if (!res) {
 				return;
 			}
 
-			this.data[index] = {
+			const dataIndex = this.data.findIndex(data => data.data.name === row.data.name);
+
+			this.data[dataIndex] = {
 				data: res,
 			} as TreeNode<IGameList>;
 			this.saveToLocalStorage();
@@ -148,7 +150,7 @@ export class GamesComponent implements OnInit {
 
 	save() {
 		const blob = new Blob([JSON.stringify(this.data)], {type: "application/json"});
-		saveAs(blob, "games.json");
+		saveAs(blob, "gamesList.json");
 	}
 
 }
