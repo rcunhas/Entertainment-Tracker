@@ -15,7 +15,7 @@ export class BooksComponent implements OnInit {
 
 	data : TreeNode<IBookList>[] = []
 
-	allColumns: string[] = [ 'Actions', 'Name', 'Score', 'Author', 'Genre', 'Read'];
+	allColumns: string[] = [ 'Actions', 'Name', 'Score', 'Author', 'Genre', 'Read', 'Starred'];
 
 	dataSource: NbTreeGridDataSource<TreeNode<IList>>;
 
@@ -75,6 +75,8 @@ export class BooksComponent implements OnInit {
 				return 'whereToStream';
 			case 'Watch With GF':
 				return 'watchWithGF';
+			case 'Starred':
+				return 'starred';
 			case 'Read':
 			case 'Watched':
 			case 'Played':
@@ -93,6 +95,7 @@ export class BooksComponent implements OnInit {
 					score:  -1,
 					genre: [],
 					checkbox: false,
+					starred: false,
 				}
 			}
 		}).onClose.subscribe(res => {
@@ -116,6 +119,7 @@ export class BooksComponent implements OnInit {
 				score:  data.score,
 				genre: data.genre,
 				checkbox: data.checkbox,
+				starred: data.starred,
 			}
 		}}).onClose.subscribe(res => {
 			if (!res) {

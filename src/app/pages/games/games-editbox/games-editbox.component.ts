@@ -21,6 +21,7 @@ export class GamesEditboxDialog implements OnInit {
 	multiControl!: FormControl;
 	recommendedControl!: FormControl;
 	checkboxControl!: FormControl;
+	starredControl!: FormControl;
 
 	gameGenres: string[] = GAME_GENRES;
 	whereToPlay: string[] = WHERE_TO_PLAY;
@@ -40,6 +41,7 @@ export class GamesEditboxDialog implements OnInit {
 		this.multiControl = new FormControl(this.data?.multiplayer || false);
 		this.recommendedControl = new FormControl(this.data?.recommended || false);
 		this.checkboxControl = new FormControl(this.data?.checkbox || false);
+		this.starredControl = new FormControl(this.data?.starred || false);
 	}
 
 	close() {
@@ -57,6 +59,7 @@ export class GamesEditboxDialog implements OnInit {
 		this.data.singleplayer = this.singleControl.value;
 		this.data.multiplayer = this.multiControl.value;
 		this.data.recommended = this.recommendedControl.value;
+		this.data.starred = this.starredControl.value;
 
 		if (this.data.name === '') {
 			this.nameControl.markAllAsTouched();

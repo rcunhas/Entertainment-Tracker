@@ -26,13 +26,13 @@
 						<button nbButton ghost (click)="edit(i, row)"><nb-icon icon="edit-outline"></nb-icon></button>
 					</div>
 
-					<div *ngIf="!['checkbox'].includes(convert(column)) && column != 'Actions'">
+					<div *ngIf="!['checkbox', 'starred'].includes(convert(column)) && column != 'Actions'">
 						<p>
 							{{getValue(row, column)}}
 						</p>
 					</div>
 
-					<nb-checkbox *ngIf="['checkbox'].includes(convert(column))" [checked]="row.data[convert(column)]" disabled></nb-checkbox>
+					<nb-checkbox *ngIf="['checkbox', 'starred'].includes(convert(column))" [checked]="row.data[convert(column)]" disabled></nb-checkbox>
 				</td>
 			</ng-container>
 

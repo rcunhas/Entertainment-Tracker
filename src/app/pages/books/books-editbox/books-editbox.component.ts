@@ -17,6 +17,7 @@ export class BooksEditboxDialog implements OnInit {
 	authorControl!: FormControl;
 	genreControl!: FormControl;
 	checkboxControl!: FormControl;
+	starredControl!: FormControl;
 
 	bookGenres: string[] = BOOK_GENRES;
 
@@ -32,6 +33,7 @@ export class BooksEditboxDialog implements OnInit {
 		this.authorControl = new FormControl(this.data?.author || '', Validators.required);
 		this.genreControl = new FormControl(this.data?.genre || [], Validators.required);
 		this.checkboxControl = new FormControl(this.data?.checkbox || false);
+		this.starredControl = new FormControl(this.data?.starred || false);
 	}
 
 	close() {
@@ -46,6 +48,7 @@ export class BooksEditboxDialog implements OnInit {
 		this.data.author = this.authorControl.value;
 		this.data.genre = this.genreControl.value;
 		this.data.checkbox = this.checkboxControl.value;
+		this.data.starred = this.starredControl.value;
 
 		if (this.data.name === '') {
 			this.nameControl.markAllAsTouched();

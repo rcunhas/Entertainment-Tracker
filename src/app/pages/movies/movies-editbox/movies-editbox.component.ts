@@ -19,6 +19,7 @@ export class MoviesEditboxDialog implements OnInit {
 	streamControl!: FormControl;
 	watchWithControl!: FormControl;
 	checkboxControl!: FormControl;
+	starredControl!: FormControl;
 
 	movieGenres: string[] = MOVIE_GENRES;
 	whereToStream: string[] = WHERE_TO_STREAM;
@@ -36,6 +37,7 @@ export class MoviesEditboxDialog implements OnInit {
 		this.streamControl = new FormControl(this.data?.whereToStream || [], Validators.required);
 		this.watchWithControl = new FormControl(this.data?.watchWithGF || false);
 		this.checkboxControl = new FormControl(this.data?.checkbox || false);
+		this.starredControl = new FormControl(this.data?.starred || false);
 	}
 
 	close() {
@@ -51,6 +53,7 @@ export class MoviesEditboxDialog implements OnInit {
 		this.data.whereToStream = this.streamControl.value;
 		this.data.checkbox = this.checkboxControl.value;
 		this.data.watchWithGF = this.watchWithControl.value;
+		this.data.starred = this.starredControl.value;
 
 		if (this.data.name === '') {
 			this.nameControl.markAllAsTouched();

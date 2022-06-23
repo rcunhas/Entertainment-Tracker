@@ -16,7 +16,7 @@ export class GamesComponent implements OnInit {
 
 	data : TreeNode<IGameList>[] = []
 
-	allColumns: string[] = [ 'Actions', 'Name', 'Score', 'Where To Play', 'Genre', 'SinglePlayer', 'MultiPlayer', 'Recommended', 'Played'];
+	allColumns: string[] = [ 'Actions', 'Name', 'Score', 'Where To Play', 'Genre', 'SinglePlayer', 'MultiPlayer', 'Recommended', 'Played', 'Starred'];
 
 	dataSource: NbTreeGridDataSource<TreeNode<IList>>;
 
@@ -78,6 +78,8 @@ export class GamesComponent implements OnInit {
 				return 'watchWithGF';
 			case 'Recommended':
 				return 'recommended';
+			case 'Starred':
+				return 'starred';
 			case 'Read':
 			case 'Watched':
 			case 'Played':
@@ -99,6 +101,7 @@ export class GamesComponent implements OnInit {
 					whereToPlay: [],
 					genre: [],
 					checkbox: false,
+					starred: false,
 				}
 			}
 		}).onClose.subscribe(res => {
@@ -125,6 +128,7 @@ export class GamesComponent implements OnInit {
 				whereToPlay: data.whereToPlay,
 				genre: data.genre,
 				checkbox: data.checkbox,
+				starred: data.starred,
 			}
 		}}).onClose.subscribe(res => {
 			if (!res) {

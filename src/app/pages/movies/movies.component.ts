@@ -15,7 +15,7 @@ export class MoviesComponent implements OnInit {
 
 	data : TreeNode<IMovieList>[] = []
 
-	allColumns: string[] = [ 'Actions', 'Name', 'Score', 'Where To Stream', 'Genre', 'Watch With GF', 'Watched'];
+	allColumns: string[] = [ 'Actions', 'Name', 'Score', 'Where To Stream', 'Genre', 'Watch With GF', 'Watched', 'Starred'];
 
 	dataSource: NbTreeGridDataSource<TreeNode<IList>>;
 
@@ -77,6 +77,8 @@ export class MoviesComponent implements OnInit {
 				return 'whereToStream';
 			case 'Watch With GF':
 				return 'watchWithGF';
+			case 'Starred':
+				return 'starred';
 			case 'Read':
 			case 'Watched':
 			case 'Played':
@@ -96,6 +98,7 @@ export class MoviesComponent implements OnInit {
 					whereToStream: [],
 					genre: [],
 					checkbox: false,
+					starred: false,
 				}
 			}
 		}).onClose.subscribe(res => {
@@ -120,6 +123,7 @@ export class MoviesComponent implements OnInit {
 				whereToStream: data.whereToStream,
 				genre: data.genre,
 				checkbox: data.checkbox,
+				starred: data.starred,
 			}
 		}}).onClose.subscribe(res => {
 			if (!res) {

@@ -2,6 +2,7 @@ export interface IList {
 	checkbox: boolean;
 	name: string;
 	score: number;
+	starred: boolean;
 }
 
 export interface IFranchise extends IList {
@@ -34,7 +35,7 @@ export interface TreeNode<T> {
   }
 
 
-export const BOOK_GENRES = ['Action and Adventure', 'Classic', 'Comic Book or Manga', 'Mystery', 'Fantasy', 'Fiction', 'Horror', 'Romance', 'Sci-Fi', 'Short Stories', 'Thriller', 'History', 'True Crime']
+export const BOOK_GENRES = ['Action and Adventure', 'Classic', 'Comic Book or Manga', 'Mystery', 'Fantasy', 'Fiction', 'Horror', 'Post-Apocalyptic', 'Romance', 'Sci-Fi', 'Short Stories', 'Thriller', 'History', 'True Crime']
 
 export const WHERE_TO_PLAY = ['Ubisoft', 'EA', 'Game Pass', 'Steam', 'Epic', 'Battle.net', 'Fitgirl'];
 
