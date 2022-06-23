@@ -79,7 +79,7 @@ export class GamesComponent implements OnInit {
 			case 'checkbox':
 				return 'Played';
 			default:
-				return '';
+				return column;
 		}
 	}
 
