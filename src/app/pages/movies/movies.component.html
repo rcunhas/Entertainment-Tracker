@@ -12,6 +12,12 @@
 
 		</div>
 
+		<mat-paginator
+		[pageSizeOptions]="[5, 10, 25, 50, 100, 1000]"
+		[pageSize]="25" aria-label="Select page"
+		[showFirstLastButtons]="true">
+    	</mat-paginator>
+
 		<mat-table [dataSource]="dataSource" matSort>
 
 			<ng-container *ngFor="let column of allColumns; let index = index" [matColumnDef]="column">
@@ -23,7 +29,7 @@
 						<button nbButton ghost (click)="edit(row)"><nb-icon icon="edit-outline"></nb-icon></button>
 					</div>
 
-					<div *ngIf="!['checkbox', 'watchWithGF', 'starred'].includes(column) && column != 'Actions'">
+					<div *ngIf="!['checkbox', 'watchWithGF', 'starred'].includes(column) && column != 'Actions'" class="string-fields">
 						<div style="white-space: pre-line">
 							{{getValue(row, column)}}
 						</div>
@@ -38,12 +44,6 @@
             <mat-row *matRowDef="let row; columns: allColumns;"></mat-row>
 
         </mat-table>
-
-		<mat-paginator
-		[pageSizeOptions]="[5, 10, 25, 100]"
-		[pageSize]="50" aria-label="Select page"
-		[showFirstLastButtons]="true">
-    	</mat-paginator>
 
 	</nb-card-body>
 </nb-card>
