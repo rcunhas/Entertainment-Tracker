@@ -21,8 +21,8 @@ export class BooksComponent implements OnInit {
 
 	dataSourceData!: TreeNode<IList>[];
 
-	sortColumn: string = 'name';
- 	sortDirection: NbSortDirection = NbSortDirection.ASCENDING;
+	sortColumn: string = '';
+ 	sortDirection: NbSortDirection = NbSortDirection.NONE;
 
 	constructor(
 		private readonly router: Router,
@@ -31,6 +31,7 @@ export class BooksComponent implements OnInit {
 	) {
 		const storage = localStorage.getItem('booksList');
 		this.data = (storage !== null ? JSON.parse(storage) : booksList) as TreeNode<IBookList>[];
+		this.data = this.data.sort((a,b) => a.data.name.localeCompare(b.data.name));
 		this.dataSource = this.dataSourceBuilder.create(this.data);
 		this.dataSource.sort({
 			column: this.sortColumn,
@@ -39,6 +40,15 @@ export class BooksComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+
+	}
+
+	nextPage() {
+		console.log('NEXT PAGE');
+	}
+
+	previousPage() {
+		console.log('PREVIOUS PAGE');
 	}
 
 	updateSort(sortRequest: NbSortRequest): void {
@@ -142,6 +152,7 @@ export class BooksComponent implements OnInit {
 
 	saveToLocalStorage() {
 		localStorage.setItem('booksList', JSON.stringify(this.data));
+		this.data = this.data.sort((a,b) => a.data.name.localeCompare(b.data.name));
 		this.dataSource = this.dataSourceBuilder.create(this.data);
 		this.dataSource.sort({
 			column: this.sortColumn,
