@@ -31,7 +31,7 @@ import { MatSortModule } from '@angular/material/sort';
 		BrowserModule,
 		AppRoutingModule,
 		BrowserAnimationsModule,
-		NbThemeModule.forRoot(),
+		NbThemeModule.forRoot({name: 'dark'}),
 		NbSidebarModule.forRoot(),
 		NbMenuModule.forRoot(),
 		NbDialogModule.forRoot(),

@@ -10,3 +10,24 @@ table {
 td, th {
 	width: 25%;
 }
+
+mat-table {
+	background-color: #192038;
+}
+
+mat-cell {
+	color: #ffffff;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+mat-header-cell {
+	color: #ffffff;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	font-size: 14px;
+	font-weight: bold;
+}
+
+mat-paginator {
+	background-color: #192038;
+}
