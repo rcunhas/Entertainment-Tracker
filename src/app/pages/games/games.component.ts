@@ -1,72 +1,56 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder, NbSortRequest, NbDialogService } from '@nebular/theme';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { NbDialogService } from '@nebular/theme';
 import * as saveAs from 'file-saver';
 import gamesList from '../../../files/gamesList.json'
 
-import { TreeNode, IList, IGameList } from 'src/shared/models/lists.model';
+import { IGameList } from 'src/shared/models/lists.model';
 import { GamesEditboxDialog } from './games-editbox/games-editbox.component';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
 	selector: 'app-games',
 	templateUrl: './games.component.html',
 	styleUrls: ['./games.component.scss']
 })
-export class GamesComponent implements OnInit {
+export class GamesComponent implements AfterViewInit  {
 
-	data : TreeNode<IGameList>[] = []
+	@ViewChild(MatPaginator) paginator!: MatPaginator;
+	@ViewChild(MatSort) sort!: MatSort;
+
+	data : IGameList[] = []
 
 	allColumns: string[] = [ 'Actions', 'name', 'score', 'whereToPlay', 'genre', 'singleplayer', 'multiplayer', 'recommended', 'checkbox', 'starred'];
 
-	dataSource: NbTreeGridDataSource<TreeNode<IList>>;
+	dataSource: MatTableDataSource<IGameList>;
 
-	dataSourceData!: TreeNode<IGameList>[];
-
-	sortColumn: string = '';
- 	sortDirection: NbSortDirection = NbSortDirection.NONE;
+	globalFilter: string = '';
 
 	constructor(
-		private readonly router: Router,
-		private dataSourceBuilder: NbTreeGridDataSourceBuilder<TreeNode<IGameList>>,
 		private dialogService: NbDialogService,
 	) {
 		const storage = localStorage.getItem('gamesList');
-		this.data = (storage !== null ? JSON.parse(storage) : gamesList) as TreeNode<IGameList>[];
-		this.data = this.data.sort((a,b) => a.data.name.localeCompare(b.data.name));
-		this.dataSource = this.dataSourceBuilder.create(this.data);
-		this.dataSource.sort({
-			column: this.sortColumn,
-			direction: this.sortDirection,
-		});
+		this.data = (storage !== null ? JSON.parse(storage) : gamesList) as IGameList[];
+		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name));
+		this.dataSource = new MatTableDataSource(this.data);
 	}
 
-	ngOnInit(): void {
-
+	ngAfterViewInit() {
+		this.dataSource.paginator = this.paginator;
+		this.dataSource.sort = this.sort;
 	}
 
-	nextPage() {
-		console.log('NEXT PAGE');
-	}
+	applyFilter(event: string) {
+		this.dataSource.filter = event.trim().toLowerCase();
 
-	previousPage() {
-		console.log('PREVIOUS PAGE');
-	}
-
-	updateSort(sortRequest: NbSortRequest): void {
-		this.sortColumn = sortRequest.column;
-		this.sortDirection = sortRequest.direction;
-	}
-
-	getSortDirection(column: string): NbSortDirection {
-		if (this.sortColumn === column) {
-			return this.sortDirection;
+		if (this.dataSource.paginator) {
+		  this.dataSource.paginator.firstPage();
 		}
-		return NbSortDirection.NONE;
 	}
 
-	getValue(row: TreeNode<IGameList>, column: string) {
-		const data = row.data;
-		const columnData = (data as any)[column];
+	getValue(row: IGameList, column: string) {
+		const columnData = (row as any)[column];
 		if (Array.isArray(columnData)) {
 			let value = '';
 			for (let entry of columnData) {
@@ -124,15 +108,13 @@ export class GamesComponent implements OnInit {
 				return;
 			}
 
-			this.data.push({
-				data: res,
-			} as TreeNode<IGameList>);
+			this.data.push(res);
 			this.saveToLocalStorage();
 		});
 	}
 
-	edit(row: TreeNode<IGameList>) {
-		const data = row.data;
+	edit(row: IGameList) {
+		const data = row;
 		this.dialogService.open(GamesEditboxDialog, {context : {
 			data: {
 				name: data.name,
@@ -150,29 +132,23 @@ export class GamesComponent implements OnInit {
 				return;
 			}
 
-			const dataIndex = this.data.findIndex(data => data.data.name === row.data.name);
+			const dataIndex = this.data.findIndex(data => data.name === row.name);
 
-			this.data[dataIndex] = {
-				data: res,
-			} as TreeNode<IGameList>;
+			this.data[dataIndex] = res as IGameList;
 			this.saveToLocalStorage();
 		})
 	}
 
-	deleteEntry(row: TreeNode<IGameList>) {
-		const dataIndex = this.data.findIndex(data => data.data.name === row.data.name);
+	deleteEntry(row: IGameList) {
+		const dataIndex = this.data.findIndex(data => data.name === row.name);
 		this.data.splice(dataIndex, 1);
 		this.saveToLocalStorage();
 	}
 
 	saveToLocalStorage() {
+		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name));
+		this.dataSource = new MatTableDataSource(this.data);
 		localStorage.setItem('gamesList', JSON.stringify(this.data));
-		this.data = this.data.sort((a,b) => a.data.name.localeCompare(b.data.name));
-		this.dataSource = this.dataSourceBuilder.create(this.data);
-		this.dataSource.sort({
-			column: this.sortColumn,
-			direction: this.sortDirection,
-		});
 	}
 
 	save() {

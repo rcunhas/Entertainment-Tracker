@@ -28,13 +28,6 @@ export interface IMovieList extends IList {
 	watchWithGF: boolean;
 }
 
-export interface TreeNode<T> {
-	data: T;
-	children?: TreeNode<T>[];
-	expanded?: boolean;
-  }
-
-
 export const BOOK_GENRES = ['Action and Adventure', 'Classic', 'Comic Book or Manga', 'Drama', 'Fantasy', 'Fiction', 'Horror', 'Mystery', 'Post-Apocalyptic', 'Romance', 'Sci-Fi', 'Short Stories', 'Thriller', 'History', 'True Crime', 'Cyberpunk']
 
 export const WHERE_TO_PLAY = ['Ubisoft', 'EA', 'Game Pass', 'Steam', 'Epic', 'Battle.net', 'Fitgirl'];

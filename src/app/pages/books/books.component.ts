@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder, NbSortRequest, NbDialogService } from '@nebular/theme';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { NbDialogService } from '@nebular/theme';
 import * as saveAs from 'file-saver';
-import { IBookList, IList, TreeNode } from 'src/shared/models/lists.model';
+import { IBookList, IList } from 'src/shared/models/lists.model';
 import booksList from '../../../files/booksList.json'
 import { BooksEditboxDialog } from './books-editbox/books-editbox.component';
 
@@ -11,61 +13,43 @@ import { BooksEditboxDialog } from './books-editbox/books-editbox.component';
 	templateUrl: './books.component.html',
 	styleUrls: ['./books.component.scss']
 })
-export class BooksComponent implements OnInit {
+export class BooksComponent implements AfterViewInit {
 
-	data : TreeNode<IBookList>[] = []
+	@ViewChild(MatPaginator) paginator!: MatPaginator;
+	@ViewChild(MatSort) sort!: MatSort;
+
+	data : IBookList[] = []
 
 	allColumns: string[] = [ 'Actions', 'name', 'score', 'author', 'genre', 'checkbox', 'starred'];
 
-	dataSource: NbTreeGridDataSource<TreeNode<IList>>;
+	dataSource: MatTableDataSource<IBookList>;
 
-	dataSourceData!: TreeNode<IList>[];
-
-	sortColumn: string = '';
- 	sortDirection: NbSortDirection = NbSortDirection.NONE;
+	globalFilter: string = '';
 
 	constructor(
-		private readonly router: Router,
-		private dataSourceBuilder: NbTreeGridDataSourceBuilder<TreeNode<IBookList>>,
 		private dialogService: NbDialogService,
 	) {
 		const storage = localStorage.getItem('booksList');
-		this.data = (storage !== null ? JSON.parse(storage) : booksList) as TreeNode<IBookList>[];
-		this.data = this.data.sort((a,b) => a.data.name.localeCompare(b.data.name));
-		this.dataSource = this.dataSourceBuilder.create(this.data);
-		this.dataSource.sort({
-			column: this.sortColumn,
-			direction: this.sortDirection,
-		});
+		this.data = (storage !== null ? JSON.parse(storage) : booksList) as IBookList[];
+		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name));
+		this.dataSource = new MatTableDataSource(this.data);
 	}
 
-	ngOnInit(): void {
-
+	ngAfterViewInit() {
+		this.dataSource.paginator = this.paginator;
+		this.dataSource.sort = this.sort;
 	}
 
-	nextPage() {
-		console.log('NEXT PAGE');
-	}
+	applyFilter(event: string) {
+		this.dataSource.filter = event.trim().toLowerCase();
 
-	previousPage() {
-		console.log('PREVIOUS PAGE');
-	}
-
-	updateSort(sortRequest: NbSortRequest): void {
-		this.sortColumn = sortRequest.column;
-		this.sortDirection = sortRequest.direction;
-	}
-
-	getSortDirection(column: string): NbSortDirection {
-		if (this.sortColumn === column) {
-			return this.sortDirection;
+		if (this.dataSource.paginator) {
+		  this.dataSource.paginator.firstPage();
 		}
-		return NbSortDirection.NONE;
 	}
 
-	getValue(row: TreeNode<IList>, column: string) {
-		const data = row.data;
-		const columnData = (data as any)[column];
+	getValue(row: IList, column: string) {
+		const columnData = (row as any)[column];
 		if (Array.isArray(columnData)) {
 			let value = '';
 			for (let entry of columnData) {
@@ -112,15 +96,13 @@ export class BooksComponent implements OnInit {
 				return;
 			}
 
-			this.data.push({
-				data: res,
-			} as TreeNode<IBookList>);
+			this.data.push(res as IBookList);
 			this.saveToLocalStorage();
 		});
 	}
 
-	edit(row: TreeNode<IBookList>) {
-		const data = row.data;
+	edit(row: IBookList) {
+		const data = row;
 		this.dialogService.open(BooksEditboxDialog, {context : {
 			data: {
 				name: data.name,
@@ -135,29 +117,23 @@ export class BooksComponent implements OnInit {
 				return;
 			}
 
-			const dataIndex = this.data.findIndex(data => data.data.name === row.data.name);
+			const dataIndex = this.data.findIndex(data => data.name === row.name);
 
-			this.data[dataIndex] = {
-				data: res,
-			} as TreeNode<IBookList>;
+			this.data[dataIndex] = res as IBookList;
 			this.saveToLocalStorage();
 		})
 	}
 
-	deleteEntry(row: TreeNode<IBookList>) {
-		const dataIndex = this.data.findIndex(data => data.data.name === row.data.name);
+	deleteEntry(row: IBookList) {
+		const dataIndex = this.data.findIndex(data => data.name === row.name);
 		this.data.splice(dataIndex, 1);
 		this.saveToLocalStorage();
 	}
 
 	saveToLocalStorage() {
+		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name));
+		this.dataSource = new MatTableDataSource(this.data);
 		localStorage.setItem('booksList', JSON.stringify(this.data));
-		this.data = this.data.sort((a,b) => a.data.name.localeCompare(b.data.name));
-		this.dataSource = this.dataSourceBuilder.create(this.data);
-		this.dataSource.sort({
-			column: this.sortColumn,
-			direction: this.sortDirection,
-		});
 	}
 
 	save() {

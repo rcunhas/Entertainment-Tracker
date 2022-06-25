@@ -3,30 +3,20 @@
 
 		<div style="margin-bottom: 15px;">
 
-			<input nbInput [nbFilterInput]="dataSource" id="search" class="search-input">
+			<input nbInput [ngModel]="globalFilter" (ngModelChange)="applyFilter($event)"
+                    [ngModelOptions]="{standalone: true}" id="search" class="search-input" #input>
 
 			<button nbButton ghost (click)="add()"><nb-icon icon="plus-outline"></nb-icon></button>
 			<button nbButton ghost (click)="saveToLocalStorage()"><nb-icon icon="save-outline"></nb-icon></button>
 			<button nbButton ghost (click)="save()"><nb-icon icon="arrow-circle-down-outline"></nb-icon></button>
 
-			<button nbButton ghost style="float:right;" (click)="nextPage()"><nb-icon icon="arrow-ios-forward-outline"></nb-icon></button>
-			<button nbButton ghost style="float:right;" (click)="previousPage()"><nb-icon icon="arrow-ios-back-outline"></nb-icon></button>
-
 		</div>
 
-		<table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)">
+		<mat-table [dataSource]="dataSource" matSort>
 
-			<tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
-			<tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
-
-			<ng-container *ngFor="let column of allColumns; let index = index"
-                    [nbTreeGridColumnDef]="column">
-
-				<th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
-				{{convert(column)}}
-				</th>
-
-				<td nbTreeGridCell *nbTreeGridCellDef="let row; let i = index">
+			<ng-container *ngFor="let column of allColumns; let index = index" [matColumnDef]="column">
+				<mat-header-cell *matHeaderCellDef mat-sort-header> {{convert(column)}} </mat-header-cell>
+				<mat-cell mat-cell *matCellDef="let row">
 
 					<div *ngIf="column === 'Actions'">
 						<button nbButton ghost (click)="deleteEntry(row)"><nb-icon icon="trash-2-outline"></nb-icon></button>
@@ -39,11 +29,21 @@
 						</div>
 					</div>
 
-					<nb-checkbox *ngIf="['checkbox', 'starred'].includes(column)" [checked]="row.data[column]" disabled></nb-checkbox>
-				</td>
+					<nb-checkbox *ngIf="['checkbox', 'starred'].includes(column)" [checked]="getValue(row, column)" disabled></nb-checkbox>
+
+                </mat-cell>
 			</ng-container>
 
-		</table>
+			<mat-header-row *matHeaderRowDef="allColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: allColumns;"></mat-row>
+
+        </mat-table>
+
+		<mat-paginator
+		[pageSizeOptions]="[5, 10, 25, 100]"
+		[pageSize]="50" aria-label="Select page"
+		[showFirstLastButtons]="true">
+    	</mat-paginator>
 
 	</nb-card-body>
 </nb-card>

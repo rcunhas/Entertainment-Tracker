@@ -13,7 +13,10 @@ import { BooksEditboxDialog } from './pages/books/books-editbox/books-editbox.co
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GamesEditboxDialog } from './pages/games/games-editbox/games-editbox.component';
 import { MoviesEditboxDialog } from './pages/movies/movies-editbox/movies-editbox.component';
-
+import { MatTableModule } from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -28,7 +31,7 @@ import { MoviesEditboxDialog } from './pages/movies/movies-editbox/movies-editbo
 		BrowserModule,
 		AppRoutingModule,
 		BrowserAnimationsModule,
-		NbThemeModule.forRoot({ name: 'dark' }),
+		NbThemeModule.forRoot(),
 		NbSidebarModule.forRoot(),
 		NbMenuModule.forRoot(),
 		NbDialogModule.forRoot(),
@@ -45,6 +48,10 @@ import { MoviesEditboxDialog } from './pages/movies/movies-editbox/movies-editbo
 		FormsModule,
 		FormsModule,
 		ReactiveFormsModule,
+		MatTableModule,
+		MatFormFieldModule,
+		MatPaginatorModule,
+		MatSortModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent]

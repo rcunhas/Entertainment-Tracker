@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder, NbSortRequest, NbDialogService } from '@nebular/theme';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { NbDialogService } from '@nebular/theme';
 import * as saveAs from 'file-saver';
-import { TreeNode, IList, IMovieList } from 'src/shared/models/lists.model';
+import { IList, IMovieList } from 'src/shared/models/lists.model';
 import moviesList from '../../../files/moviesList.json'
 import { MoviesEditboxDialog } from './movies-editbox/movies-editbox.component';
 
@@ -11,62 +13,44 @@ import { MoviesEditboxDialog } from './movies-editbox/movies-editbox.component';
 	templateUrl: './movies.component.html',
 	styleUrls: ['./movies.component.scss']
 })
-export class MoviesComponent implements OnInit {
+export class MoviesComponent implements AfterViewInit {
 
-	data : TreeNode<IMovieList>[] = []
+	@ViewChild(MatPaginator) paginator!: MatPaginator;
+	@ViewChild(MatSort) sort!: MatSort;
 
-	allColumns: string[] = [ 'Actions', 'name', 'score', 'whereToStream', 'genre', 'watchWithGF', 'watched', 'starred'];
+	data : IMovieList[] = []
 
-	dataSource: NbTreeGridDataSource<TreeNode<IList>>;
+	allColumns: string[] = [ 'Actions', 'name', 'score', 'whereToStream', 'genre', 'watchWithGF', 'checkbox', 'starred'];
 
-	dataSourceData!: TreeNode<IList>[];
+	dataSource: MatTableDataSource<IMovieList>;
 
-	sortColumn: string = '';
- 	sortDirection: NbSortDirection = NbSortDirection.NONE;
+	globalFilter: string = '';
 
 	constructor(
-		private readonly router: Router,
-		private dataSourceBuilder: NbTreeGridDataSourceBuilder<TreeNode<IMovieList>>,
 		private dialogService: NbDialogService,
 
 	) {
 		const storage = localStorage.getItem('moviesList');
-		this.data = (storage !== null ? JSON.parse(storage) : moviesList) as TreeNode<IMovieList>[];
-		this.data = this.data.sort((a,b) => a.data.name.localeCompare(b.data.name));
-		this.dataSource = this.dataSourceBuilder.create(this.data);
-		this.dataSource.sort({
-			column: this.sortColumn,
-			direction: this.sortDirection,
-		});
+		this.data = (storage !== null ? JSON.parse(storage) : moviesList) as IMovieList[];
+		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name));
+		this.dataSource = new MatTableDataSource(this.data);
 	}
 
-	ngOnInit(): void {
-
+	ngAfterViewInit() {
+		this.dataSource.paginator = this.paginator;
+		this.dataSource.sort = this.sort;
 	}
 
-	nextPage() {
-		console.log('NEXT PAGE');
-	}
+	applyFilter(event: string) {
+		this.dataSource.filter = event.trim().toLowerCase();
 
-	previousPage() {
-		console.log('PREVIOUS PAGE');
-	}
-
-	updateSort(sortRequest: NbSortRequest): void {
-		this.sortColumn = sortRequest.column;
-		this.sortDirection = sortRequest.direction;
-	}
-
-	getSortDirection(column: string): NbSortDirection {
-		if (this.sortColumn === column) {
-			return this.sortDirection;
+		if (this.dataSource.paginator) {
+		  this.dataSource.paginator.firstPage();
 		}
-		return NbSortDirection.NONE;
 	}
 
-	getValue(row: TreeNode<IList>, column: string) {
-		const data = row.data;
-		const columnData = (data as any)[column];
+	getValue(row: IList, column: string) {
+		const columnData = (row as any)[column];
 		if (Array.isArray(columnData)) {
 			let value = '';
 			for (let entry of columnData) {
@@ -116,15 +100,13 @@ export class MoviesComponent implements OnInit {
 				return;
 			}
 
-			this.data.push({
-				data: res,
-			} as TreeNode<IMovieList>);
+			this.data.push(res as IMovieList);
 			this.saveToLocalStorage();
 		});
 	}
 
-	edit(row: TreeNode<IMovieList>) {
-		const data = row.data;
+	edit(row: IMovieList) {
+		const data = row;
 		this.dialogService.open(MoviesEditboxDialog, {context : {
 			data: {
 				name: data.name,
@@ -140,29 +122,23 @@ export class MoviesComponent implements OnInit {
 				return;
 			}
 
-			const dataIndex = this.data.findIndex(data => data.data.name === row.data.name);
+			const dataIndex = this.data.findIndex(data => data.name === row.name);
 
-			this.data[dataIndex] = {
-				data: res,
-			} as TreeNode<IMovieList>;
+			this.data[dataIndex] = res as IMovieList;
 			this.saveToLocalStorage();
 		})
 	}
 
-	deleteEntry(row: TreeNode<IMovieList>) {
-		const dataIndex = this.data.findIndex(data => data.data.name === row.data.name);
+	deleteEntry(row: IMovieList) {
+		const dataIndex = this.data.findIndex(data => data.name === row.name);
 		this.data.splice(dataIndex, 1);
 		this.saveToLocalStorage();
 	}
 
 	saveToLocalStorage() {
+		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name));
+		this.dataSource = new MatTableDataSource(this.data);
 		localStorage.setItem('moviesList', JSON.stringify(this.data));
-		this.data = this.data.sort((a,b) => a.data.name.localeCompare(b.data.name));
-		this.dataSource = this.dataSourceBuilder.create(this.data);
-		this.dataSource.sort({
-			column: this.sortColumn,
-			direction: this.sortDirection,
-		});
 	}
 
 	save() {
