@@ -21,8 +21,8 @@ export class BooksComponent implements OnInit {
 
 	dataSourceData!: TreeNode<IList>[];
 
-	sortColumn!: string;
- 	sortDirection: NbSortDirection = NbSortDirection.NONE;
+	sortColumn: string = 'name';
+ 	sortDirection: NbSortDirection = NbSortDirection.ASCENDING;
 
 	constructor(
 		private readonly router: Router,
@@ -32,6 +32,10 @@ export class BooksComponent implements OnInit {
 		const storage = localStorage.getItem('booksList');
 		this.data = (storage !== null ? JSON.parse(storage) : booksList) as TreeNode<IBookList>[];
 		this.dataSource = this.dataSourceBuilder.create(this.data);
+		this.dataSource.sort({
+			column: this.sortColumn,
+			direction: this.sortDirection,
+		});
 	}
 
 	ngOnInit(): void {
@@ -138,6 +142,10 @@ export class BooksComponent implements OnInit {
 	saveToLocalStorage() {
 		localStorage.setItem('booksList', JSON.stringify(this.data));
 		this.dataSource = this.dataSourceBuilder.create(this.data);
+		this.dataSource.sort({
+			column: this.sortColumn,
+			direction: this.sortDirection,
+		});
 	}
 
 	save() {
