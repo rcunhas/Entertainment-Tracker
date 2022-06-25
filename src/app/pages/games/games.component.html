@@ -1,11 +1,13 @@
 <nb-card>
 	<nb-card-body>
 
-		<input nbInput [nbFilterInput]="dataSource" id="search" class="search-input">
+		<div style="margin-bottom: 15px;">
+			<input nbInput [nbFilterInput]="dataSource" id="search" class="search-input">
 
-		<button nbButton ghost (click)="add()"><nb-icon icon="plus-outline"></nb-icon></button>
-		<button nbButton ghost (click)="saveToLocalStorage()"><nb-icon icon="save-outline"></nb-icon></button>
-		<button nbButton ghost (click)="save()"><nb-icon icon="arrow-circle-down-outline"></nb-icon></button>
+			<button nbButton ghost (click)="add()"><nb-icon icon="plus-outline"></nb-icon></button>
+			<button nbButton ghost (click)="saveToLocalStorage()"><nb-icon icon="save-outline"></nb-icon></button>
+			<button nbButton ghost (click)="save()"><nb-icon icon="arrow-circle-down-outline"></nb-icon></button>
+		</div>
 
 		<table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)">
 
@@ -22,8 +24,8 @@
 				<td nbTreeGridCell *nbTreeGridCellDef="let row; let i = index">
 
 					<div *ngIf="column === 'Actions'">
-						<button nbButton ghost (click)="deleteEntry(i)"><nb-icon icon="trash-2-outline"></nb-icon></button>
-						<button nbButton ghost (click)="edit(i, row)"><nb-icon icon="edit-outline"></nb-icon></button>
+						<button nbButton ghost (click)="deleteEntry(row)"><nb-icon icon="trash-2-outline"></nb-icon></button>
+						<button nbButton ghost (click)="edit(row)"><nb-icon icon="edit-outline"></nb-icon></button>
 					</div>
 
 					<div *ngIf="!['checkbox', 'recommended', 'singleplayer', 'multiplayer', 'starred'].includes(column) && column != 'Actions'">

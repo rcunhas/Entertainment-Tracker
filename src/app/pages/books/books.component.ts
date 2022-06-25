@@ -109,7 +109,7 @@ export class BooksComponent implements OnInit {
 		});
 	}
 
-	edit(index: number, row: TreeNode<IBookList>) {
+	edit(row: TreeNode<IBookList>) {
 		const data = row.data;
 		this.dialogService.open(BooksEditboxDialog, {context : {
 			data: {
@@ -134,8 +134,9 @@ export class BooksComponent implements OnInit {
 		})
 	}
 
-	deleteEntry(index: number) {
-		this.data.splice(index, 1);
+	deleteEntry(row: TreeNode<IBookList>) {
+		const dataIndex = this.data.findIndex(data => data.data.name === row.data.name);
+		this.data.splice(dataIndex, 1);
 		this.saveToLocalStorage();
 	}
 

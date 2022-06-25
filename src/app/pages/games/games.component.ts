@@ -121,7 +121,7 @@ export class GamesComponent implements OnInit {
 		});
 	}
 
-	edit(index: number, row: TreeNode<IGameList>) {
+	edit(row: TreeNode<IGameList>) {
 		const data = row.data;
 		this.dialogService.open(GamesEditboxDialog, {context : {
 			data: {
@@ -149,8 +149,9 @@ export class GamesComponent implements OnInit {
 		})
 	}
 
-	deleteEntry(index: number) {
-		this.data.splice(index, 1);
+	deleteEntry(row: TreeNode<IGameList>) {
+		const dataIndex = this.data.findIndex(data => data.data.name === row.data.name);
+		this.data.splice(dataIndex, 1);
 		this.saveToLocalStorage();
 	}
 

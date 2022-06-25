@@ -114,7 +114,7 @@ export class MoviesComponent implements OnInit {
 		});
 	}
 
-	edit(index: number, row: TreeNode<IMovieList>) {
+	edit(row: TreeNode<IMovieList>) {
 		const data = row.data;
 		this.dialogService.open(MoviesEditboxDialog, {context : {
 			data: {
@@ -140,8 +140,9 @@ export class MoviesComponent implements OnInit {
 		})
 	}
 
-	deleteEntry(index: number) {
-		this.data.splice(index, 1);
+	deleteEntry(row: TreeNode<IMovieList>) {
+		const dataIndex = this.data.findIndex(data => data.data.name === row.data.name);
+		this.data.splice(dataIndex, 1);
 		this.saveToLocalStorage();
 	}
 
