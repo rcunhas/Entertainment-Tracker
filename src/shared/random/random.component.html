@@ -1,0 +1,28 @@
+<nb-card>
+	<nb-card-header style="text-align: center; font-weight: 600;">
+		Random Choice
+	</nb-card-header>
+
+	<nb-card-body>
+
+		<ng-container>
+			<h3 style="white-space: pre-line">Name</h3>
+			<p style="white-space: pre-line">{{data.name}}</p>
+		</ng-container>
+
+		<ng-container>
+			<h3 style="white-space: pre-line">Genre</h3>
+			<p style="white-space: pre-line">{{data.genre}}</p>
+		</ng-container>
+
+		<ng-container *ngIf="data.whereTo !== ''">
+			<h3 style="white-space: pre-line">Where To</h3>
+			<p style="white-space: pre-line">{{data.whereTo}}</p>
+		</ng-container>
+
+	</nb-card-body>
+
+	<nb-card-footer style="display:flex; align-items: center; justify-content: center; flex-direction: row;">
+		<button nbButton status="success" style="margin-right: 10px; align-self: center;" (click)="close()">OK</button>
+	</nb-card-footer>
+  </nb-card>

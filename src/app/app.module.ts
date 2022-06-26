@@ -17,6 +17,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { RandomDialog } from 'src/shared/random/random.component';
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -26,6 +27,7 @@ import { MatSortModule } from '@angular/material/sort';
 		BooksEditboxDialog,
  		GamesEditboxDialog,
    		MoviesEditboxDialog,
+		RandomDialog
 	],
 	imports: [
 		BrowserModule,

@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { NbDialogService } from '@nebular/theme';
 import * as saveAs from 'file-saver';
 import { IList, IMovieList } from 'src/shared/models/lists.model';
+import { randomElement } from 'src/shared/models/utils';
+import { RandomDialog } from 'src/shared/random/random.component';
 import moviesList from '../../../files/moviesList.json'
 import { MoviesEditboxDialog } from './movies-editbox/movies-editbox.component';
 
@@ -47,6 +49,21 @@ export class MoviesComponent implements AfterViewInit {
 		if (this.dataSource.paginator) {
 		  this.dataSource.paginator.firstPage();
 		}
+	}
+
+	randomizeEntry(forMe: boolean, starred: boolean = false) {
+		let filteredEntries = starred ? this.dataSource.data.filter(data => data.starred) : this.dataSource.filteredData;
+		filteredEntries = forMe ? filteredEntries : filteredEntries.filter(data => data.watchWithGF);
+		const element = randomElement(filteredEntries);
+		this.dialogService.open(RandomDialog, {
+			context: {
+				data: {
+					name: element.name,
+					genre: this.getValue(element, 'genre'),
+					whereTo: this.getValue(element, 'whereToStream'),
+				}
+			}
+		});
 	}
 
 	getValue(row: IList, column: string) {

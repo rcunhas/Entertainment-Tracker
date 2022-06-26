@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { NbDialogService } from '@nebular/theme';
 import * as saveAs from 'file-saver';
 import { IBookList, IList } from 'src/shared/models/lists.model';
+import { randomElement } from 'src/shared/models/utils';
+import { RandomDialog } from 'src/shared/random/random.component';
 import booksList from '../../../files/booksList.json'
 import { BooksEditboxDialog } from './books-editbox/books-editbox.component';
 
@@ -46,6 +48,20 @@ export class BooksComponent implements AfterViewInit {
 		if (this.dataSource.paginator) {
 		  this.dataSource.paginator.firstPage();
 		}
+	}
+
+	randomizeEntry(starred: boolean) {
+		let filteredEntries = starred ? this.dataSource.data.filter(data => data.starred) : this.dataSource.filteredData;
+		const element = randomElement(filteredEntries);
+		this.dialogService.open(RandomDialog, {
+			context: {
+				data: {
+					name: element.name,
+					genre: this.getValue(element, 'genre'),
+					whereTo: element.author,
+				}
+			}
+		});
 	}
 
 	getValue(row: IList, column: string) {

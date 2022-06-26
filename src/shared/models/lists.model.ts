@@ -30,7 +30,7 @@ export interface IMovieList extends IList {
 
 export const BOOK_GENRES = ['Action and Adventure', 'Classic', 'Comic Book or Manga', 'Drama', 'Fantasy', 'Fiction', 'Horror', 'Mystery', 'Post-Apocalyptic', 'Romance', 'Sci-Fi', 'Short Stories', 'Thriller', 'History', 'True Crime', 'Cyberpunk']
 
-export const WHERE_TO_PLAY = ['Ubisoft', 'EA', 'Game Pass', 'Steam', 'Epic', 'Battle.net', 'Fitgirl'];
+export const WHERE_TO_PLAY = ['Ubisoft', 'EA', 'Game Pass', 'Steam', 'Epic', 'Battle.net', 'Fitgirl', 'PS5'];
 
 export const GAME_GENRES = ['Action', 'Action RPG', 'Adventure', 'Arcade', "Beat'em Up", 'City Building', 'Co-op', 'Horror', 'Hack and Slash', 'Open World', 'Other', 'Platform', 'Puzzle', 'Racing', 'Roguelike', 'RTS', 'RPG', 'Shooter', 'Simulation', 'Sports', 'Strategy', 'Survival', 'Soulslike', 'TD', 'Turn Based', 'Cyberpunk', 'Japanese', 'Story Rich', 'Zombies'];
 

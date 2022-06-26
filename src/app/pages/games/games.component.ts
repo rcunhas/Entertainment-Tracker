@@ -8,6 +8,8 @@ import { GamesEditboxDialog } from './games-editbox/games-editbox.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { randomElement } from 'src/shared/models/utils';
+import { RandomDialog } from 'src/shared/random/random.component';
 
 @Component({
 	selector: 'app-games',
@@ -47,6 +49,21 @@ export class GamesComponent implements AfterViewInit  {
 		if (this.dataSource.paginator) {
 		  this.dataSource.paginator.firstPage();
 		}
+	}
+
+	randomizeEntry(forMe: boolean, starred: boolean = false) {
+		let filteredEntries = starred ? this.dataSource.data.filter(data => data.starred) : this.dataSource.filteredData;
+		filteredEntries = forMe ? filteredEntries : filteredEntries.filter(data => data.recommended);
+		const element = randomElement(filteredEntries);
+		this.dialogService.open(RandomDialog, {
+			context: {
+				data: {
+					name: element.name,
+					genre: this.getValue(element, 'genre'),
+					whereTo: this.getValue(element, 'whereToPlay'),
+				}
+			}
+		});
 	}
 
 	getValue(row: IGameList, column: string) {
