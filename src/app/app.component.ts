@@ -13,4 +13,10 @@ export class AppComponent {
 	sideBarState: NbSidebarState = SidebarState.EXPANDED;
 	menuItems : NbMenuItem[] = MENU_ITEMS;
 
+	expanded: boolean = true;
+
+	toggleMenu() {
+		this.expanded = !this.expanded;
+		this.sideBarState = this.expanded ? SidebarState.EXPANDED : SidebarState.COMPACTED;
+	}
 }

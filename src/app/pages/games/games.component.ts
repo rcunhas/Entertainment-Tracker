@@ -147,6 +147,7 @@ export class GamesComponent implements AfterViewInit  {
 
 	saveToLocalStorage() {
 		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name));
+		this.applyFilter('');
 		this.dataSource = new MatTableDataSource(this.data);
 		localStorage.setItem('gamesList', JSON.stringify(this.data));
 	}

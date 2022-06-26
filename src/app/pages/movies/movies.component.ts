@@ -137,6 +137,7 @@ export class MoviesComponent implements AfterViewInit {
 
 	saveToLocalStorage() {
 		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name));
+		this.applyFilter('');
 		this.dataSource = new MatTableDataSource(this.data);
 		localStorage.setItem('moviesList', JSON.stringify(this.data));
 	}

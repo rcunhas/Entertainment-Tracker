@@ -1,23 +1,22 @@
-<nb-layout>
+<body>
+	<nb-layout withScroll="false">
 
-	<nb-sidebar [state]="sideBarState">
-		<nb-menu tag="menu" [items]="menuItems"></nb-menu>
-	</nb-sidebar>
+		<nb-layout-header fixed >
+			<button nbButton ghost (click)="toggleMenu()"><nb-icon icon="menu-outline"></nb-icon></button>
+			<p style="padding-left: 20px;">
+				Entertainment Tracker
+			</p>
+		</nb-layout-header>
 
-	<nb-layout-header subheader>
-		Entertainment Tracker
-	</nb-layout-header>
+		<nb-sidebar [state]="sideBarState">
+			<nb-menu tag="menu" [items]="menuItems"></nb-menu>
+		</nb-sidebar>
 
-	<nb-layout-column>
+		<nb-layout-column style="max-height: 75%;">
 
-		<router-outlet></router-outlet>
+			<router-outlet></router-outlet>
 
-	</nb-layout-column>
+		</nb-layout-column>
+	</nb-layout>
+</body>
 
-	<nb-layout-footer fixed>
-		<p>
-			Created by <em>Rodrigo Cunha</em>
-		</p>
-	</nb-layout-footer>
-
-</nb-layout>
