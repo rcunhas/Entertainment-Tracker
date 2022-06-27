@@ -148,8 +148,11 @@ export class BooksComponent implements AfterViewInit {
 
 	saveToLocalStorage() {
 		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name));
+		this.dataSource.data = this.data;
 		this.applyFilter('');
-		this.dataSource = new MatTableDataSource(this.data);
+		if (this.dataSource.paginator) {
+			this.dataSource.paginator.firstPage();
+		}
 		localStorage.setItem('booksList', JSON.stringify(this.data));
 	}
 
