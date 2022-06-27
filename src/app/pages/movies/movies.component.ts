@@ -22,7 +22,7 @@ export class MoviesComponent implements AfterViewInit {
 
 	data : IMovieList[] = []
 
-	allColumns: string[] = [ 'Actions', 'name', 'score', 'whereToStream', 'genre', 'watchWithGF', 'checkbox', 'starred'];
+	allColumns: string[] = [ 'Actions', 'name', 'score', 'whereToStream', 'genre', 'movie', 'watchWithGF', 'checkbox', 'starred'];
 
 	dataSource: MatTableDataSource<IMovieList>;
 
@@ -75,6 +75,10 @@ export class MoviesComponent implements AfterViewInit {
 			}
 			return value;
 		}
+
+		if (column === 'movie') {
+			return columnData ? 'Movie' : 'Series';
+		}
 		return columnData === -1 ? '-' : columnData;
 	}
 
@@ -94,6 +98,8 @@ export class MoviesComponent implements AfterViewInit {
 				return 'Starred';
 			case 'checkbox':
 				return 'Watched';
+			case 'movie':
+				return 'Movie or Series';
 			default:
 				return column;
 		}
@@ -108,6 +114,7 @@ export class MoviesComponent implements AfterViewInit {
 					watchWithGF: false,
 					whereToStream: [],
 					genre: [],
+					movie: false,
 					checkbox: false,
 					starred: false,
 				}
@@ -131,6 +138,7 @@ export class MoviesComponent implements AfterViewInit {
 				watchWithGF: data.watchWithGF,
 				whereToStream: data.whereToStream,
 				genre: data.genre,
+				movie: data.movie,
 				checkbox: data.checkbox,
 				starred: data.starred,
 			}

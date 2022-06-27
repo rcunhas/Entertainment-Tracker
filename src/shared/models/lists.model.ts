@@ -24,6 +24,7 @@ export interface IGameList extends IList {
 
 export interface IMovieList extends IList {
 	whereToStream: string[];
+	movie: boolean;
 	genre: string[];
 	watchWithGF: boolean;
 }
@@ -34,6 +35,6 @@ export const WHERE_TO_PLAY = ['Ubisoft', 'EA', 'Game Pass', 'Steam', 'Epic', 'Ba
 
 export const GAME_GENRES = ['Action', 'Action RPG', 'Adventure', 'Arcade', "Beat'em Up", 'City Building', 'Co-op', 'Horror', 'Hack and Slash', 'Open World', 'Other', 'Platform', 'Puzzle', 'Racing', 'Roguelike', 'RTS', 'RPG', 'Shooter', 'Simulation', 'Sports', 'Strategy', 'Survival', 'Soulslike', 'TD', 'Turn Based', 'Cyberpunk', 'Japanese', 'Story Rich', 'Zombies'];
 
-export const WHERE_TO_STREAM = ['Netflix', 'Prime Video', 'HBO Max', 'Disney+', 'Crunchyroll'];
+export const WHERE_TO_STREAM = ['Netflix', 'Prime Video', 'HBO Max', 'Disney+', 'Crunchyroll', 'Pirate Bay'];
 
-export const MOVIE_GENRES = ['Action', 'Anime', 'Asian', 'Comedy', 'Drama', 'Fantasy', 'Horror', 'Kids', 'Movie', 'Mystery', 'Reality TV', 'Police', 'Marvel', 'STAR WARS', 'Pixar', 'Romance', 'Sci-Fi', 'Sports', 'Teen', 'Thriller', 'TV Show']
+export const MOVIE_GENRES = ['Action', 'Anime', 'Asian', 'Comedy', 'Drama', 'Fantasy', 'Horror', 'Kids', 'Mystery', 'Reality TV', 'Police', 'Marvel', 'STAR WARS', 'Pixar', 'Romance', 'Sci-Fi', 'Sports', 'Teen', 'Thriller']

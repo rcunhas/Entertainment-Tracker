@@ -17,6 +17,7 @@ export class MoviesEditboxDialog implements OnInit {
 	scoreControl!: FormControl;
 	genreControl!: FormControl;
 	streamControl!: FormControl;
+	movieControl!: FormControl;
 	watchWithControl!: FormControl;
 	checkboxControl!: FormControl;
 	starredControl!: FormControl;
@@ -35,6 +36,7 @@ export class MoviesEditboxDialog implements OnInit {
 		this.scoreControl = new FormControl(this.data?.score || -1, Validators.compose([Validators.min(-1), Validators.max(10), Validators.required]));
 		this.genreControl = new FormControl(this.data?.genre || [], Validators.required);
 		this.streamControl = new FormControl(this.data?.whereToStream || [], Validators.required);
+		this.movieControl = new FormControl(this.data?.movie || false);
 		this.watchWithControl = new FormControl(this.data?.watchWithGF || false);
 		this.checkboxControl = new FormControl(this.data?.checkbox || false);
 		this.starredControl = new FormControl(this.data?.starred || false);
@@ -52,6 +54,7 @@ export class MoviesEditboxDialog implements OnInit {
 		this.data.genre = this.genreControl.value;
 		this.data.whereToStream = this.streamControl.value;
 		this.data.checkbox = this.checkboxControl.value;
+		this.data.movie = this.movieControl.value;
 		this.data.watchWithGF = this.watchWithControl.value;
 		this.data.starred = this.starredControl.value;
 

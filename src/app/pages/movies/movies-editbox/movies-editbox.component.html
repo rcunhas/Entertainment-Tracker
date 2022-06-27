@@ -29,7 +29,14 @@
 			<nb-option *ngFor="let genre of movieGenres" [value]="genre">{{genre}}</nb-option>
 		</nb-select>
 		<br>
+		<br>
 
+		<label>Movie</label>
+		<br>
+		<br>
+		<nb-checkbox [formControl]="movieControl" style="margin-top: 20px;"></nb-checkbox>
+
+		<br>
 		<br>
 
 		<label>Watch With GF</label>
