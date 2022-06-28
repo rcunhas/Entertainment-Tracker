@@ -37,4 +37,4 @@ export const GAME_GENRES = ['Action', 'Action RPG', 'Adventure', 'Arcade', "Beat
 
 export const WHERE_TO_STREAM = ['Netflix', 'Prime Video', 'HBO Max', 'Disney+', 'Crunchyroll', 'Pirate Bay'];
 
-export const MOVIE_GENRES = ['Action', 'Anime', 'Asian', 'Comedy', 'Drama', 'Fantasy', 'Horror', 'Kids', 'Mystery', 'Reality TV', 'Police', 'Marvel', 'STAR WARS', 'Pixar', 'Romance', 'Sci-Fi', 'Sports', 'Teen', 'Thriller']
+export const MOVIE_GENRES = ['Action', 'Anime', 'Animation', 'Asian', 'Comedy', 'Drama', 'Fantasy', 'Horror', 'Kids', 'Mystery', 'Musical', 'Reality TV', 'Police', 'Marvel', 'Spy', 'Super Hero', 'STAR WARS', 'Pixar', 'Romance', 'Sci-Fi', 'Sports', 'Teen', 'Thriller']
