@@ -51,8 +51,8 @@ export class MoviesEditboxDialog implements OnInit {
 
 		this.data.name = this.nameControl.value;
 		this.data.score = this.scoreControl.value;
-		this.data.genre = this.genreControl.value;
-		this.data.whereToStream = this.streamControl.value;
+		this.data.genre = (this.genreControl.value as any[]).sort((a,b) => a.localeCompare(b));
+		this.data.whereToStream = (this.streamControl.value as any[]).sort((a,b) => a.localeCompare(b));
 		this.data.checkbox = this.checkboxControl.value;
 		this.data.movie = this.movieControl.value;
 		this.data.watchWithGF = this.watchWithControl.value;

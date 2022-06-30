@@ -46,7 +46,7 @@ export class BooksEditboxDialog implements OnInit {
 		this.data.name = this.nameControl.value;
 		this.data.score = this.scoreControl.value;
 		this.data.author = this.authorControl.value;
-		this.data.genre = this.genreControl.value;
+		this.data.genre = (this.genreControl.value as any[]).sort((a,b) => a.localeCompare(b));
 		this.data.checkbox = this.checkboxControl.value;
 		this.data.starred = this.starredControl.value;
 

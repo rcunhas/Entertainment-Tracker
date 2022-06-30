@@ -53,8 +53,8 @@ export class GamesEditboxDialog implements OnInit {
 
 		this.data.name = this.nameControl.value;
 		this.data.score = this.scoreControl.value;
-		this.data.genre = this.genreControl.value;
-		this.data.whereToPlay = this.playControl.value;
+		this.data.genre = (this.genreControl.value as any[]).sort((a,b) => a.localeCompare(b));
+		this.data.whereToPlay = (this.playControl.value as any[]).sort((a,b) => a.localeCompare(b));
 		this.data.checkbox = this.checkboxControl.value;
 		this.data.singleplayer = this.singleControl.value;
 		this.data.multiplayer = this.multiControl.value;
