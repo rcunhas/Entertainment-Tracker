@@ -1,4 +1,5 @@
 export interface IList {
+	id: number;
 	checkbox: boolean;
 	name: string;
 	score: number;

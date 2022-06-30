@@ -33,7 +33,7 @@ export class BooksComponent implements AfterViewInit {
 	) {
 		const storage = localStorage.getItem('booksList');
 		this.data = (storage !== null ? JSON.parse(storage) : booksList) as IBookList[];
-		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name));
+		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name)).map((a, index) => { a.id = index; return a;});
 		this.dataSource = new MatTableDataSource(this.data);
 	}
 
@@ -99,6 +99,7 @@ export class BooksComponent implements AfterViewInit {
 		this.dialogService.open(BooksEditboxDialog, {
 			context: {
 				data : {
+					id: this.data.length,
 					name: '',
 					author: '',
 					score:  -1,
@@ -121,6 +122,7 @@ export class BooksComponent implements AfterViewInit {
 		const data = row;
 		this.dialogService.open(BooksEditboxDialog, {context : {
 			data: {
+				id: row.id,
 				name: data.name,
 				author: data.author,
 				score:  data.score,
@@ -133,21 +135,18 @@ export class BooksComponent implements AfterViewInit {
 				return;
 			}
 
-			const dataIndex = this.data.findIndex(data => data.name === row.name);
-
-			this.data[dataIndex] = res as IBookList;
+			this.data[row.id] = res as IBookList;
 			this.saveToLocalStorage();
 		})
 	}
 
 	deleteEntry(row: IBookList) {
-		const dataIndex = this.data.findIndex(data => data.name === row.name);
-		this.data.splice(dataIndex, 1);
+		this.data.splice(row.id, 1);
 		this.saveToLocalStorage();
 	}
 
 	saveToLocalStorage() {
-		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name));
+		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name)).map((a, index) => { a.id = index; return a;});
 		this.dataSource.data = this.data;
 		this.applyFilter('');
 		if (this.dataSource.paginator) {
