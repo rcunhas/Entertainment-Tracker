@@ -10,6 +10,8 @@ import { RandomDialog } from 'src/shared/random/random.component';
 import booksList from '../../../files/booksList.json'
 import { BooksEditboxDialog } from './books-editbox/books-editbox.component';
 
+import * as uuid from 'uuid';
+
 @Component({
 	selector: 'app-books',
 	templateUrl: './books.component.html',
@@ -34,8 +36,9 @@ export class BooksComponent implements AfterViewInit {
 	) {
 		const storage = localStorage.getItem('booksList');
 		this.data = (storage !== null ? JSON.parse(storage) : booksList) as IBookList[];
-		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name)).map((a, index) => { a.id = index; return a;});
+		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name));
 		this.dataSource = new MatTableDataSource(this.data);
+		this.saveToLocalStorage();
 	}
 
 	ngAfterViewInit() {
@@ -100,7 +103,7 @@ export class BooksComponent implements AfterViewInit {
 		this.dialogService.open(BooksEditboxDialog, {
 			context: {
 				data : {
-					id: this.data.length,
+					id: uuid.v4(),
 					name: '',
 					author: '',
 					score:  -1,
@@ -143,18 +146,21 @@ export class BooksComponent implements AfterViewInit {
 				return;
 			}
 
-			this.data[row.id] = res as IBookList;
+			const index = this.data.findIndex(entry => entry.id = data.id);
+
+			this.data[index] = res as IBookList;
 			this.saveToLocalStorage();
 		})
 	}
 
 	deleteEntry(row: IBookList) {
-		this.data.splice(row.id, 1);
+		const index = this.data.findIndex(entry => entry.id = row.id);
+		this.data.splice(index, 1);
 		this.saveToLocalStorage();
 	}
 
 	saveToLocalStorage() {
-		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name)).map((a, index) => { a.id = index; return a;});
+		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name));
 		this.dataSource.data = this.data;
 		this.applyFilter('');
 		if (this.dataSource.paginator) {

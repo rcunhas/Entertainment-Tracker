@@ -11,6 +11,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { randomElement } from 'src/shared/models/utils';
 import { RandomDialog } from 'src/shared/random/random.component';
 
+import * as uuid from 'uuid';
+
 @Component({
 	selector: 'app-games',
 	templateUrl: './games.component.html',
@@ -35,8 +37,9 @@ export class GamesComponent implements AfterViewInit  {
 	) {
 		const storage = localStorage.getItem('gamesList');
 		this.data = (storage !== null ? JSON.parse(storage) : gamesList) as IGameList[];
-		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name)).map((a, index) => { a.id = index; return a;});
+		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name));
 		this.dataSource = new MatTableDataSource(this.data);
+		this.saveToLocalStorage();
 	}
 
 	ngAfterViewInit() {
@@ -110,7 +113,7 @@ export class GamesComponent implements AfterViewInit  {
 		this.dialogService.open(GamesEditboxDialog, {
 			context: {
 				data : {
-					id: this.data.length,
+					id: uuid.v4(),
 					name: '',
 					score:  -1,
 					singleplayer: false,
@@ -159,18 +162,21 @@ export class GamesComponent implements AfterViewInit  {
 				return;
 			}
 
-			this.data[row.id] = res as IGameList;
+			const index = this.data.findIndex(entry => entry.id = res.id);
+
+			this.data[index] = res as IGameList;
 			this.saveToLocalStorage();
 		})
 	}
 
 	deleteEntry(row: IGameList) {
-		this.data.splice(row.id, 1);
+		const index = this.data.findIndex(entry => entry.id = row.id);
+		this.data.splice(index, 1);
 		this.saveToLocalStorage();
 	}
 
 	saveToLocalStorage() {
-		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name)).map((a, index) => { a.id = index; return a;});
+		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name));
 		this.dataSource.data = this.data;
 		this.applyFilter('');
 		if (this.dataSource.paginator) {
