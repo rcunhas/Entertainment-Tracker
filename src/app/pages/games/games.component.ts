@@ -39,7 +39,6 @@ export class GamesComponent implements AfterViewInit  {
 		this.data = (storage !== null ? JSON.parse(storage) : gamesList) as IGameList[];
 		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name));
 		this.dataSource = new MatTableDataSource(this.data);
-		this.saveToLocalStorage();
 	}
 
 	ngAfterViewInit() {
@@ -130,7 +129,7 @@ export class GamesComponent implements AfterViewInit  {
 				return;
 			}
 
-			const index = this.data.findIndex(entry => entry.name = res.name);
+			const index = this.data.findIndex(entry => entry.name === res.name);
 
 			if (index !== -1) {
 				this.toastrService.danger('Entry already exists with the same name', 'Name Control', { position: NbGlobalPhysicalPosition.BOTTOM_RIGHT })
@@ -162,7 +161,7 @@ export class GamesComponent implements AfterViewInit  {
 				return;
 			}
 
-			const index = this.data.findIndex(entry => entry.id = res.id);
+			const index = this.data.findIndex(entry => entry.id === res.id);
 
 			this.data[index] = res as IGameList;
 			this.saveToLocalStorage();
@@ -170,7 +169,7 @@ export class GamesComponent implements AfterViewInit  {
 	}
 
 	deleteEntry(row: IGameList) {
-		const index = this.data.findIndex(entry => entry.id = row.id);
+		const index = this.data.findIndex(entry => entry.id === row.id);
 		this.data.splice(index, 1);
 		this.saveToLocalStorage();
 	}

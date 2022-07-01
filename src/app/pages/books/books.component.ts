@@ -38,7 +38,6 @@ export class BooksComponent implements AfterViewInit {
 		this.data = (storage !== null ? JSON.parse(storage) : booksList) as IBookList[];
 		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name));
 		this.dataSource = new MatTableDataSource(this.data);
-		this.saveToLocalStorage();
 	}
 
 	ngAfterViewInit() {
@@ -117,7 +116,7 @@ export class BooksComponent implements AfterViewInit {
 				return;
 			}
 
-			const index = this.data.findIndex(entry => entry.name = res.name);
+			const index = this.data.findIndex(entry => entry.name === res.name);
 
 			if (index !== -1) {
 				this.toastrService.danger('Entry already exists with the same name', 'Name Control', { position: NbGlobalPhysicalPosition.BOTTOM_RIGHT })
@@ -146,7 +145,7 @@ export class BooksComponent implements AfterViewInit {
 				return;
 			}
 
-			const index = this.data.findIndex(entry => entry.id = data.id);
+			const index = this.data.findIndex(entry => entry.id === data.id);
 
 			this.data[index] = res as IBookList;
 			this.saveToLocalStorage();
@@ -154,7 +153,7 @@ export class BooksComponent implements AfterViewInit {
 	}
 
 	deleteEntry(row: IBookList) {
-		const index = this.data.findIndex(entry => entry.id = row.id);
+		const index = this.data.findIndex(entry => entry.id === row.id);
 		this.data.splice(index, 1);
 		this.saveToLocalStorage();
 	}
