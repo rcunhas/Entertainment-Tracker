@@ -118,6 +118,8 @@ export const MOVIE_GENRES = [
 	'Reality TV',
 	'Police',
 	'Marvel',
+	'Magic',
+	'Supernatural',
 	'Spy',
 	'Super Hero',
 	'Zombies',

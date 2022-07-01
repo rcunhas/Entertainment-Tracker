@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { NbDialogService } from '@nebular/theme';
+import { NbDialogService, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
 import * as saveAs from 'file-saver';
 import gamesList from '../../../files/gamesList.json'
 
@@ -31,6 +31,7 @@ export class GamesComponent implements AfterViewInit  {
 
 	constructor(
 		private dialogService: NbDialogService,
+		private toastrService: NbToastrService,
 	) {
 		const storage = localStorage.getItem('gamesList');
 		this.data = (storage !== null ? JSON.parse(storage) : gamesList) as IGameList[];
@@ -123,6 +124,13 @@ export class GamesComponent implements AfterViewInit  {
 			}
 		}).onClose.subscribe(res => {
 			if (!res) {
+				return;
+			}
+
+			const index = this.data.findIndex(entry => entry.name = res.name);
+
+			if (index !== -1) {
+				this.toastrService.danger('Entry already exists with the same name', 'Name Control', { position: NbGlobalPhysicalPosition.BOTTOM_RIGHT })
 				return;
 			}
 

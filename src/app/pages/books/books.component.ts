@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { NbDialogService } from '@nebular/theme';
+import { NbDialogService, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
 import * as saveAs from 'file-saver';
 import { IBookList, IList } from 'src/shared/models/lists.model';
 import { randomElement } from 'src/shared/models/utils';
@@ -30,6 +30,7 @@ export class BooksComponent implements AfterViewInit {
 
 	constructor(
 		private dialogService: NbDialogService,
+		private toastrService: NbToastrService,
 	) {
 		const storage = localStorage.getItem('booksList');
 		this.data = (storage !== null ? JSON.parse(storage) : booksList) as IBookList[];
@@ -110,6 +111,13 @@ export class BooksComponent implements AfterViewInit {
 			}
 		}).onClose.subscribe(res => {
 			if (!res) {
+				return;
+			}
+
+			const index = this.data.findIndex(entry => entry.name = res.name);
+
+			if (index !== -1) {
+				this.toastrService.danger('Entry already exists with the same name', 'Name Control', { position: NbGlobalPhysicalPosition.BOTTOM_RIGHT })
 				return;
 			}
 
