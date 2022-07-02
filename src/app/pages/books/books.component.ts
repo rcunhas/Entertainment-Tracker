@@ -90,7 +90,7 @@ export class BooksComponent implements AfterViewInit {
 			case 'genre':
 				return 'Genre';
 			case 'starred':
-				return 'Starred';
+				return 'Star';
 			case 'checkbox':
 				return 'Read';
 			default:

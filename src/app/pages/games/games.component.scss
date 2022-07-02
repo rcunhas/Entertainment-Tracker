@@ -41,6 +41,17 @@ mat-header-cell {
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 	font-size: 14px;
 	font-weight: bold;
+	Word-wrap: break-Word !important;
+	white-space: unset !important;
+	overflow-wrap: break-Word;
+	Word-wrap: break-Word;
+
+	Word-break: break-Word;
+
+	-ms-hyphens: auto;
+	-moz-hyphens: auto;
+	-webkit-hyphens: auto;
+	hyphens: auto;
 }
 
 mat-paginator {

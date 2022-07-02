@@ -92,15 +92,15 @@ export class GamesComponent implements AfterViewInit  {
 			case 'genre':
 				return 'Genre';
 			case 'whereToPlay':
-				return 'Where To Play';
+				return 'Play On';
 			case 'singleplayer':
-				return 'SinglePlayer';
+				return 'Single Player';
 			case 'multiplayer':
-				return 'MultiPlayer';
+				return 'Multi Player';
 			case 'recommended':
-				return 'Recommended';
+				return 'GF';
 			case 'starred':
-				return 'Starred';
+				return 'Star';
 			case 'checkbox':
 				return 'Played';
 			default:

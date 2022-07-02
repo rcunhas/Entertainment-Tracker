@@ -93,15 +93,15 @@ export class MoviesComponent implements AfterViewInit {
 			case 'genre':
 				return 'Genre';
 			case 'whereToStream':
-				return 'Where To Stream';
+				return 'Stream On';
 			case 'watchWithGF':
-				return 'Watch With GF';
+				return 'GF';
 			case 'starred':
-				return 'Starred';
+				return 'Star';
 			case 'checkbox':
 				return 'Watched';
 			case 'movie':
-				return 'Movie or Series';
+				return 'Type';
 			default:
 				return column;
 		}
