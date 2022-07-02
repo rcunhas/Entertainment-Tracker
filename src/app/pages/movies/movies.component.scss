@@ -2,6 +2,50 @@ table {
 	width: 100%;
 }
 
+.search-input {
+	width: 200px;
+}
+
+.score-select ::ng-deep {
+	margin-left: 15px;
+	.select-button {
+		min-width: 125px;
+		max-width: 125px;
+	}
+
+	Word-wrap: break-Word !important;
+	white-space: unset !important;
+	overflow-wrap: break-Word;
+	Word-wrap: break-Word;
+
+	Word-break: break-Word;
+
+	-ms-hyphens: auto;
+	-moz-hyphens: auto;
+	-webkit-hyphens: auto;
+	hyphens: auto;
+}
+
+nb-select ::ng-deep {
+	margin-left: 15px;
+	.select-button {
+		min-width: 175px;
+		max-width: 175px;
+	}
+
+	Word-wrap: break-Word !important;
+	white-space: unset !important;
+	overflow-wrap: break-Word;
+	Word-wrap: break-Word;
+
+	Word-break: break-Word;
+
+	-ms-hyphens: auto;
+	-moz-hyphens: auto;
+	-webkit-hyphens: auto;
+	hyphens: auto;
+}
+
 .mat-form-field {
 	font-size: 14px;
 	width: 100%;

@@ -18,6 +18,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { RandomDialog } from 'src/shared/random/random.component';
+import { MatOptionModule } from '@angular/material/core';
+import { CommonModule } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
+
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -25,15 +29,15 @@ import { RandomDialog } from 'src/shared/random/random.component';
 		MoviesComponent,
 		BooksComponent,
 		BooksEditboxDialog,
- 		GamesEditboxDialog,
-   		MoviesEditboxDialog,
+		GamesEditboxDialog,
+		MoviesEditboxDialog,
 		RandomDialog
 	],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
 		BrowserAnimationsModule,
-		NbThemeModule.forRoot({name: 'dark'}),
+		NbThemeModule.forRoot({ name: 'dark' }),
 		NbSidebarModule.forRoot(),
 		NbMenuModule.forRoot(),
 		NbDialogModule.forRoot(),
@@ -47,13 +51,15 @@ import { RandomDialog } from 'src/shared/random/random.component';
 		NbInputModule,
 		NbSelectModule,
 		NbCheckboxModule,
-		FormsModule,
-		FormsModule,
-		ReactiveFormsModule,
 		MatTableModule,
-		MatFormFieldModule,
 		MatPaginatorModule,
 		MatSortModule,
+		MatOptionModule,
+		CommonModule,
+		FormsModule,
+		MatFormFieldModule,
+		ReactiveFormsModule,
+		MatInputModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent]

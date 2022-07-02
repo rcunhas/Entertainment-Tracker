@@ -6,13 +6,75 @@
 			<input nbInput [ngModel]="globalFilter" (ngModelChange)="applyFilter($event)"
                     [ngModelOptions]="{standalone: true}" id="search" class="search-input" #input>
 
+			<nb-select multiple placeholder="Score" [formControl]="scoreControl" class="score-select">
+				<nb-option [value]="null">Clear</nb-option>
+				<nb-option *ngFor="let score of [
+					{type: '\<', text: '-7', predicate: 7},
+					{type: '\>=', text: '7', predicate: 7},
+					{type: '\>=', text: '8', predicate: 8},
+					{type: '\>=', text: '9', predicate: 9},
+					{type: '\==', text: '10', predicate: 10},
+				]"
+				[value]="score">{{score.text}}</nb-option>
+			</nb-select>
+
+			<nb-select multiple placeholder="Where" [formControl]="whereControl">
+				<nb-option [value]="null">Clear</nb-option>
+				<nb-option *ngFor="let where of whereToPlay"
+				[value]="where">{{where}}</nb-option>
+			</nb-select>
+
+			<nb-select multiple placeholder="Genre" [formControl]="genreControl">
+				<nb-option [value]="null">Clear</nb-option>
+				<nb-option *ngFor="let genre of gameGenres"
+				[value]="genre">{{genre}}</nb-option>
+			</nb-select>
+
+			<nb-select placeholder="Players" [formControl]="singleControl" class="score-select">
+				<nb-option [value]="null">Clear</nb-option>
+				<nb-option *ngFor="let type of [
+					{value: true , text: 'SinglePlayer'},
+					{value: false , text: 'MultiPlayer'},
+				]"
+				[value]="type.value">{{type.text}}</nb-option>
+			</nb-select>
+
+			<nb-select placeholder="GF" [formControl]="recommendedControl" class="score-select">
+				<nb-option [value]="null">Clear</nb-option>
+				<nb-option *ngFor="let type of [
+					{value: true , text: 'Yes'},
+					{value: false , text: 'No'},
+				]"
+				[value]="type.value">{{type.text}}</nb-option>
+			</nb-select>
+
+			<nb-select placeholder="Played" [formControl]="playedControl" class="score-select">
+				<nb-option [value]="null">Clear</nb-option>
+				<nb-option *ngFor="let type of [
+					{value: true , text: 'Yes'},
+					{value: false , text: 'No'},
+				]"
+				[value]="type.value">{{type.text}}</nb-option>
+			</nb-select>
+
+			<nb-select placeholder="Starred" [formControl]="starredControl" class="score-select">
+				<nb-option [value]="null">Clear</nb-option>
+				<nb-option *ngFor="let type of [
+					{value: true , text: 'Yes'},
+					{value: false , text: 'No'},
+				]"
+				[value]="type.value">{{type.text}}</nb-option>
+			</nb-select>
+
+		</div>
+
+		<div style="margin-bottom: 15px;">
 			<button nbButton ghost (click)="add()"><nb-icon icon="plus-outline"></nb-icon></button>
 			<button nbButton ghost (click)="saveToLocalStorage()"><nb-icon icon="save-outline"></nb-icon></button>
 			<button nbButton ghost (click)="save()"><nb-icon icon="arrow-circle-down-outline"></nb-icon></button>
 			<button nbButton ghost (click)="randomizeEntry(true)"><nb-icon icon="shuffle-2-outline"></nb-icon></button>
 			<button nbButton ghost (click)="randomizeEntry(false)"><nb-icon icon="heart-outline"></nb-icon></button>
 			<button nbButton ghost (click)="randomizeEntry(true, true)"><nb-icon icon="star-outline"></nb-icon></button>
-
 		</div>
 
 		<mat-paginator
