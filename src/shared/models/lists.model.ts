@@ -52,12 +52,17 @@ export const BOOK_GENRES = [
 export const WHERE_TO_PLAY = [
 	'Ubisoft',
 	'EA',
+	'Emu XBOX',
+	'Emu PS2',
+	'Emu Nintendo',
 	'Game Pass',
 	'Steam',
 	'Epic',
+	'DODI',
 	'Battle.net',
 	'Fitgirl',
-	'PS5'
+	'PS5',
+	'Pirate Bay'
 ].sort((a,b) => a.localeCompare(b));
 
 export const GAME_GENRES = [
@@ -109,7 +114,8 @@ export const WHERE_TO_STREAM = [
 	'HBO Max',
 	'Disney+',
 	'Crunchyroll',
-	'Pirate Bay'
+	'Pirate Bay',
+	'Globo Play'
 ].sort((a,b) => a.localeCompare(b));
 
 export const MOVIE_GENRES = [

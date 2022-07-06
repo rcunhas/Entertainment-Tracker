@@ -173,8 +173,8 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 			if (this.globalFilter) {
 				const lowerCaseFilter = this.globalFilter.trim().toLowerCase();
 				const nameIncludes = data.name != '' && data.name.toLowerCase().includes(lowerCaseFilter);
-				const whereIncludes = data.whereToPlay != [] && data.whereToPlay.filter(entry => entry.toLocaleLowerCase().includes(lowerCaseFilter)).length > 0;
-				const genreIncludes = data.genre != [] && data.genre.filter(entry => entry.toLocaleLowerCase().includes(lowerCaseFilter)).length > 0;
+				const whereIncludes = data.whereToPlay != [] && data.whereToPlay.some(entry => entry.toLocaleLowerCase().includes(lowerCaseFilter));
+				const genreIncludes = data.genre != [] && data.genre.some(entry => entry.toLocaleLowerCase().includes(lowerCaseFilter));
 
 				globalMatch = nameIncludes || whereIncludes || genreIncludes;
 			}

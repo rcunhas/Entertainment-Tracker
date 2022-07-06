@@ -154,26 +154,26 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 			const hasGenre = genre ? data.genre.filter(entry => genre.includes(entry)).length > 0 : true;
 
 			const type = parsedSearch.type;
-			const hasSingle = type !== null ? data.movie === type : true;
+			const hasType = type !== null ? data.movie === type : true;
 
 			const recommended = parsedSearch.recommended;
 			const hasRecommended = recommended !== null ? data.watchWithGF === recommended : true;
 
-			const played = parsedSearch.played;
-			const hasPlayed = played !== null ? data.checkbox === played : true;
+			const watched = parsedSearch.watched;
+			const hasWatched = watched !== null ? data.checkbox === watched : true;
 
 			const starred = parsedSearch.starred;
 			const hasStarred = starred !== null ? data.starred === starred : true;
 
-			let selectMatch = hasScore && hasWhere && hasGenre && hasSingle && hasRecommended && hasPlayed && hasStarred;
+			let selectMatch = hasScore && hasWhere && hasGenre && hasType && hasRecommended && hasWatched && hasStarred;
 
 			let globalMatch = !this.globalFilter;
 
 			if (this.globalFilter) {
 				const lowerCaseFilter = this.globalFilter.trim().toLowerCase();
 				const nameIncludes = data.name != '' && data.name.toLowerCase().includes(lowerCaseFilter);
-				const whereIncludes = data.whereToStream != [] && data.whereToStream.filter(entry => entry.toLocaleLowerCase().includes(lowerCaseFilter)).length > 0;
-				const genreIncludes = data.genre != [] && data.genre.filter(entry => entry.toLocaleLowerCase().includes(lowerCaseFilter)).length > 0;
+				const whereIncludes = data.whereToStream != [] && data.whereToStream.some(entry => entry.toLocaleLowerCase().includes(lowerCaseFilter));
+				const genreIncludes = data.genre != [] && data.genre.some(entry => entry.toLocaleLowerCase().includes(lowerCaseFilter));
 
 				globalMatch = nameIncludes || whereIncludes || genreIncludes;
 			}

@@ -135,7 +135,7 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 				const lowerCaseFilter = this.globalFilter.trim().toLowerCase();
 				const nameIncludes = data.name != '' && data.name.toLowerCase().includes(lowerCaseFilter);
 				const authorIncludes = data.author != '' && data.author.toLocaleLowerCase().includes(lowerCaseFilter);
-				const genreIncludes = data.genre != [] && data.genre.filter(entry => entry.toLocaleLowerCase().includes(lowerCaseFilter)).length > 0;
+				const genreIncludes = data.genre != [] && data.genre.some(entry => entry.toLocaleLowerCase().includes(lowerCaseFilter));
 
 				globalMatch = nameIncludes || authorIncludes || genreIncludes;
 			}
