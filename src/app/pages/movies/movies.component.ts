@@ -4,9 +4,9 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { NbDialogService, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
 import * as saveAs from 'file-saver';
-import { IList, IMovieList, MOVIE_GENRES, WHERE_TO_STREAM } from 'src/shared/models/lists.model';
-import { randomElement } from 'src/shared/models/utils';
-import { RandomDialog } from 'src/shared/random/random.component';
+import { IList, IMovieList, MOVIE_GENRES, WHERE_TO_STREAM } from 'src/app/shared/models/lists.model';
+import { randomElement } from 'src/app/shared/models/utils';
+import { RandomDialog } from 'src/app/shared/random/random.component';
 import moviesList from '../../../files/moviesList.json'
 import { MoviesEditboxDialog } from './movies-editbox/movies-editbox.component';
 

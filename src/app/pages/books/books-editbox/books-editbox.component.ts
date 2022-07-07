@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { NbDialogRef, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
-import { BOOK_GENRES, IBookList,  } from 'src/shared/models/lists.model';
+import { BOOK_GENRES, IBookList,  } from 'src/app/shared/models/lists.model';
 
 @Component({
 	selector: 'app-books-editbox',

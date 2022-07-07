@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { NbDialogRef, NbToastrService, NbGlobalPhysicalPosition } from '@nebular/theme';
-import { IMovieList, MOVIE_GENRES, WHERE_TO_STREAM } from 'src/shared/models/lists.model';
+import { IMovieList, MOVIE_GENRES, WHERE_TO_STREAM } from 'src/app/shared/models/lists.model';
 import { BooksEditboxDialog } from '../../books/books-editbox/books-editbox.component';
 
 @Component({

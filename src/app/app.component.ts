@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NbMenuItem, NbSidebarState } from '@nebular/theme';
-import { SidebarState } from 'src/shared/models/interfaces.model';
-import { MENU_ITEMS } from 'src/shared/models/menu.model';
+import { SidebarState } from 'src/app/shared/models/interfaces.model';
+import { MENU_ITEMS } from 'src/app/shared/models/menu.model';
 
 @Component({
 	selector: 'app-root',

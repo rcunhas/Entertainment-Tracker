@@ -4,9 +4,9 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { NbDialogService, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
 import * as saveAs from 'file-saver';
-import { BOOK_GENRES, IBookList, IList } from 'src/shared/models/lists.model';
-import { randomElement } from 'src/shared/models/utils';
-import { RandomDialog } from 'src/shared/random/random.component';
+import { BOOK_GENRES, IBookList, IList } from 'src/app/shared/models/lists.model';
+import { randomElement } from 'src/app/shared/models/utils';
+import { RandomDialog } from 'src/app/shared/random/random.component';
 import booksList from '../../../files/booksList.json'
 import { BooksEditboxDialog } from './books-editbox/books-editbox.component';
 

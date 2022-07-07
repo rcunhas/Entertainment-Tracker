@@ -3,13 +3,13 @@ import { NbDialogService, NbGlobalPhysicalPosition, NbToastrService } from '@neb
 import * as saveAs from 'file-saver';
 import gamesList from '../../../files/gamesList.json'
 
-import { GAME_GENRES, IGameList, WHERE_TO_PLAY } from 'src/shared/models/lists.model';
+import { GAME_GENRES, IGameList, WHERE_TO_PLAY } from 'src/app/shared/models/lists.model';
 import { GamesEditboxDialog } from './games-editbox/games-editbox.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { randomElement } from 'src/shared/models/utils';
-import { RandomDialog } from 'src/shared/random/random.component';
+import { randomElement } from 'src/app/shared/models/utils';
+import { RandomDialog } from 'src/app/shared/random/random.component';
 
 import * as uuid from 'uuid';
 import { FormControl } from '@angular/forms';

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { NbDialogRef, NbToastrService, NbGlobalPhysicalPosition } from '@nebular/theme';
-import { GAME_GENRES, IGameList, WHERE_TO_PLAY } from 'src/shared/models/lists.model';
+import { GAME_GENRES, IGameList, WHERE_TO_PLAY } from 'src/app/shared/models/lists.model';
 import { BooksEditboxDialog } from '../../books/books-editbox/books-editbox.component';
 
 @Component({
