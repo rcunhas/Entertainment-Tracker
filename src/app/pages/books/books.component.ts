@@ -7,12 +7,13 @@ import * as saveAs from 'file-saver';
 import { BOOK_GENRES, IBookList, IList } from 'src/app/shared/models/lists.model';
 import { randomElement } from 'src/app/shared/models/utils';
 import { RandomDialog } from 'src/app/shared/random/random.component';
-import booksList from '../../../files/booksList.json'
 import { BooksEditboxDialog } from './books-editbox/books-editbox.component';
 
 import * as uuid from 'uuid';
 import { FormControl } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { combineLatest, Subscription } from 'rxjs';
+import { TablesStore } from 'src/app/shared/store/tables.store.service';
+import { RecommendationService } from 'src/app/shared/recommendation/recommendation.service';
 
 @Component({
 	selector: 'app-books',
@@ -26,7 +27,7 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 
 	data : IBookList[] = []
 
-	allColumns: string[] = [ 'Actions', 'name', 'score', 'author', 'genre', 'checkbox', 'starred'];
+	allColumns: string[] = [ 'Actions', 'name', 'score', 'author', 'genre', 'checkbox', 'starred', 'recommendation'];
 
 	bookGenres: string[] = BOOK_GENRES;
 
@@ -39,6 +40,8 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 
 	subscriptions: Subscription;
 
+	loading = true;
+
 	globalFilter: string = '';
 	filteredValues = {
 		score: null,
@@ -50,11 +53,9 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 	constructor(
 		private dialogService: NbDialogService,
 		private toastrService: NbToastrService,
+		private tablesStore: TablesStore,
 	) {
-		const storage = localStorage.getItem('booksList');
-		this.data = (storage !== null ? JSON.parse(storage) : booksList) as IBookList[];
-		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name));
-		this.dataSource = new MatTableDataSource(this.data);
+		this.dataSource = new MatTableDataSource();
 
 		this.dataSource.filterPredicate = this.customFilterPredicate();
 
@@ -64,6 +65,7 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 		this.starredControl = new FormControl;
 		this.subscriptions = new Subscription();
 	}
+
 	ngOnInit(): void {
 		const scoreSub = this.scoreControl.valueChanges.subscribe(scoreValue => {
 
@@ -86,6 +88,20 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 			this.dataSource.filter = JSON.stringify(this.filteredValues);
 		});
 
+		const books = this.tablesStore.getBooks();
+
+		const sub = combineLatest([books])
+		.subscribe(async ([bookList]) => {
+			this.dataSource.data = bookList.slice();
+			this.data = bookList.slice();
+			this.applyFilter('');
+			if (this.dataSource.paginator) {
+				this.dataSource.paginator.firstPage();
+			}
+			this.loading = false;
+		});
+
+		this.subscriptions.add(sub);
 		this.subscriptions.add(scoreSub);
 		this.subscriptions.add(genreSub);
 		this.subscriptions.add(readSub);
@@ -198,6 +214,8 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 				return 'Star';
 			case 'checkbox':
 				return 'Read';
+			case 'recommendation':
+				return 'Rec %';
 			default:
 				return column;
 		}
@@ -214,6 +232,7 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 					genre: [],
 					checkbox: false,
 					starred: false,
+					recommendation: -1,
 				}
 			}
 		}).onClose.subscribe(res => {
@@ -244,6 +263,7 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 				genre: data.genre,
 				checkbox: data.checkbox,
 				starred: data.starred,
+				recommendation: data.recommendation,
 			}
 		}}).onClose.subscribe((res: IBookList) => {
 			if (!res) {
@@ -264,13 +284,9 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 	}
 
 	saveToLocalStorage() {
+		this.loading = true;
 		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name));
-		this.dataSource.data = this.data;
-		this.applyFilter('');
-		if (this.dataSource.paginator) {
-			this.dataSource.paginator.firstPage();
-		}
-		localStorage.setItem('booksList', JSON.stringify(this.data));
+		this.tablesStore.setBookData(this.data);
 	}
 
 	save() {

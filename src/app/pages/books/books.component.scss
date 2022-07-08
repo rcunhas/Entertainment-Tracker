@@ -119,3 +119,10 @@ mat-paginator {
     border-radius: 20px;
     border: 3px solid rgb(130, 130, 130);
 }
+
+.loading {
+	display: flex;
+	margin-top: 20px;
+	justify-content: center;
+	align-items: center;
+}

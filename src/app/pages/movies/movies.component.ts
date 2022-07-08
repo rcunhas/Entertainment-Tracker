@@ -263,6 +263,7 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 					movie: false,
 					checkbox: false,
 					starred: false,
+					recommendation: -1,
 				}
 			}
 		}).onClose.subscribe(res => {
@@ -295,6 +296,7 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 				movie: data.movie,
 				checkbox: data.checkbox,
 				starred: data.starred,
+				recommendation: data.recommendation,
 			}
 		}}).onClose.subscribe((res: IMovieList) => {
 			if (!res) {

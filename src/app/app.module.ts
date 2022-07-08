@@ -21,6 +21,7 @@ import { RandomDialog } from 'src/app/shared/random/random.component';
 import { MatOptionModule } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
 	declarations: [
@@ -31,7 +32,7 @@ import { MatInputModule } from '@angular/material/input';
 		BooksEditboxDialog,
 		GamesEditboxDialog,
 		MoviesEditboxDialog,
-		RandomDialog
+		RandomDialog,
 	],
 	imports: [
 		BrowserModule,
@@ -60,6 +61,7 @@ import { MatInputModule } from '@angular/material/input';
 		MatFormFieldModule,
 		ReactiveFormsModule,
 		MatInputModule,
+		MatProgressSpinnerModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent]

@@ -4,6 +4,8 @@ export interface IList {
 	name: string;
 	score: number;
 	starred: boolean;
+	genre: string[];
+	recommendation: number;
 }
 
 export interface IFranchise extends IList {
@@ -12,12 +14,10 @@ export interface IFranchise extends IList {
 
 export interface IBookList extends IList {
 	author: string;
-	genre: string[];
 }
 
 export interface IGameList extends IList {
 	whereToPlay: string[];
-	genre: string[];
 	singleplayer: boolean;
 	multiplayer: boolean;
 	recommended: boolean;
@@ -26,7 +26,6 @@ export interface IGameList extends IList {
 export interface IMovieList extends IList {
 	whereToStream: string[];
 	movie: boolean;
-	genre: string[];
 	watchWithGF: boolean;
 }
 

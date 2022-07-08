@@ -13,7 +13,8 @@ import { RandomDialog } from 'src/app/shared/random/random.component';
 
 import * as uuid from 'uuid';
 import { FormControl } from '@angular/forms';
-import { single, Subscription } from 'rxjs';
+import { combineLatest, single, Subscription } from 'rxjs';
+import { TablesStore } from 'src/app/shared/store/tables.store.service';
 
 @Component({
 	selector: 'app-games',
@@ -27,7 +28,7 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 
 	data : IGameList[] = []
 
-	allColumns: string[] = [ 'Actions', 'name', 'score', 'whereToPlay', 'genre', 'singleplayer', 'multiplayer', 'recommended', 'checkbox', 'starred'];
+	allColumns: string[] = [ 'Actions', 'name', 'score', 'whereToPlay', 'genre', 'singleplayer', 'multiplayer', 'recommended', 'checkbox', 'starred', 'recommendation'];
 
 	gameGenres: string[] = GAME_GENRES;
 	whereToPlay: string[] = WHERE_TO_PLAY;
@@ -44,6 +45,8 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 
 	subscriptions: Subscription;
 
+	loading = true;
+
 	globalFilter: string = '';
 	filteredValues = {
 		score: null,
@@ -58,11 +61,9 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 	constructor(
 		private dialogService: NbDialogService,
 		private toastrService: NbToastrService,
+		private tablesStore: TablesStore,
 	) {
-		const storage = localStorage.getItem('gamesList');
-		this.data = (storage !== null ? JSON.parse(storage) : gamesList) as IGameList[];
-		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name));
-		this.dataSource = new MatTableDataSource(this.data);
+		this.dataSource = new MatTableDataSource();
 
 		this.dataSource.filterPredicate = this.customFilterPredicate();
 
@@ -112,6 +113,21 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 			this.filteredValues['starred'] = starredValue;
 			this.dataSource.filter = JSON.stringify(this.filteredValues);
 		});
+
+		const games = this.tablesStore.getGames();
+
+		const sub = combineLatest([games])
+		.subscribe(async ([gamesList]) => {
+			this.dataSource.data = gamesList.slice();
+			this.data = gamesList.slice();
+			this.applyFilter('');
+			if (this.dataSource.paginator) {
+				this.dataSource.paginator.firstPage();
+			}
+			this.loading = false;
+		});
+
+		this.subscriptions.add(sub);
 
 		this.subscriptions.add(scoreSub);
 		this.subscriptions.add(whereSub);
@@ -246,6 +262,8 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 				return 'Star';
 			case 'checkbox':
 				return 'Played';
+			case 'recommendation':
+				return 'Rec %';
 			default:
 				return column;
 		}
@@ -265,6 +283,7 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 					genre: [],
 					checkbox: false,
 					starred: false,
+					recommendation: -1,
 				}
 			}
 		}).onClose.subscribe(res => {
@@ -298,6 +317,7 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 				genre: data.genre,
 				checkbox: data.checkbox,
 				starred: data.starred,
+				recommendation: data.recommendation,
 			}
 		}}).onClose.subscribe((res : IGameList) => {
 			if (!res) {
@@ -318,13 +338,9 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 	}
 
 	saveToLocalStorage() {
+		this.loading = true;
 		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name));
-		this.dataSource.data = this.data;
-		this.applyFilter('');
-		if (this.dataSource.paginator) {
-			this.dataSource.paginator.firstPage();
-		}
-		localStorage.setItem('gamesList', JSON.stringify(this.data));
+		this.tablesStore.setGameData(this.data);
 	}
 
 	save() {
