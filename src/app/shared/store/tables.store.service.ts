@@ -66,7 +66,6 @@ export class TablesStore implements OnInit {
 		const storage = localStorage.getItem('gamesList');
 		let games = (storage !== null ? JSON.parse(storage) : gamesList) as IGameList[];
 		games = games.sort((a,b) => a.name.localeCompare(b.name));
-		console.log('GAMES', games);
 		const recTable = await this.recService.calculateGamesRecomendation(games.slice());
 		if (recTable != null) {
 			games = games.map(game => {
@@ -80,13 +79,12 @@ export class TablesStore implements OnInit {
 				if (game.multiplayer) [value, entries] = this.updateRecValue(value, entries, 'MultiPlayer', recTable);
 
 				[value, entries] = this.updateGenreValues(value, entries, genres, recTable);
-				[value, entries] = this.updateArray(value, entries, where, recTable);
+				// [value, entries] = this.updateArray(value, entries, where, recTable);
 
 				game.recommendation = this.convertToPercentage(value/entries) || -1;
 				return game;
 			})
 		}
-		console.log(games);
 		this.setGameData(games);
 	}
 
@@ -110,7 +108,7 @@ export class TablesStore implements OnInit {
 		for (let i = 0; i < genres.length; i++) {
 			const genre = genres[i];
 			[value, entries] = this.updateRecValue(value, entries, genre, table);
-			for (let j = i + 1; i < genres.length; i++) {
+			for (let j = i + 1; j < genres.length; j++) {
 				const key = `${genre}/${genres[j]}`;
 				[value, entries] = this.updateRecValue(value, entries, key, table);
 			}

@@ -38,7 +38,7 @@ export class RecommendationService {
 
 		for (let game of playedGames) {
 			const score = game.score;
-			this.calculateArray(game.whereToPlay.slice(), score, featureMap);
+			// this.calculateArray(game.whereToPlay.slice(), score, featureMap);
 
 			if (game.singleplayer) this.addEntry('SinglePlayer', score, featureMap);
 			if (game.multiplayer) this.addEntry('MultiPlayer', score, featureMap);
@@ -61,7 +61,7 @@ export class RecommendationService {
 		for (let i = 0; i < genres.length; i++) {
 			const genre = genres[i];
 			this.addEntry(genre, score, features);
-			for (let j = i + 1; i < genres.length; i++) {
+			for (let j = i + 1; j < genres.length; j++) {
 				const key = `${genre}/${genres[j]}`;
 				this.addEntry(key, score, features);
 			}

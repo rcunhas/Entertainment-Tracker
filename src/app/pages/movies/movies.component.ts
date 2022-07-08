@@ -224,7 +224,7 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 		if (column === 'movie') {
 			return columnData ? 'Movie' : 'Series';
 		}
-		return columnData === -1 ? '-' : columnData;
+		return columnData === -1 ? '-' : column === 'recommendation' ?  `${columnData}%` : columnData;
 	}
 
 	convert(column: string) : string {
