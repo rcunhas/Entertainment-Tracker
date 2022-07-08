@@ -24,7 +24,7 @@ export class RecommendationService {
 			const genres = book.genre.slice();
 			this.calculateGenres(genres, score, featureMap);
 		}
-
+		console.log(`BOOKS`, readBooks.length);
 		return this.getUserEntries(featureMap, readBooks.length);
 	}
 
@@ -46,7 +46,7 @@ export class RecommendationService {
 			const genres = game.genre.slice();
 			this.calculateGenres(genres, score, featureMap);
 		}
-
+		console.log('GAMES', playedGames.length);
 		return this.getUserEntries(featureMap, playedGames.length);
 	}
 
@@ -67,7 +67,7 @@ export class RecommendationService {
 			const genres = movie.genre.slice();
 			this.calculateGenres(genres, score, featureMap);
 		}
-
+		console.log('MOVIES', watchedMovies.length);
 		return this.getUserEntries(featureMap, watchedMovies.length);
 	}
 
@@ -98,11 +98,14 @@ export class RecommendationService {
 	getUserEntries(featureMap: Map<string, number[]>, total: number) {
 		const userEntries : Map<string, number> =  new Map<string,number>();
 
+		console.log(featureMap);
+
 		for (let [key, value] of featureMap.entries()) {
 			const sum = value.reduce((a, b) => a + b, 0);
-			const avg = Math.min(((sum / value.length) || 0) * (1 + ((value.length/total)/10)), 10);
+			const avg = Math.min( ((sum / value.length) || 0) * (1 + ((value.length/total)/10)), 10);
 			userEntries.set(key, Math.round((avg + Number.EPSILON) * 100) / 100)
 		}
+		console.log(userEntries);
 
 		return userEntries;
 	}
