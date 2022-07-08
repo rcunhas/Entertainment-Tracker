@@ -197,7 +197,7 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 			}
 			return value;
 		}
-		return columnData === -1 ? '-' : columnData;
+		return columnData === -1 ? '-' : column === 'recommendation' ?  `${columnData}%` : columnData;
 	}
 
 	convert(column: string) : string {

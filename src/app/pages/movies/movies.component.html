@@ -81,7 +81,7 @@
 		[showFirstLastButtons]="true">
     	</mat-paginator>
 
-		<mat-table [dataSource]="dataSource" matSort fixedLayout>
+		<mat-table *ngIf="!loading" [dataSource]="dataSource" matSort fixedLayout>
 
 			<ng-container *ngFor="let column of allColumns; let index = index" [matColumnDef]="column">
 				<mat-header-cell *matHeaderCellDef mat-sort-header> {{convert(column)}} </mat-header-cell>
@@ -107,6 +107,10 @@
             <mat-row *matRowDef="let row; columns: allColumns;"></mat-row>
 
         </mat-table>
+
+		<div class="loading" *ngIf="loading">
+			<mat-spinner></mat-spinner>
+		</div>
 
 	</nb-card-body>
 </nb-card>

@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { IBookList, IGameList } from "../models/lists.model";
+import { IBookList, IGameList, IMovieList } from "../models/lists.model";
 import booksList from '../../../files/booksList.json'
 import gamesList from '../../../files/gamesList.json'
 import moviesList from '../../../files/moviesList.json'
@@ -13,17 +13,18 @@ export class TablesStore implements OnInit {
 
 	_bookList = new BehaviorSubject<IBookList[]>([])
 	_gamesList = new BehaviorSubject<IGameList[]>([])
+	_moviesList = new BehaviorSubject<IMovieList[]>([])
 
 	constructor(
 		private recService: RecommendationService,
 	) {
 		this.listBooks();
 		this.listGames();
+		this.listMovies();
 	}
 
 	async ngOnInit() {
 
-		// this.listMovies(),
 	}
 
 	getBooks() {
@@ -91,6 +92,40 @@ export class TablesStore implements OnInit {
 	setGameData(games: IGameList[]) {
 		this._gamesList.next(games);
 		localStorage.setItem('gamesList', JSON.stringify(games));
+	}
+
+	getMovies() {
+		return this._moviesList.asObservable();
+	}
+
+	async listMovies() {
+		const storage = localStorage.getItem('moviesList');
+		let movies = (storage !== null ? JSON.parse(storage) : moviesList) as IMovieList[];
+		movies = movies.sort((a,b) => a.name.localeCompare(b.name));
+		const recTable = await this.recService.calculateMoviesRecomendation(movies.slice());
+		if (recTable != null) {
+			movies = movies.map(movie => {
+				let value = 0;
+				let entries = 0;
+
+				const genres = movie.genre.slice();
+				const where = movie.whereToStream.slice();
+
+				[value, entries] = this.updateRecValue(value, entries, movie.movie ? 'Movie' : 'Series', recTable);
+
+				[value, entries] = this.updateGenreValues(value, entries, genres, recTable);
+				// [value, entries] = this.updateArray(value, entries, where, recTable);
+
+				movie.recommendation = this.convertToPercentage(value/entries) || -1;
+				return movie;
+			})
+		}
+		this.setMovieData(movies);
+	}
+
+	setMovieData(movies: IMovieList[]) {
+		this._moviesList.next(movies);
+		localStorage.setItem('moviesList', JSON.stringify(movies));
 	}
 
 	updateArray(value: number, entries: number, array: string[], table: Map<string, number>) {

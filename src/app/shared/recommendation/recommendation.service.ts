@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { IBookList, IGameList } from "../models/lists.model";
+import { IBookList, IGameList, IMovieList } from "../models/lists.model";
 
 @Injectable({
 	providedIn: 'root'
@@ -25,7 +25,7 @@ export class RecommendationService {
 			this.calculateGenres(genres, score, featureMap);
 		}
 
-		return this.getUserEntries(featureMap);
+		return this.getUserEntries(featureMap, readBooks.length);
 	}
 
 	calculateGamesRecomendation(gamesList: IGameList[]) : Map<string,number> | null{
@@ -38,7 +38,7 @@ export class RecommendationService {
 
 		for (let game of playedGames) {
 			const score = game.score;
-			// this.calculateArray(game.whereToPlay.slice(), score, featureMap);
+			this.calculateArray(game.whereToPlay.slice(), score, featureMap);
 
 			if (game.singleplayer) this.addEntry('SinglePlayer', score, featureMap);
 			if (game.multiplayer) this.addEntry('MultiPlayer', score, featureMap);
@@ -47,7 +47,28 @@ export class RecommendationService {
 			this.calculateGenres(genres, score, featureMap);
 		}
 
-		return this.getUserEntries(featureMap);
+		return this.getUserEntries(featureMap, playedGames.length);
+	}
+
+	calculateMoviesRecomendation(moviesList: IMovieList[]) : Map<string,number> | null{
+		const movies = moviesList.slice();
+		const watchedMovies = movies.filter(game => game.checkbox);
+
+		if (watchedMovies.length === 0) return null;
+
+		const featureMap : Map<string, number[]> =  new Map<string,number[]>();
+
+		for (let movie of watchedMovies) {
+			const score = movie.score;
+			this.calculateArray(movie.whereToStream.slice(), score, featureMap);
+
+			this.addEntry(movie.movie ? 'Movie' : 'Series', score, featureMap);
+
+			const genres = movie.genre.slice();
+			this.calculateGenres(genres, score, featureMap);
+		}
+
+		return this.getUserEntries(featureMap, watchedMovies.length);
 	}
 
 	calculateArray(array: string[], score: number, features: Map<string, number[]>) {
@@ -74,12 +95,12 @@ export class RecommendationService {
 		featureMap.set(key, values);
 	}
 
-	getUserEntries(featureMap: Map<string, number[]>) {
+	getUserEntries(featureMap: Map<string, number[]>, total: number) {
 		const userEntries : Map<string, number> =  new Map<string,number>();
 
 		for (let [key, value] of featureMap.entries()) {
 			const sum = value.reduce((a, b) => a + b, 0);
-			const avg = (sum / value.length) || 0;
+			const avg = Math.min(((sum / value.length) || 0) * (1 + ((value.length/total)/10)), 10);
 			userEntries.set(key, Math.round((avg + Number.EPSILON) * 100) / 100)
 		}
 

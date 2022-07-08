@@ -12,7 +12,8 @@ import { MoviesEditboxDialog } from './movies-editbox/movies-editbox.component';
 
 import * as uuid from 'uuid';
 import { FormControl } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { combineLatest, Subscription } from 'rxjs';
+import { TablesStore } from 'src/app/shared/store/tables.store.service';
 
 @Component({
 	selector: 'app-movies',
@@ -26,7 +27,7 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 
 	data : IMovieList[] = []
 
-	allColumns: string[] = [ 'Actions', 'name', 'score', 'whereToStream', 'genre', 'movie', 'watchWithGF', 'checkbox', 'starred'];
+	allColumns: string[] = [ 'Actions', 'name', 'score', 'whereToStream', 'genre', 'movie', 'watchWithGF', 'checkbox', 'starred', 'recommendation'];
 
 	movieGenres: string[] = MOVIE_GENRES;
 	whereToStream: string[] = WHERE_TO_STREAM;
@@ -43,6 +44,8 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 
 	subscriptions: Subscription;
 
+	loading = true;
+
 	globalFilter: string = '';
 	filteredValues = {
 		score: null,
@@ -57,11 +60,9 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 	constructor(
 		private dialogService: NbDialogService,
 		private toastrService: NbToastrService,
+		private tablesStore: TablesStore,
 	) {
-		const storage = localStorage.getItem('moviesList');
-		this.data = (storage !== null ? JSON.parse(storage) : moviesList) as IMovieList[];
-		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name));
-		this.dataSource = new MatTableDataSource(this.data);
+		this.dataSource = new MatTableDataSource();
 
 		this.dataSource.filterPredicate = this.customFilterPredicate();
 
@@ -111,6 +112,21 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 			this.filteredValues['starred'] = starredValue;
 			this.dataSource.filter = JSON.stringify(this.filteredValues);
 		});
+
+		const movies = this.tablesStore.getMovies();
+
+		const sub = combineLatest([movies])
+		.subscribe(async ([movieList]) => {
+			this.dataSource.data = movieList.slice();
+			this.data = movieList.slice();
+			this.applyFilter('');
+			if (this.dataSource.paginator) {
+				this.dataSource.paginator.firstPage();
+			}
+			this.loading = false;
+		});
+
+		this.subscriptions.add(sub);
 
 		this.subscriptions.add(scoreSub);
 		this.subscriptions.add(whereSub);
@@ -245,6 +261,8 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 				return 'Watched';
 			case 'movie':
 				return 'Type';
+			case 'recommendation':
+				return 'Rec %';
 			default:
 				return column;
 		}
@@ -317,13 +335,9 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 	}
 
 	saveToLocalStorage() {
+		this.loading = true;
 		this.data = this.data.sort((a,b) => a.name.localeCompare(b.name));
-		this.dataSource.data = this.data;
-		this.applyFilter('');
-		if (this.dataSource.paginator) {
-			this.dataSource.paginator.firstPage();
-		}
-		localStorage.setItem('moviesList', JSON.stringify(this.data));
+		this.tablesStore.setMovieData(this.data);
 	}
 
 	save() {
