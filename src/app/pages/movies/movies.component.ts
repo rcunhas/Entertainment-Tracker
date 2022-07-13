@@ -194,8 +194,11 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 			const excludes = parsedSearch.excludes;
 			const hasExcludeGenre = excludes != null ? data.genre.every(entry => !excludes.includes(entry)) : true;
 			const hasExcludeWhere = excludes != null ? data.whereToStream.every(entry => !excludes.includes(entry)) : true;
+			const hasExcludeType = excludes != null ? data.type.every(entry => !excludes.includes(entry)) : true;
 
-			let selectMatch = hasScore && hasWhere && hasGenre && hasType && hasRecommended && hasWatched && hasStarred && hasExcludeGenre && hasExcludeWhere;
+			const hasExclude = hasExcludeGenre && hasExcludeWhere && hasExcludeType;
+
+			let selectMatch = hasScore && hasWhere && hasGenre && hasType && hasRecommended && hasWatched && hasStarred && hasExclude;
 
 			let globalMatch = !this.globalFilter;
 

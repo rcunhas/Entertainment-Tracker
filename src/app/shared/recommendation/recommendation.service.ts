@@ -61,9 +61,11 @@ export class RecommendationService {
 		for (let movie of watchedMovies) {
 			const score = movie.score;
 			this.calculateArray(movie.whereToStream.slice(), score, featureMap);
-			this.calculateArray(movie.type.slice(), score, featureMap);
+			// this.calculateArray(movie.type.slice(), score, featureMap);
 
-			const genres = movie.genre.slice();
+			let genres = movie.genre.slice();
+			genres.push(...movie.type.slice());
+			genres = genres.sort((a,b) => a.localeCompare(b));
 			this.calculateGenres(genres, score, featureMap);
 		}
 		console.log('MOVIES', watchedMovies.length);
