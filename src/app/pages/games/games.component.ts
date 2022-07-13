@@ -32,6 +32,7 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 
 	gameGenres: string[] = GAME_GENRES;
 	whereToPlay: string[] = WHERE_TO_PLAY;
+	excludeList: string[] = [...GAME_GENRES, ...WHERE_TO_PLAY];
 
 	dataSource: MatTableDataSource<IGameList>;
 
@@ -42,6 +43,7 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 	recommendedControl: FormControl;
 	playedControl: FormControl;
 	starredControl: FormControl;
+	excludeControl: FormControl;
 
 	subscriptions: Subscription;
 
@@ -56,6 +58,7 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 		recommended: null,
 		played: null,
 		starred: null,
+		excludes: null,
 	}
 
 	constructor(
@@ -74,6 +77,7 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 		this.recommendedControl = new FormControl;
 		this.playedControl = new FormControl;
 		this.starredControl = new FormControl;
+		this.excludeControl = new FormControl;
 		this.subscriptions = new Subscription();
 	}
 
@@ -114,6 +118,11 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 			this.dataSource.filter = JSON.stringify(this.filteredValues);
 		});
 
+		const excludeSub = this.excludeControl.valueChanges.subscribe(excludeValue => {
+			this.filteredValues['excludes'] = excludeValue.length > 0 ? excludeValue : null;
+			this.dataSource.filter = JSON.stringify(this.filteredValues);
+		});
+
 		const games = this.tablesStore.getGames();
 
 		const sub = combineLatest([games])
@@ -136,6 +145,7 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 		this.subscriptions.add(recSub);
 		this.subscriptions.add(playedSub);
 		this.subscriptions.add(starSub);
+		this.subscriptions.add(excludeSub);
 	}
 
 	ngAfterViewInit() {
@@ -182,7 +192,11 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 			const starred = parsedSearch.starred;
 			const hasStarred = starred !== null ? data.starred === starred : true;
 
-			let selectMatch = hasScore && hasWhere && hasGenre && hasSingle && hasRecommended && hasPlayed && hasStarred;
+			const excludes = parsedSearch.excludes;
+			const hasExcludeGenre = excludes != null ? data.genre.every(entry => !excludes.includes(entry)) : true;
+			const hasExcludeWhere = excludes != null ? data.whereToPlay.every(entry => !excludes.includes(entry)) : true;
+
+			let selectMatch = hasScore && hasWhere && hasGenre && hasSingle && hasRecommended && hasPlayed && hasStarred && hasExcludeGenre && hasExcludeWhere;
 
 			let globalMatch = !this.globalFilter;
 

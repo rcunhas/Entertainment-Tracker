@@ -5,7 +5,7 @@
 			<input nbInput [ngModel]="globalFilter" (ngModelChange)="applyFilter($event)"
                     [ngModelOptions]="{standalone: true}" id="search" class="search-input" #input>
 
-			<nb-select multiple placeholder="Score" [formControl]="scoreControl" class="score-select">
+			<nb-select multiple placeholder="Score" [formControl]="scoreControl" class="score-select" shape="round">
 				<nb-option [value]="null">Clear</nb-option>
 				<nb-option *ngFor="let score of [
 					{type: '\<', text: '-7', predicate: 7},
@@ -17,13 +17,13 @@
 				[value]="score">{{score.text}}</nb-option>
 			</nb-select>
 
-			<nb-select multiple placeholder="Genre" [formControl]="genreControl">
+			<nb-select multiple placeholder="Genre" [formControl]="genreControl" shape="round">
 				<nb-option [value]="null">Clear</nb-option>
 				<nb-option *ngFor="let genre of bookGenres"
 				[value]="genre">{{genre}}</nb-option>
 			</nb-select>
 
-			<nb-select placeholder="Read" [formControl]="readControl" class="score-select">
+			<nb-select placeholder="Read" [formControl]="readControl" class="score-select" shape="round">
 				<nb-option [value]="null">Clear</nb-option>
 				<nb-option *ngFor="let type of [
 					{value: true , text: 'Yes'},
@@ -32,13 +32,19 @@
 				[value]="type.value">{{type.text}}</nb-option>
 			</nb-select>
 
-			<nb-select placeholder="Starred" [formControl]="starredControl" class="score-select">
+			<nb-select placeholder="Starred" [formControl]="starredControl" class="score-select" shape="round">
 				<nb-option [value]="null">Clear</nb-option>
 				<nb-option *ngFor="let type of [
 					{value: true , text: 'Yes'},
 					{value: false , text: 'No'},
 				]"
 				[value]="type.value">{{type.text}}</nb-option>
+			</nb-select>
+
+			<nb-select multiple placeholder="Excludes" [formControl]="excludeControl" shape="round">
+				<nb-option [value]="null">Clear</nb-option>
+				<nb-option *ngFor="let exclude of excludeList"
+				[value]="exclude">{{exclude}}</nb-option>
 			</nb-select>
 
 		</div>

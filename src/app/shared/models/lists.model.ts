@@ -25,7 +25,7 @@ export interface IGameList extends IList {
 
 export interface IMovieList extends IList {
 	whereToStream: string[];
-	movie: boolean;
+	type: string[];
 	watchWithGF: boolean;
 }
 
@@ -114,13 +114,19 @@ export const WHERE_TO_STREAM = [
 	'Disney+',
 	'Crunchyroll',
 	'Pirate Bay',
-	'Globo Play'
+	'Globo Play',
+	'GoGo Animes'
+].sort((a,b) => a.localeCompare(b));
+
+export const MOVIE_TYPES = [
+	'Anime',
+	'Animation',
+	'Movie',
+	'Series',
 ].sort((a,b) => a.localeCompare(b));
 
 export const MOVIE_GENRES = [
 	'Action',
-	'Anime',
-	'Animation',
 	'Asian',
 	'Comedy',
 	'Crime',

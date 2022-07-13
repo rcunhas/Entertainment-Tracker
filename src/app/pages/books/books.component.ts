@@ -31,12 +31,15 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 
 	bookGenres: string[] = BOOK_GENRES;
 
+	excludeList: string[] = [...BOOK_GENRES];
+
 	dataSource: MatTableDataSource<IBookList>;
 
 	scoreControl: FormControl;
 	genreControl: FormControl;
 	readControl: FormControl;
 	starredControl: FormControl;
+	excludeControl: FormControl;
 
 	subscriptions: Subscription;
 
@@ -48,6 +51,7 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 		genre: null,
 		read: null,
 		starred: null,
+		excludes: null,
 	}
 
 	constructor(
@@ -63,6 +67,7 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 		this.genreControl = new FormControl;
 		this.readControl = new FormControl;
 		this.starredControl = new FormControl;
+		this.excludeControl = new FormControl;
 		this.subscriptions = new Subscription();
 	}
 
@@ -88,6 +93,11 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 			this.dataSource.filter = JSON.stringify(this.filteredValues);
 		});
 
+		const excludeSub = this.excludeControl.valueChanges.subscribe(excludeValue => {
+			this.filteredValues['excludes'] = excludeValue.length > 0 ? excludeValue : null;
+			this.dataSource.filter = JSON.stringify(this.filteredValues);
+		});
+
 		const books = this.tablesStore.getBooks();
 
 		const sub = combineLatest([books])
@@ -106,6 +116,7 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 		this.subscriptions.add(genreSub);
 		this.subscriptions.add(readSub);
 		this.subscriptions.add(starSub);
+		this.subscriptions.add(excludeSub);
 	}
 
 	ngAfterViewInit() {
@@ -143,7 +154,10 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 			const starred = parsedSearch.starred;
 			const hasStarred = starred !== null ? data.starred === starred : true;
 
-			let selectMatch = hasScore && hasGenre && hasRead && hasStarred;
+			const excludes = parsedSearch.excludes;
+			const hasExcludeGenre = excludes != null ? data.genre.every(entry => !excludes.includes(entry)) : true;
+
+			let selectMatch = hasScore && hasGenre && hasRead && hasStarred && hasExcludeGenre;
 
 			let globalMatch = !this.globalFilter;
 

@@ -5,7 +5,7 @@
 			<input nbInput [ngModel]="globalFilter" (ngModelChange)="applyFilter($event)"
                     [ngModelOptions]="{standalone: true}" id="search" class="search-input" #input>
 
-			<nb-select multiple placeholder="Score" [formControl]="scoreControl" class="score-select">
+			<nb-select multiple placeholder="Score" [formControl]="scoreControl" class="score-select" shape="round">
 				<nb-option [value]="null">Clear</nb-option>
 				<nb-option *ngFor="let score of [
 					{type: '\<', text: '-7', predicate: 7},
@@ -17,28 +17,25 @@
 				[value]="score">{{score.text}}</nb-option>
 			</nb-select>
 
-			<nb-select multiple placeholder="Where" [formControl]="whereControl">
+			<nb-select multiple placeholder="Where" [formControl]="whereControl" shape="round">
 				<nb-option [value]="null">Clear</nb-option>
 				<nb-option *ngFor="let where of whereToStream"
 				[value]="where">{{where}}</nb-option>
 			</nb-select>
 
-			<nb-select multiple placeholder="Genre" [formControl]="genreControl">
+			<nb-select multiple placeholder="Genre" [formControl]="genreControl" shape="round">
 				<nb-option [value]="null">Clear</nb-option>
 				<nb-option *ngFor="let genre of movieGenres"
 				[value]="genre">{{genre}}</nb-option>
 			</nb-select>
 
-			<nb-select placeholder="Type" [formControl]="typeControl" class="score-select">
+			<nb-select multiple placeholder="Type" [formControl]="typeControl" class="score-select" shape="round">
 				<nb-option [value]="null">Clear</nb-option>
-				<nb-option *ngFor="let type of [
-					{value: true , text: 'Movie'},
-					{value: false , text: 'Series'},
-				]"
-				[value]="type.value">{{type.text}}</nb-option>
+				<nb-option *ngFor="let type of movieTypes"
+				[value]="type">{{type}}</nb-option>
 			</nb-select>
 
-			<nb-select placeholder="GF" [formControl]="recommendedControl" class="score-select">
+			<nb-select placeholder="GF" [formControl]="recommendedControl" class="score-select" shape="round">
 				<nb-option [value]="null">Clear</nb-option>
 				<nb-option *ngFor="let type of [
 					{value: true , text: 'Yes'},
@@ -47,7 +44,7 @@
 				[value]="type.value">{{type.text}}</nb-option>
 			</nb-select>
 
-			<nb-select placeholder="Watched" [formControl]="watchedControl" class="score-select">
+			<nb-select placeholder="Watched" [formControl]="watchedControl" class="score-select" shape="round">
 				<nb-option [value]="null">Clear</nb-option>
 				<nb-option *ngFor="let type of [
 					{value: true , text: 'Yes'},
@@ -56,13 +53,19 @@
 				[value]="type.value">{{type.text}}</nb-option>
 			</nb-select>
 
-			<nb-select placeholder="Starred" [formControl]="starredControl" class="score-select">
+			<nb-select placeholder="Starred" [formControl]="starredControl" class="score-select" shape="round">
 				<nb-option [value]="null">Clear</nb-option>
 				<nb-option *ngFor="let type of [
 					{value: true , text: 'Yes'},
 					{value: false , text: 'No'},
 				]"
 				[value]="type.value">{{type.text}}</nb-option>
+			</nb-select>
+
+			<nb-select multiple placeholder="Excludes" [formControl]="excludeControl" shape="round">
+				<nb-option [value]="null">Clear</nb-option>
+				<nb-option *ngFor="let exclude of excludeList"
+				[value]="exclude">{{exclude}}</nb-option>
 			</nb-select>
 		</div>
 

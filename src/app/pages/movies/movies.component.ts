@@ -4,10 +4,9 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { NbDialogService, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
 import * as saveAs from 'file-saver';
-import { IList, IMovieList, MOVIE_GENRES, WHERE_TO_STREAM } from 'src/app/shared/models/lists.model';
+import { IList, IMovieList, MOVIE_GENRES, MOVIE_TYPES, WHERE_TO_STREAM } from 'src/app/shared/models/lists.model';
 import { randomElement } from 'src/app/shared/models/utils';
 import { RandomDialog } from 'src/app/shared/random/random.component';
-import moviesList from '../../../files/moviesList.json'
 import { MoviesEditboxDialog } from './movies-editbox/movies-editbox.component';
 
 import * as uuid from 'uuid';
@@ -27,10 +26,12 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 
 	data : IMovieList[] = []
 
-	allColumns: string[] = [ 'Actions', 'name', 'score', 'whereToStream', 'genre', 'movie', 'watchWithGF', 'checkbox', 'starred', 'recommendation'];
+	allColumns: string[] = [ 'Actions', 'name', 'score', 'whereToStream', 'genre', 'type', 'watchWithGF', 'checkbox', 'starred', 'recommendation'];
 
 	movieGenres: string[] = MOVIE_GENRES;
 	whereToStream: string[] = WHERE_TO_STREAM;
+	movieTypes: string[] = MOVIE_TYPES;
+	excludeList: string[] = [...MOVIE_GENRES, ...WHERE_TO_STREAM, ...MOVIE_TYPES];
 
 	dataSource: MatTableDataSource<IMovieList>;
 
@@ -41,6 +42,7 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 	recommendedControl: FormControl;
 	watchedControl: FormControl;
 	starredControl: FormControl;
+	excludeControl: FormControl;
 
 	subscriptions: Subscription;
 
@@ -55,6 +57,7 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 		recommended: null,
 		watched: null,
 		starred: null,
+		excludes: null,
 	}
 
 	constructor(
@@ -73,6 +76,7 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 		this.recommendedControl = new FormControl;
 		this.watchedControl = new FormControl;
 		this.starredControl = new FormControl;
+		this.excludeControl = new FormControl;
 		this.subscriptions = new Subscription();
 	}
 
@@ -94,7 +98,7 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 		});
 
 		const singleSub = this.typeControl.valueChanges.subscribe(typeValue => {
-			this.filteredValues['type'] = typeValue;
+			this.filteredValues['type'] = typeValue.length > 0 ? typeValue : null;;
 			this.dataSource.filter = JSON.stringify(this.filteredValues);
 		});
 
@@ -110,6 +114,11 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 
 		const starSub = this.starredControl.valueChanges.subscribe(starredValue => {
 			this.filteredValues['starred'] = starredValue;
+			this.dataSource.filter = JSON.stringify(this.filteredValues);
+		});
+
+		const excludeSub = this.excludeControl.valueChanges.subscribe(excludeValue => {
+			this.filteredValues['excludes'] = excludeValue.length > 0 ? excludeValue : null;
 			this.dataSource.filter = JSON.stringify(this.filteredValues);
 		});
 
@@ -135,6 +144,7 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 		this.subscriptions.add(recSub);
 		this.subscriptions.add(playedSub);
 		this.subscriptions.add(starSub);
+		this.subscriptions.add(excludeSub);
 	}
 
 	ngAfterViewInit() {
@@ -170,7 +180,7 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 			const hasGenre = genre ? data.genre.filter(entry => genre.includes(entry)).length > 0 : true;
 
 			const type = parsedSearch.type;
-			const hasType = type !== null ? data.movie === type : true;
+			const hasType = type !== null ? data.type.filter(entry => type.includes(entry)).length > 0 : true;
 
 			const recommended = parsedSearch.recommended;
 			const hasRecommended = recommended !== null ? data.watchWithGF === recommended : true;
@@ -181,7 +191,11 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 			const starred = parsedSearch.starred;
 			const hasStarred = starred !== null ? data.starred === starred : true;
 
-			let selectMatch = hasScore && hasWhere && hasGenre && hasType && hasRecommended && hasWatched && hasStarred;
+			const excludes = parsedSearch.excludes;
+			const hasExcludeGenre = excludes != null ? data.genre.every(entry => !excludes.includes(entry)) : true;
+			const hasExcludeWhere = excludes != null ? data.whereToStream.every(entry => !excludes.includes(entry)) : true;
+
+			let selectMatch = hasScore && hasWhere && hasGenre && hasType && hasRecommended && hasWatched && hasStarred && hasExcludeGenre && hasExcludeWhere;
 
 			let globalMatch = !this.globalFilter;
 
@@ -259,7 +273,7 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 				return 'Star';
 			case 'checkbox':
 				return 'Watched';
-			case 'movie':
+			case 'type':
 				return 'Type';
 			case 'recommendation':
 				return 'Rec %';
@@ -278,7 +292,7 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 					watchWithGF: false,
 					whereToStream: [],
 					genre: [],
-					movie: false,
+					type: [],
 					checkbox: false,
 					starred: false,
 					recommendation: -1,
@@ -311,7 +325,7 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 				watchWithGF: data.watchWithGF,
 				whereToStream: data.whereToStream,
 				genre: data.genre,
-				movie: data.movie,
+				type: data.type,
 				checkbox: data.checkbox,
 				starred: data.starred,
 				recommendation: data.recommendation,

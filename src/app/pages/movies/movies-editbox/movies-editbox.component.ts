@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { NbDialogRef, NbToastrService, NbGlobalPhysicalPosition } from '@nebular/theme';
-import { IMovieList, MOVIE_GENRES, WHERE_TO_STREAM } from 'src/app/shared/models/lists.model';
+import { IMovieList, MOVIE_GENRES, MOVIE_TYPES, WHERE_TO_STREAM } from 'src/app/shared/models/lists.model';
 import { BooksEditboxDialog } from '../../books/books-editbox/books-editbox.component';
 
 @Component({
@@ -17,13 +17,14 @@ export class MoviesEditboxDialog implements OnInit {
 	scoreControl!: FormControl;
 	genreControl!: FormControl;
 	streamControl!: FormControl;
-	movieControl!: FormControl;
+	typeControl!: FormControl;
 	watchWithControl!: FormControl;
 	checkboxControl!: FormControl;
 	starredControl!: FormControl;
 
 	movieGenres: string[] = MOVIE_GENRES;
 	whereToStream: string[] = WHERE_TO_STREAM;
+	movieTypes: string[] = MOVIE_TYPES;
 
 	constructor(
 		protected ref: NbDialogRef<BooksEditboxDialog>,
@@ -36,7 +37,7 @@ export class MoviesEditboxDialog implements OnInit {
 		this.scoreControl = new FormControl(this.data?.score || -1, Validators.compose([Validators.min(-1), Validators.max(10), Validators.required]));
 		this.genreControl = new FormControl(this.data?.genre || [], Validators.required);
 		this.streamControl = new FormControl(this.data?.whereToStream || [], Validators.required);
-		this.movieControl = new FormControl(this.data?.movie || false);
+		this.typeControl = new FormControl(this.data?.type || [], Validators.required);
 		this.watchWithControl = new FormControl(this.data?.watchWithGF || false);
 		this.checkboxControl = new FormControl(this.data?.checkbox || false);
 		this.starredControl = new FormControl(this.data?.starred || false);
@@ -54,7 +55,7 @@ export class MoviesEditboxDialog implements OnInit {
 		this.data.genre = (this.genreControl.value as any[]).sort((a,b) => a.localeCompare(b));
 		this.data.whereToStream = (this.streamControl.value as any[]).sort((a,b) => a.localeCompare(b));
 		this.data.checkbox = this.checkboxControl.value;
-		this.data.movie = this.movieControl.value;
+		this.data.type = (this.typeControl.value as any[]).sort((a,b) => a.localeCompare(b));
 		this.data.watchWithGF = this.watchWithControl.value;
 		this.data.starred = this.starredControl.value;
 

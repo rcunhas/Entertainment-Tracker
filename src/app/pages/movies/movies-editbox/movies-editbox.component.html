@@ -33,8 +33,9 @@
 
 		<label>Movie</label>
 		<br>
-		<br>
-		<nb-checkbox [formControl]="movieControl" style="margin-top: 20px;"></nb-checkbox>
+		<nb-select multiple style="width: 250px;" placeholder="Type" [formControl]="typeControl">
+			<nb-option *ngFor="let type of movieTypes" [value]="type">{{type}}</nb-option>
+		</nb-select>
 
 		<br>
 		<br>

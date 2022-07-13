@@ -6,7 +6,7 @@
 			<input nbInput [ngModel]="globalFilter" (ngModelChange)="applyFilter($event)"
                     [ngModelOptions]="{standalone: true}" id="search" class="search-input" #input>
 
-			<nb-select multiple placeholder="Score" [formControl]="scoreControl" class="score-select">
+			<nb-select multiple placeholder="Score" [formControl]="scoreControl" class="score-select" shape="round">
 				<nb-option [value]="null">Clear</nb-option>
 				<nb-option *ngFor="let score of [
 					{type: '\<', text: '-7', predicate: 7},
@@ -18,19 +18,19 @@
 				[value]="score">{{score.text}}</nb-option>
 			</nb-select>
 
-			<nb-select multiple placeholder="Where" [formControl]="whereControl">
+			<nb-select multiple placeholder="Where" [formControl]="whereControl" shape="round">
 				<nb-option [value]="null">Clear</nb-option>
 				<nb-option *ngFor="let where of whereToPlay"
 				[value]="where">{{where}}</nb-option>
 			</nb-select>
 
-			<nb-select multiple placeholder="Genre" [formControl]="genreControl">
+			<nb-select multiple placeholder="Genre" [formControl]="genreControl" shape="round">
 				<nb-option [value]="null">Clear</nb-option>
 				<nb-option *ngFor="let genre of gameGenres"
 				[value]="genre">{{genre}}</nb-option>
 			</nb-select>
 
-			<nb-select placeholder="Players" [formControl]="singleControl" class="score-select">
+			<nb-select placeholder="Players" [formControl]="singleControl" class="score-select" shape="round">
 				<nb-option [value]="null">Clear</nb-option>
 				<nb-option *ngFor="let type of [
 					{value: true , text: 'SinglePlayer'},
@@ -39,7 +39,7 @@
 				[value]="type.value">{{type.text}}</nb-option>
 			</nb-select>
 
-			<nb-select placeholder="GF" [formControl]="recommendedControl" class="score-select">
+			<nb-select placeholder="GF" [formControl]="recommendedControl" class="score-select" shape="round">
 				<nb-option [value]="null">Clear</nb-option>
 				<nb-option *ngFor="let type of [
 					{value: true , text: 'Yes'},
@@ -48,7 +48,7 @@
 				[value]="type.value">{{type.text}}</nb-option>
 			</nb-select>
 
-			<nb-select placeholder="Played" [formControl]="playedControl" class="score-select">
+			<nb-select placeholder="Played" [formControl]="playedControl" class="score-select" shape="round">
 				<nb-option [value]="null">Clear</nb-option>
 				<nb-option *ngFor="let type of [
 					{value: true , text: 'Yes'},
@@ -57,7 +57,7 @@
 				[value]="type.value">{{type.text}}</nb-option>
 			</nb-select>
 
-			<nb-select placeholder="Starred" [formControl]="starredControl" class="score-select">
+			<nb-select placeholder="Starred" [formControl]="starredControl" class="score-select" shape="round">
 				<nb-option [value]="null">Clear</nb-option>
 				<nb-option *ngFor="let type of [
 					{value: true , text: 'Yes'},
@@ -66,6 +66,11 @@
 				[value]="type.value">{{type.text}}</nb-option>
 			</nb-select>
 
+			<nb-select multiple placeholder="Excludes" [formControl]="excludeControl" shape="round">
+				<nb-option [value]="null">Clear</nb-option>
+				<nb-option *ngFor="let exclude of excludeList"
+				[value]="exclude">{{exclude}}</nb-option>
+			</nb-select>
 		</div>
 
 		<div style="margin-bottom: 15px;">

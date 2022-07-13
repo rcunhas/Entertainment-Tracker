@@ -110,10 +110,10 @@ export class TablesStore implements OnInit {
 
 				const genres = movie.genre.slice();
 				const where = movie.whereToStream.slice();
-
-				[value, entries] = this.updateRecValue(value, entries, movie.movie ? 'Movie' : 'Series', recTable);
+				const types = movie.type.slice();
 
 				[value, entries] = this.updateGenreValues(value, entries, genres, recTable);
+				[value, entries] = this.updateArray(value, entries, types, recTable);
 				// [value, entries] = this.updateArray(value, entries, where, recTable);
 
 				movie.recommendation = this.convertToPercentage(value/entries) || -1;

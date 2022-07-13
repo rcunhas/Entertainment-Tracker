@@ -3,14 +3,14 @@ table {
 }
 
 .search-input {
-	width: 200px;
+	width: 175px;
 }
 
 .score-select ::ng-deep {
 	margin-left: 15px;
 	.select-button {
-		min-width: 125px;
-		max-width: 125px;
+		min-width: 150px;
+		max-width: 150px;
 	}
 
 	Word-wrap: break-Word !important;
@@ -29,8 +29,8 @@ table {
 nb-select ::ng-deep {
 	margin-left: 15px;
 	.select-button {
-		min-width: 175px;
-		max-width: 175px;
+		min-width: 150px;
+		max-width: 150px;
 	}
 
 	Word-wrap: break-Word !important;
