@@ -5,42 +5,65 @@
 
 	<nb-card-body>
 
-		<label>Name</label>
-		<br>
-		<input type="text" nbInput style="width: 250px;" status="basic" placeholder="Name" [formControl]="nameControl">
-		<br>
+		<div class="row">
+			<div class="data-input">
+				<label>Name</label>
+				<input type="text" nbInput status="basic" placeholder="Name" [formControl]="nameControl">
+			</div>
 
-		<label>Score</label>
-		<br>
-		<input type="number" nbInput style="width: 250px;" status="basic" placeholder="Score" [formControl]="scoreControl">
-		<br>
+			<div class="data-input">
+				<label>Score</label>
+				<input type="number" nbInput status="basic" placeholder="Score" [formControl]="scoreControl">
+			</div>
+		</div>
 
-		<label>Author</label>
-		<br>
-		<input type="text" nbInput style="width: 250px;" status="basic" placeholder="Author" [formControl]="authorControl">
-		<br>
+		<div class="row">
+			<div class="data-input">
+				<label>Author</label>
+				<input type="text" nbInput status="basic" placeholder="Author" [formControl]="authorControl">
+			</div>
 
-		<label>Genre</label>
-		<br>
-		<nb-select multiple style="width: 250px;" placeholder="Genre" [formControl]="genreControl">
-			<nb-option *ngFor="let genre of bookGenres" [value]="genre">{{genre}}</nb-option>
-		</nb-select>
-		<br>
+			<div class="data-input">
+				<label>Genre</label>
+				<nb-select multiple placeholder="Genre" [formControl]="genreControl">
+					<nb-option *ngFor="let genre of bookGenres" [value]="genre">{{genre}}</nb-option>
+				</nb-select>
+			</div>
+		</div>
 
-		<br>
+		<div class="row">
+			<div class="data-input">
+				<label>Read</label>
+				<nb-select placeholder="Starred" [formControl]="checkboxControl">
+					<nb-option *ngFor="let type of [
+					{value: true , text: 'Yes'},
+					{value: false , text: 'No'},
+					]"
+					[value]="type.value">{{type.text}}</nb-option>
+				</nb-select>
+			</div>
 
-		<label>Read</label>
-		<br>
-		<br>
-		<nb-checkbox [formControl]="checkboxControl" style="margin-top: 20px;"></nb-checkbox>
-		<br>
+			<div class="data-input">
+				<label>Starred</label>
+				<nb-select placeholder="Starred" [formControl]="starredControl">
+					<nb-option *ngFor="let type of [
+					{value: true , text: 'Yes'},
+					{value: false , text: 'No'},
+					]"
+					[value]="type.value">{{type.text}}</nb-option>
+				</nb-select>
+			</div>
+		</div>
 
-		<br>
+		<div class="row">
+			<div class="data-input">
 
-		<label>Starred</label>
-		<br>
-		<br>
-		<nb-checkbox [formControl]="starredControl" style="margin-top: 20px;"></nb-checkbox>
+			</div>
+
+			<div class="data-input">
+
+			</div>
+		</div>
 
 	</nb-card-body>
 

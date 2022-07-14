@@ -285,6 +285,7 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 
 	add() {
 		this.dialogService.open(GamesEditboxDialog, {
+			closeOnBackdropClick: false,
 			context: {
 				data : {
 					id: uuid.v4(),
@@ -319,21 +320,24 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 
 	edit(row: IGameList) {
 		const data = row;
-		this.dialogService.open(GamesEditboxDialog, {context : {
-			data: {
-				id: row.id,
-				name: data.name,
-				score:  data.score,
-				singleplayer: data.singleplayer,
-				multiplayer: data.multiplayer,
-				recommended: data.recommended,
-				whereToPlay: data.whereToPlay,
-				genre: data.genre,
-				checkbox: data.checkbox,
-				starred: data.starred,
-				recommendation: data.recommendation,
+		this.dialogService.open(GamesEditboxDialog, {
+			closeOnBackdropClick: false,
+			context : {
+				data: {
+					id: row.id,
+					name: data.name,
+					score:  data.score,
+					singleplayer: data.singleplayer,
+					multiplayer: data.multiplayer,
+					recommended: data.recommended,
+					whereToPlay: data.whereToPlay,
+					genre: data.genre,
+					checkbox: data.checkbox,
+					starred: data.starred,
+					recommendation: data.recommendation,
+				}
 			}
-		}}).onClose.subscribe((res : IGameList) => {
+		}).onClose.subscribe((res : IGameList) => {
 			if (!res) {
 				return;
 			}

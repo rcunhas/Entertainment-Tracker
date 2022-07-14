@@ -5,61 +5,88 @@
 
 	<nb-card-body>
 
-		<label>Name</label>
-		<br>
-		<input type="text" nbInput style="width: 250px;" status="basic" placeholder="Name" [formControl]="nameControl">
-		<br>
+		<div class="row">
+			<div class="data-input">
+				<label>Name</label>
+				<input type="text" nbInput status="basic" placeholder="Name" [formControl]="nameControl">
+			</div>
 
-		<label>Score</label>
-		<br>
-		<input type="number" nbInput style="width: 250px;" status="basic" placeholder="Score" [formControl]="scoreControl">
-		<br>
+			<div class="data-input">
+				<label>Score</label>
+				<input type="number" nbInput status="basic" placeholder="Score" [formControl]="scoreControl">
+			</div>
+		</div>
 
-		<label>Where To Stream</label>
-		<br>
-		<nb-select multiple style="width: 250px;" placeholder="Where To Stream" [formControl]="streamControl">
-			<nb-option *ngFor="let location of whereToStream" [value]="location">{{location}}</nb-option>
-		</nb-select>
-		<br>
-		<br>
+		<div class="row">
+			<div class="data-input">
+				<label>Where To Stream</label>
+				<nb-select multiple placeholder="Where To Stream" [formControl]="streamControl">
+					<nb-option *ngFor="let location of whereToStream" [value]="location">{{location}}</nb-option>
+				</nb-select>
+			</div>
 
-		<label>Genre</label>
-		<br>
-		<nb-select multiple style="width: 250px;" placeholder="Genre" [formControl]="genreControl">
-			<nb-option *ngFor="let genre of movieGenres" [value]="genre">{{genre}}</nb-option>
-		</nb-select>
-		<br>
-		<br>
+			<div class="data-input">
+				<label>Genre</label>
+				<nb-select multiple placeholder="Genre" [formControl]="genreControl">
+					<nb-option *ngFor="let genre of movieGenres" [value]="genre">{{genre}}</nb-option>
+				</nb-select>
+			</div>
+		</div>
 
-		<label>Movie</label>
-		<br>
-		<nb-select multiple style="width: 250px;" placeholder="Type" [formControl]="typeControl">
-			<nb-option *ngFor="let type of movieTypes" [value]="type">{{type}}</nb-option>
-		</nb-select>
+		<div class="row">
+			<div class="data-input">
+				<label>Movie</label>
+				<nb-select multiple placeholder="Type" [formControl]="typeControl">
+					<nb-option *ngFor="let type of movieTypes" [value]="type">{{type}}</nb-option>
+				</nb-select>
+			</div>
 
-		<br>
-		<br>
+			<div class="data-input">
+				<label>Watch With GF</label>
+				<nb-select placeholder="Starred" [formControl]="watchWithControl">
+					<nb-option *ngFor="let type of [
+					{value: true , text: 'Yes'},
+					{value: false , text: 'No'},
+					]"
+					[value]="type.value">{{type.text}}</nb-option>
+				</nb-select>
+			</div>
+		</div>
 
-		<label>Watch With GF</label>
-		<br>
-		<br>
-		<nb-checkbox [formControl]="watchWithControl" style="margin-top: 20px;"></nb-checkbox>
+		<div class="row">
+			<div class="data-input">
+				<label>Watched</label>
+				<nb-select placeholder="Starred" [formControl]="checkboxControl">
+					<nb-option *ngFor="let type of [
+					{value: true , text: 'Yes'},
+					{value: false , text: 'No'},
+					]"
+					[value]="type.value">{{type.text}}</nb-option>
+				</nb-select>
+			</div>
 
-		<br>
-		<br>
+			<div class="data-input">
+				<label>Starred</label>
+				<nb-select placeholder="Starred" [formControl]="starredControl">
+					<nb-option *ngFor="let type of [
+					{value: true , text: 'Yes'},
+					{value: false , text: 'No'},
+					]"
+					[value]="type.value">{{type.text}}</nb-option>
+				</nb-select>
+			</div>
+		</div>
 
-		<label>Watched</label>
-		<br>
-		<br>
-		<nb-checkbox [formControl]="checkboxControl" style="margin-top: 20px;"></nb-checkbox>
+		<div class="row">
+			<div class="data-input">
 
-		<br>
-		<br>
+			</div>
 
-		<label>Starred</label>
-		<br>
-		<br>
-		<nb-checkbox [formControl]="starredControl" style="margin-top: 20px;"></nb-checkbox>
+			<div class="data-input">
+
+			</div>
+		</div>
+
 	</nb-card-body>
 
 	<nb-card-footer>
