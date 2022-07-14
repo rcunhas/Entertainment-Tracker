@@ -42,6 +42,7 @@ export class TablesStore implements OnInit {
 				let entries = 0;
 
 				[value, entries] = this.updateRecValue(value, entries, book.author, recTable);
+				if (book.franchise !== '') [value, entries] = this.updateRecValue(value, entries, book.franchise, recTable);
 
 				const genres = book.genre.slice();
 
@@ -78,6 +79,7 @@ export class TablesStore implements OnInit {
 
 				if (game.singleplayer) [value, entries] = this.updateRecValue(value, entries, 'SinglePlayer', recTable);
 				if (game.multiplayer) [value, entries] = this.updateRecValue(value, entries, 'MultiPlayer', recTable);
+				if (game.franchise !== '') [value, entries] = this.updateRecValue(value, entries, game.franchise, recTable);
 
 				[value, entries] = this.updateGenreValues(value, entries, genres, recTable);
 				// [value, entries] = this.updateArray(value, entries, where, recTable);
@@ -114,6 +116,7 @@ export class TablesStore implements OnInit {
 				const where = movie.whereToStream.slice();
 
 				[value, entries] = this.updateGenreValues(value, entries, genres, recTable);
+				if (movie.franchise !== '') [value, entries] = this.updateRecValue(value, entries, movie.franchise, recTable);
 				// [value, entries] = this.updateArray(value, entries, types, recTable);
 				// [value, entries] = this.updateArray(value, entries, where, recTable);
 

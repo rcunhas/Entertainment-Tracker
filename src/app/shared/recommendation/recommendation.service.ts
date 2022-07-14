@@ -19,6 +19,8 @@ export class RecommendationService {
 		for (let book of readBooks) {
 			const author = book.author;
 			const score = book.score;
+
+			if (book.franchise !== '') this.addEntry(book.franchise, score, featureMap);
 			this.addEntry(author, score, featureMap);
 
 			const genres = book.genre.slice();
@@ -42,6 +44,7 @@ export class RecommendationService {
 
 			if (game.singleplayer) this.addEntry('SinglePlayer', score, featureMap);
 			if (game.multiplayer) this.addEntry('MultiPlayer', score, featureMap);
+			if (game.franchise !== '') this.addEntry(game.franchise, score, featureMap);
 
 			const genres = game.genre.slice();
 			this.calculateGenres(genres, score, featureMap);
@@ -60,6 +63,9 @@ export class RecommendationService {
 
 		for (let movie of watchedMovies) {
 			const score = movie.score;
+
+			if (movie.franchise !== '') this.addEntry(movie.franchise, score, featureMap);
+
 			this.calculateArray(movie.whereToStream.slice(), score, featureMap);
 			// this.calculateArray(movie.type.slice(), score, featureMap);
 
