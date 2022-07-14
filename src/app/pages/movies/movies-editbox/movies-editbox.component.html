@@ -19,6 +19,17 @@
 
 		<div class="row">
 			<div class="data-input">
+				<label>Franchise</label>
+				<input type="text" nbInput status="basic" placeholder="Franchise" [formControl]="franchiseControl">
+			</div>
+
+			<div class="data-input">
+
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="data-input">
 				<label>Where To Stream</label>
 				<nb-select multiple placeholder="Where To Stream" [formControl]="streamControl">
 					<nb-option *ngFor="let location of whereToStream" [value]="location">{{location}}</nb-option>

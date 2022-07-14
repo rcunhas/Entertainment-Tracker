@@ -21,6 +21,7 @@ export class MoviesEditboxDialog implements OnInit {
 	watchWithControl!: FormControl;
 	checkboxControl!: FormControl;
 	starredControl!: FormControl;
+	franchiseControl!: FormControl;
 
 	movieGenres: string[] = MOVIE_GENRES;
 	whereToStream: string[] = WHERE_TO_STREAM;
@@ -35,6 +36,7 @@ export class MoviesEditboxDialog implements OnInit {
 	ngOnInit(): void {
 		this.nameControl = new FormControl(this.data?.name || '', Validators.required);
 		this.scoreControl = new FormControl(this.data?.score || -1, Validators.compose([Validators.min(-1), Validators.max(10), Validators.required]));
+		this.franchiseControl = new FormControl(this.data?.franchise || '', Validators.required);
 		this.genreControl = new FormControl(this.data?.genre || [], Validators.required);
 		this.streamControl = new FormControl(this.data?.whereToStream || [], Validators.required);
 		this.typeControl = new FormControl(this.data?.type || [], Validators.required);
@@ -52,6 +54,7 @@ export class MoviesEditboxDialog implements OnInit {
 
 		this.data.name = this.nameControl.value;
 		this.data.score = this.scoreControl.value;
+		this.data.franchise = this.franchiseControl.value;
 		this.data.genre = (this.genreControl.value as any[]).sort((a,b) => a.localeCompare(b));
 		this.data.whereToStream = (this.streamControl.value as any[]).sort((a,b) => a.localeCompare(b));
 		this.data.checkbox = this.checkboxControl.value;

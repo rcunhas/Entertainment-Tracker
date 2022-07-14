@@ -24,10 +24,21 @@
 			</div>
 
 			<div class="data-input">
+				<label>Franchise</label>
+				<input type="text" nbInput status="basic" placeholder="Franchise" [formControl]="franchiseControl">
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="data-input">
 				<label>Genre</label>
 				<nb-select multiple placeholder="Genre" [formControl]="genreControl">
 					<nb-option *ngFor="let genre of bookGenres" [value]="genre">{{genre}}</nb-option>
 				</nb-select>
+			</div>
+
+			<div class="data-input">
+
 			</div>
 		</div>
 

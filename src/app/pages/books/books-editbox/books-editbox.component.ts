@@ -18,6 +18,7 @@ export class BooksEditboxDialog implements OnInit {
 	genreControl!: FormControl;
 	checkboxControl!: FormControl;
 	starredControl!: FormControl;
+	franchiseControl!: FormControl;
 
 	bookGenres: string[] = BOOK_GENRES;
 
@@ -30,6 +31,7 @@ export class BooksEditboxDialog implements OnInit {
 	ngOnInit(): void {
 		this.nameControl = new FormControl(this.data?.name || '', Validators.required);
 		this.scoreControl = new FormControl(this.data?.score || -1, Validators.compose([Validators.min(-1), Validators.max(10), Validators.required]));
+		this.franchiseControl = new FormControl(this.data?.franchise || '', Validators.required);
 		this.authorControl = new FormControl(this.data?.author || '', Validators.required);
 		this.genreControl = new FormControl(this.data?.genre || [], Validators.required);
 		this.checkboxControl = new FormControl(this.data?.checkbox || false);
@@ -45,6 +47,7 @@ export class BooksEditboxDialog implements OnInit {
 
 		this.data.name = this.nameControl.value;
 		this.data.score = this.scoreControl.value;
+		this.data.franchise = this.franchiseControl.value;
 		this.data.author = this.authorControl.value;
 		this.data.genre = (this.genreControl.value as any[]).sort((a,b) => a.localeCompare(b));
 		this.data.checkbox = this.checkboxControl.value;

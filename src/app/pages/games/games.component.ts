@@ -203,10 +203,11 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 			if (this.globalFilter) {
 				const lowerCaseFilter = this.globalFilter.trim().toLowerCase();
 				const nameIncludes = data.name != '' && data.name.toLowerCase().includes(lowerCaseFilter);
+				const franchiseIncludes = data.franchise != '' && data.franchise.toLowerCase().includes(lowerCaseFilter);
 				const whereIncludes = data.whereToPlay != [] && data.whereToPlay.some(entry => entry.toLocaleLowerCase().includes(lowerCaseFilter));
 				const genreIncludes = data.genre != [] && data.genre.some(entry => entry.toLocaleLowerCase().includes(lowerCaseFilter));
 
-				globalMatch = nameIncludes || whereIncludes || genreIncludes;
+				globalMatch = nameIncludes || whereIncludes || genreIncludes || franchiseIncludes;
 			}
 
 			return globalMatch && selectMatch;
@@ -291,6 +292,7 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 					id: uuid.v4(),
 					name: '',
 					score:  -1,
+					franchise: '',
 					singleplayer: false,
 					multiplayer: false,
 					recommended: false,
@@ -327,6 +329,7 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 					id: row.id,
 					name: data.name,
 					score:  data.score,
+					franchise: data.franchise,
 					singleplayer: data.singleplayer,
 					multiplayer: data.multiplayer,
 					recommended: data.recommended,

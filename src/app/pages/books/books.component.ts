@@ -164,10 +164,11 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 			if (this.globalFilter) {
 				const lowerCaseFilter = this.globalFilter.trim().toLowerCase();
 				const nameIncludes = data.name != '' && data.name.toLowerCase().includes(lowerCaseFilter);
+				const franchiseIncludes = data.franchise != '' && data.franchise.toLowerCase().includes(lowerCaseFilter);
 				const authorIncludes = data.author != '' && data.author.toLocaleLowerCase().includes(lowerCaseFilter);
 				const genreIncludes = data.genre != [] && data.genre.some(entry => entry.toLocaleLowerCase().includes(lowerCaseFilter));
 
-				globalMatch = nameIncludes || authorIncludes || genreIncludes;
+				globalMatch = nameIncludes || authorIncludes || genreIncludes || franchiseIncludes;
 			}
 
 			return globalMatch && selectMatch;
@@ -242,6 +243,7 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 					id: uuid.v4(),
 					name: '',
 					author: '',
+					franchise: '',
 					score:  -1,
 					genre: [],
 					checkbox: false,
@@ -273,6 +275,7 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 				id: row.id,
 				name: data.name,
 				author: data.author,
+				franchise: data.franchise,
 				score:  data.score,
 				genre: data.genre,
 				checkbox: data.checkbox,

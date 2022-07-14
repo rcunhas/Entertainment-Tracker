@@ -3,6 +3,7 @@ export interface IList {
 	checkbox: boolean;
 	name: string;
 	score: number;
+	franchise: string;
 	starred: boolean;
 	genre: string[];
 	recommendation: number;

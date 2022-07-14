@@ -205,10 +205,11 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 			if (this.globalFilter) {
 				const lowerCaseFilter = this.globalFilter.trim().toLowerCase();
 				const nameIncludes = data.name != '' && data.name.toLowerCase().includes(lowerCaseFilter);
+				const franchiseIncludes = data.franchise != '' && data.franchise.toLowerCase().includes(lowerCaseFilter);
 				const whereIncludes = data.whereToStream != [] && data.whereToStream.some(entry => entry.toLocaleLowerCase().includes(lowerCaseFilter));
 				const genreIncludes = data.genre != [] && data.genre.some(entry => entry.toLocaleLowerCase().includes(lowerCaseFilter));
 
-				globalMatch = nameIncludes || whereIncludes || genreIncludes;
+				globalMatch = nameIncludes || whereIncludes || genreIncludes || franchiseIncludes;
 			}
 
 			return globalMatch && selectMatch;
@@ -292,6 +293,7 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 					id: uuid.v4(),
 					name: '',
 					score:  -1,
+					franchise: '',
 					watchWithGF: false,
 					whereToStream: [],
 					genre: [],
@@ -325,6 +327,7 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 				id: row.id,
 				name: data.name,
 				score:  data.score,
+				franchise: data.franchise,
 				watchWithGF: data.watchWithGF,
 				whereToStream: data.whereToStream,
 				genre: data.genre,

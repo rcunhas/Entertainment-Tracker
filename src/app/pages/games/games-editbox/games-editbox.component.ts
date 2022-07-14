@@ -22,6 +22,7 @@ export class GamesEditboxDialog implements OnInit {
 	recommendedControl!: FormControl;
 	checkboxControl!: FormControl;
 	starredControl!: FormControl;
+	franchiseControl!: FormControl;
 
 	gameGenres: string[] = GAME_GENRES;
 	whereToPlay: string[] = WHERE_TO_PLAY;
@@ -35,6 +36,7 @@ export class GamesEditboxDialog implements OnInit {
 	ngOnInit(): void {
 		this.nameControl = new FormControl(this.data?.name || '', Validators.required);
 		this.scoreControl = new FormControl(this.data?.score || -1, Validators.compose([Validators.min(-1), Validators.max(10), Validators.required]));
+		this.franchiseControl = new FormControl(this.data?.franchise || '', Validators.required);
 		this.genreControl = new FormControl(this.data?.genre || [], Validators.required);
 		this.playControl = new FormControl(this.data?.whereToPlay || [], Validators.required);
 		this.singleControl = new FormControl(this.data?.singleplayer || false);
@@ -53,6 +55,7 @@ export class GamesEditboxDialog implements OnInit {
 
 		this.data.name = this.nameControl.value;
 		this.data.score = this.scoreControl.value;
+		this.data.franchise = this.franchiseControl.value;
 		this.data.genre = (this.genreControl.value as any[]).sort((a,b) => a.localeCompare(b));
 		this.data.whereToPlay = (this.playControl.value as any[]).sort((a,b) => a.localeCompare(b));
 		this.data.checkbox = this.checkboxControl.value;
