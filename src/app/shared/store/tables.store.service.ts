@@ -149,6 +149,10 @@ export class TablesStore implements OnInit {
 				[value, entries] = this.updateRecValue(value, entries, key, table);
 			}
 		}
+		if (genres.length >= 3) {
+			const key = genres.join('/');
+			[value, entries] = this.updateRecValue(value, entries, key, table);
+		}
 		return [
 			value,
 			entries,

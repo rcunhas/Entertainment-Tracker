@@ -88,6 +88,10 @@ export class RecommendationService {
 				this.addEntry(key, score, features);
 			}
 		}
+		if (genres.length >= 3) {
+			const key = genres.join('/');
+			this.addEntry(key, score, features);
+		}
 	}
 
 	addEntry(key : string, value: number, featureMap: Map<string, number[]>) {
@@ -103,7 +107,7 @@ export class RecommendationService {
 
 		for (let [key, value] of featureMap.entries()) {
 			value = value.sort((a,b) => a - b);
-			if (value.length > 3) {
+			if (value.length >= 3) {
 				value.splice(0, 1)
 				value.splice(value.length - 1, 1);
 			}
