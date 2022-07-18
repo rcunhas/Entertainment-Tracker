@@ -15,16 +15,10 @@
 				<label>Score</label>
 				<input type="number" nbInput status="basic" placeholder="Score" [formControl]="scoreControl">
 			</div>
-		</div>
 
-		<div class="row">
 			<div class="data-input">
 				<label>Franchise</label>
 				<input type="text" nbInput status="basic" placeholder="Franchise" [formControl]="franchiseControl">
-			</div>
-
-			<div class="data-input">
-
 			</div>
 		</div>
 
@@ -42,6 +36,17 @@
 					<nb-option *ngFor="let genre of movieGenres" [value]="genre">{{genre}}</nb-option>
 				</nb-select>
 			</div>
+
+			<div class="data-input">
+				<label>Watched</label>
+				<nb-select placeholder="Starred" [formControl]="checkboxControl">
+					<nb-option *ngFor="let type of [
+					{value: true , text: 'Yes'},
+					{value: false , text: 'No'},
+					]"
+					[value]="type.value">{{type.text}}</nb-option>
+				</nb-select>
+			</div>
 		</div>
 
 		<div class="row">
@@ -55,19 +60,6 @@
 			<div class="data-input">
 				<label>Watch With GF</label>
 				<nb-select placeholder="Starred" [formControl]="watchWithControl">
-					<nb-option *ngFor="let type of [
-					{value: true , text: 'Yes'},
-					{value: false , text: 'No'},
-					]"
-					[value]="type.value">{{type.text}}</nb-option>
-				</nb-select>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="data-input">
-				<label>Watched</label>
-				<nb-select placeholder="Starred" [formControl]="checkboxControl">
 					<nb-option *ngFor="let type of [
 					{value: true , text: 'Yes'},
 					{value: false , text: 'No'},
@@ -93,9 +85,44 @@
 				<nb-accordion-item [disabled]="data.recChildren.length === 0">
 					<nb-accordion-item-header>Similar Movies</nb-accordion-item-header>
 					<nb-accordion-item-body>
+						<div class="row">
+							<div class="data-input">
+								<div class="string-fields">
+									Name
+								</div>
+							</div>
+
+							<div class="data-input">
+								<div class="string-fields">
+									Genres
+								</div>
+							</div>
+
+							<div class="data-input">
+								<div class="string-fields">
+									Relevance
+								</div>
+							</div>
+						</div>
 						<ng-container *ngFor="let rec of data.recChildren" class="recChildren">
-							<div class="string-fields">
-								{{rec.name}} - {{rec.genres.join()}} - {{rec.relevance}}
+							<div class="row">
+								<div class="data-input">
+									<div class="string-fields">
+										{{rec.name}}
+									</div>
+								</div>
+
+								<div class="data-input">
+									<div class="string-fields">
+										{{rec.genres.join()}}
+									</div>
+								</div>
+
+								<div class="data-input">
+									<div class="string-fields">
+										{{rec.relevance}}
+									</div>
+								</div>
 							</div>
 						</ng-container>
 					</nb-accordion-item-body>
@@ -108,9 +135,44 @@
 				<nb-accordion-item [disabled]="data.newRecChildren.length === 0">
 					<nb-accordion-item-header>Similar Movies (New Only)</nb-accordion-item-header>
 					<nb-accordion-item-body>
+						<div class="row">
+							<div class="data-input">
+								<div class="string-fields">
+									Name
+								</div>
+							</div>
+
+							<div class="data-input">
+								<div class="string-fields">
+									Genres
+								</div>
+							</div>
+
+							<div class="data-input">
+								<div class="string-fields">
+									Relevance
+								</div>
+							</div>
+						</div>
 						<ng-container *ngFor="let rec of data.newRecChildren" class="recChildren">
-							<div class="string-fields">
-								{{rec.name}} - {{rec.genres.join()}} - {{rec.relevance}}
+							<div class="row">
+								<div class="data-input">
+									<div class="string-fields">
+										{{rec.name}}
+									</div>
+								</div>
+
+								<div class="data-input">
+									<div class="string-fields">
+										{{rec.genres.join()}}
+									</div>
+								</div>
+
+								<div class="data-input">
+									<div class="string-fields">
+										{{rec.relevance}}
+									</div>
+								</div>
 							</div>
 						</ng-container>
 					</nb-accordion-item-body>
