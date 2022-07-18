@@ -89,7 +89,7 @@
 				<mat-cell mat-cell *matCellDef="let row">
 
 					<div *ngIf="column === 'actions'">
-						<button nbButton ghost ><nb-icon [icon]="row.recommended ? 'heart' : 'heart-outline'"></nb-icon></button>
+						<button nbButton ghost ><nb-icon [icon]="row.watchWithGF ? 'heart' : 'heart-outline'"></nb-icon></button>
 						<button nbButton ghost ><nb-icon [icon]="row.checkbox ? 'eye' : 'eye-off-outline'"></nb-icon></button>
 						<button nbButton ghost ><nb-icon [icon]="row.starred ? 'star' : 'star-outline'"></nb-icon></button>
 						<button nbButton ghost (click)="edit(row)"><nb-icon icon="edit-outline"></nb-icon></button>
