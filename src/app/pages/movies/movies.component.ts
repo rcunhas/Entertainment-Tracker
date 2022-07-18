@@ -26,7 +26,7 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 
 	data : IMovieList[] = []
 
-	allColumns: string[] = [ 'Actions', 'name', 'score', 'whereToStream', 'genre', 'type', 'watchWithGF', 'checkbox', 'starred', 'recommendation'];
+	allColumns: string[] = ['name', 'score', 'whereToStream', 'genre', 'type', 'recommendation', 'actions'];
 
 	movieGenres: string[] = MOVIE_GENRES;
 	whereToStream: string[] = WHERE_TO_STREAM;
@@ -230,9 +230,8 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 		}
 	}
 
-	randomizeEntry(forMe: boolean, starred: boolean = false) {
-		let filteredEntries = starred ? this.dataSource.data.filter(data => data.starred) : this.dataSource.filteredData;
-		filteredEntries = forMe ? filteredEntries : filteredEntries.filter(data => data.watchWithGF);
+	randomizeEntry() {
+		let filteredEntries = this.dataSource.filteredData;
 		const element = randomElement(filteredEntries);
 		this.dialogService.open(RandomDialog, {
 			context: {
@@ -281,6 +280,8 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 				return 'Type';
 			case 'recommendation':
 				return 'Rec %';
+			case 'actions':
+				return '';
 			default:
 				return column;
 		}

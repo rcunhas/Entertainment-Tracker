@@ -28,7 +28,7 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 
 	data : IGameList[] = []
 
-	allColumns: string[] = [ 'Actions', 'name', 'score', 'whereToPlay', 'genre', 'singleplayer', 'multiplayer', 'recommended', 'checkbox', 'starred', 'recommendation'];
+	allColumns: string[] = ['name', 'score', 'whereToPlay', 'genre', 'recommendation', 'actions'];
 
 	gameGenres: string[] = GAME_GENRES;
 	whereToPlay: string[] = WHERE_TO_PLAY;
@@ -228,9 +228,8 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 		}
 	}
 
-	randomizeEntry(forMe: boolean, starred: boolean = false) {
-		let filteredEntries = starred ? this.dataSource.data.filter(data => data.starred) : this.dataSource.filteredData;
-		filteredEntries = forMe ? filteredEntries : filteredEntries.filter(data => data.recommended);
+	randomizeEntry() {
+		let filteredEntries = this.dataSource.filteredData;
 		const element = randomElement(filteredEntries);
 		this.dialogService.open(RandomDialog, {
 			context: {
@@ -279,6 +278,8 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 				return 'Played';
 			case 'recommendation':
 				return 'Rec %';
+			case 'actions':
+				return '';
 			default:
 				return column;
 		}

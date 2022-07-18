@@ -8,8 +8,8 @@ export interface IList {
 	releaseYear: number;
 	extraFeatures: string[];
 	owner: string;
-	starred: boolean;
 	genre: string[];
+	starred: boolean;
 	recommendation: number;
 	recChildren: IChildren[];
 	newRecChildren: IChildren[];

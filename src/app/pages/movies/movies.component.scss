@@ -77,8 +77,6 @@ mat-cell {
 	color: #ffffff;
 	font-size: 14px;
 	font-weight: 600;
-	text-align: center;
-	justify-content: center;
 }
 
 mat-header-cell {
@@ -97,8 +95,6 @@ mat-header-cell {
 	-moz-hyphens: auto;
 	-webkit-hyphens: auto;
 	hyphens: auto;
-	text-align: center;
-	justify-content: center;
 }
 
 mat-paginator {
@@ -107,7 +103,7 @@ mat-paginator {
 }
 
 .string-fields {
-	width: 150px;
+	width: 90%;
 }
 
 ::-webkit-scrollbar {
@@ -128,4 +124,33 @@ mat-paginator {
 	margin-top: 20px;
 	justify-content: center;
 	align-items: center;
+}
+
+.mat-column-score {
+	max-width: 100px;
+}
+
+.mat-column-recommendation {
+	max-width: 100px;
+}
+
+.mat-column-type {
+	max-width: 100px;
+}
+
+.mat-column-whereToStream {
+	max-width: 125px;
+}
+
+.mat-column-genre {
+	max-width: 125px;
+}
+
+.mat-column-actions {
+	max-width: 300px;
+}
+
+.mat-column-name {
+	text-align: center;
+	justify-content: center;
 }

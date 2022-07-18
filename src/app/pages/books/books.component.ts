@@ -27,7 +27,7 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 
 	data : IBookList[] = []
 
-	allColumns: string[] = [ 'Actions', 'name', 'score', 'owner', 'genre', 'checkbox', 'starred', 'recommendation'];
+	allColumns: string[] = ['name', 'score', 'owner', 'genre', 'recommendation', 'actions'];
 
 	bookGenres: string[] = BOOK_GENRES;
 
@@ -189,8 +189,8 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 		}
 	}
 
-	randomizeEntry(starred: boolean) {
-		let filteredEntries = starred ? this.dataSource.data.filter(data => data.starred) : this.dataSource.filteredData;
+	randomizeEntry() {
+		let filteredEntries = this.dataSource.filteredData;
 		const element = randomElement(filteredEntries);
 		this.dialogService.open(RandomDialog, {
 			context: {
@@ -231,6 +231,8 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 				return 'Read';
 			case 'recommendation':
 				return 'Rec %';
+			case 'actions':
+				return '';
 			default:
 				return column;
 		}

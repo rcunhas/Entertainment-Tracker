@@ -53,8 +53,7 @@
 			<button nbButton ghost (click)="add()"><nb-icon icon="plus-outline"></nb-icon></button>
 			<button nbButton ghost (click)="saveToLocalStorage()"><nb-icon icon="save-outline"></nb-icon></button>
 			<button nbButton ghost (click)="save()"><nb-icon icon="arrow-circle-down-outline"></nb-icon></button>
-			<button nbButton ghost (click)="randomizeEntry(false)"><nb-icon icon="shuffle-2-outline"></nb-icon></button>
-			<button nbButton ghost (click)="randomizeEntry(true)"><nb-icon icon="star-outline"></nb-icon></button>
+			<button nbButton ghost (click)="randomizeEntry()"><nb-icon icon="shuffle-2-outline"></nb-icon></button>
 		</div>
 
 		<mat-paginator
@@ -69,18 +68,18 @@
 				<mat-header-cell *matHeaderCellDef mat-sort-header> {{convert(column)}} </mat-header-cell>
 				<mat-cell mat-cell *matCellDef="let row">
 
-					<div *ngIf="column === 'Actions'">
-						<button nbButton ghost (click)="deleteEntry(row)"><nb-icon icon="trash-2-outline"></nb-icon></button>
+					<div *ngIf="column === 'actions'">
+						<button nbButton ghost ><nb-icon [icon]="row.checkbox ? 'book' : 'book-outline'"></nb-icon></button>
+						<button nbButton ghost ><nb-icon [icon]="row.starred ? 'star' : 'star-outline'"></nb-icon></button>
 						<button nbButton ghost (click)="edit(row)"><nb-icon icon="edit-outline"></nb-icon></button>
+						<button nbButton ghost (click)="deleteEntry(row)"><nb-icon icon="trash-2-outline"></nb-icon></button>
 					</div>
 
-					<div *ngIf="!['checkbox', 'starred'].includes(column) && column != 'Actions'" class="string-fields">
+					<div *ngIf="column != 'actions'" class="string-fields">
 						<div style="white-space: pre-line">
 							{{getValue(row, column)}}
 						</div>
 					</div>
-
-					<nb-checkbox *ngIf="['checkbox', 'starred'].includes(column)" [checked]="getValue(row, column)" disabled></nb-checkbox>
 
                 </mat-cell>
 			</ng-container>
