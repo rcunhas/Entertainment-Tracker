@@ -8,6 +8,7 @@ export interface IList {
 	genre: string[];
 	recommendation: number;
 	recChildren: IChildren[];
+	newRecChildren: IChildren[];
 }
 
 export interface IChildren {

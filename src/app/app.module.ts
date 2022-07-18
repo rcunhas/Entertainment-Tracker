@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbMenuModule, NbIconModule, NbButtonModule, NbCardModule, NbTreeGridModule, NbInputModule, NbCheckboxModule, NbDialogModule, NbSelectModule, NbToastrModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbMenuModule, NbIconModule, NbButtonModule, NbCardModule, NbTreeGridModule, NbInputModule, NbCheckboxModule, NbDialogModule, NbSelectModule, NbToastrModule, NbAccordionModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { GamesComponent } from './pages/games/games.component';
 import { MoviesComponent } from './pages/movies/movies.component';
@@ -62,6 +62,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 		ReactiveFormsModule,
 		MatInputModule,
 		MatProgressSpinnerModule,
+		NbAccordionModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent]

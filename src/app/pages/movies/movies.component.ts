@@ -302,6 +302,7 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 					starred: false,
 					recommendation: -1,
 					recChildren: [],
+					newRecChildren: [],
 				}
 			}
 		}).onClose.subscribe(res => {
@@ -337,6 +338,7 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 				starred: data.starred,
 				recommendation: data.recommendation,
 				recChildren: data.recChildren,
+				newRecChildren: data.newRecChildren,
 			}
 		}}).onClose.subscribe((res: IMovieList) => {
 			if (!res) {

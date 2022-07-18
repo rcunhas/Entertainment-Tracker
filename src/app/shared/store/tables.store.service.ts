@@ -54,7 +54,8 @@ export class TablesStore implements OnInit {
 		}
 
 		books = books.map(book => {
-			book.recChildren = this.getBookRecChildren(books.slice(), book);
+			book.recChildren = this.getBookRecChildren(books.slice(), book, false);
+			book.newRecChildren = this.getBookRecChildren(books.slice(), book, true);
 			return book;
 		})
 		this.setBookData(books);
@@ -95,7 +96,8 @@ export class TablesStore implements OnInit {
 		}
 
 		games = games.map(game => {
-			game.recChildren = this.getGameRecChildren(games.slice(), game);
+			game.recChildren = this.getGameRecChildren(games.slice(), game, false);
+			game.newRecChildren = this.getGameRecChildren(games.slice(), game, true);
 			return game;
 		})
 		this.setGameData(games);
@@ -135,7 +137,8 @@ export class TablesStore implements OnInit {
 		}
 
 		movies = movies.map(movie => {
-			movie.recChildren = this.getMovieRecChildren(movies.slice(), movie);
+			movie.recChildren = this.getMovieRecChildren(movies.slice(), movie, false);
+			movie.newRecChildren = this.getMovieRecChildren(movies.slice(), movie, true);
 			return movie;
 		})
 
@@ -195,10 +198,11 @@ export class TablesStore implements OnInit {
 		return Math.round((value/10) * 100);
 	}
 
-	getBookRecChildren(array: IBookList[], entry: IBookList) : IChildren[] {
+	getBookRecChildren(array: IBookList[], entry: IBookList, newOnly: boolean) : IChildren[] {
 		return array.filter(a => {
 			const canGenre = a.genre.some(genre => entry.genre.includes(genre));
-			return canGenre && a.name !== entry.name && !a.checkbox;
+			const hasRead = newOnly ? !a.checkbox : true;
+			return canGenre && a.name !== entry.name && hasRead;
 		}).sort((a,b) => {
 			return this.getSortValue(a,b, entry);
 		}).splice(0,5)
@@ -211,11 +215,12 @@ export class TablesStore implements OnInit {
 		})
 	}
 
-	getGameRecChildren(array: IGameList[], entry: IGameList) : IChildren[] {
+	getGameRecChildren(array: IGameList[], entry: IGameList, newOnly: boolean) : IChildren[] {
 		return array.filter(a => {
 			const canGenre = a.genre.some(genre => entry.genre.includes(genre));
 			const canType = (entry.multiplayer && a.multiplayer) || (entry.singleplayer && a.singleplayer);
-			return canGenre && canType && a.name !== entry.name && !a.checkbox;
+			const hasPlayed = newOnly ? !a.checkbox : true;
+			return canGenre && canType && a.name !== entry.name && hasPlayed;
 		}).sort((a,b) => {
 			return this.getSortValue(a,b, entry);
 		}).splice(0,5)
@@ -228,11 +233,12 @@ export class TablesStore implements OnInit {
 		})
 	}
 
-	getMovieRecChildren(array: IMovieList[], entry: IMovieList) : IChildren[] {
+	getMovieRecChildren(array: IMovieList[], entry: IMovieList, newOnly: boolean) : IChildren[] {
 		return array.filter(a => {
 			const canGenre = a.genre.some(genre => entry.genre.includes(genre));
 			const canType = a.type.every(type => entry.type.includes(type)) && entry.type.every(type => a.type.includes(type));
-			return canGenre && canType && a.name !== entry.name;
+			const hasWatched = newOnly ? !a.checkbox : true;
+			return canGenre && canType && a.name !== entry.name && hasWatched;
 		}).sort((a,b) => {
 			return this.getSortValue(a,b, entry);
 		}).splice(0,5)

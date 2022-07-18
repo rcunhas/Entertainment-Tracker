@@ -286,7 +286,6 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 
 	add() {
 		this.dialogService.open(GamesEditboxDialog, {
-			closeOnBackdropClick: false,
 			context: {
 				data : {
 					id: uuid.v4(),
@@ -302,6 +301,7 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 					starred: false,
 					recommendation: -1,
 					recChildren: [],
+					newRecChildren: [],
 				}
 			}
 		}).onClose.subscribe(res => {
@@ -324,7 +324,6 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 	edit(row: IGameList) {
 		const data = row;
 		this.dialogService.open(GamesEditboxDialog, {
-			closeOnBackdropClick: false,
 			context : {
 				data: {
 					id: row.id,
@@ -340,6 +339,7 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 					starred: data.starred,
 					recommendation: data.recommendation,
 					recChildren: data.recChildren,
+					newRecChildren: data.newRecChildren,
 				}
 			}
 		}).onClose.subscribe((res : IGameList) => {
