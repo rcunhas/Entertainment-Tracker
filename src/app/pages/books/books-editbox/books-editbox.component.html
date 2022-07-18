@@ -17,6 +17,23 @@
 			</div>
 
 			<div class="data-input">
+				<label>Year</label>
+				<input type="number" nbInput status="basic" placeholder="Year" [formControl]="releaseYearControl">
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="data-input">
+				<label>Franchise</label>
+				<input type="text" nbInput status="basic" placeholder="Franchise" [formControl]="franchiseControl">
+			</div>
+
+			<div class="data-input">
+				<label>Order</label>
+				<input type="number" nbInput status="basic" placeholder="Order" [formControl]="franchiseOrderControl">
+			</div>
+
+			<div class="data-input">
 				<label>Author</label>
 				<input type="text" nbInput status="basic" placeholder="Author" [formControl]="authorControl">
 			</div>
@@ -50,21 +67,6 @@
 					]"
 					[value]="type.value">{{type.text}}</nb-option>
 				</nb-select>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="data-input">
-				<label>Franchise</label>
-				<input type="text" nbInput status="basic" placeholder="Franchise" [formControl]="franchiseControl">
-			</div>
-
-			<div class="data-input">
-
-			</div>
-
-			<div class="data-input">
-
 			</div>
 		</div>
 

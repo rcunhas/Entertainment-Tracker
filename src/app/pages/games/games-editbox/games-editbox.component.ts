@@ -24,6 +24,11 @@ export class GamesEditboxDialog implements OnInit {
 	starredControl!: FormControl;
 	franchiseControl!: FormControl;
 
+	franchiseOrderControl!: FormControl;
+	releaseYearControl!: FormControl;
+	extraFeaturesControl!: FormControl;
+	studioControl!: FormControl;
+
 	gameGenres: string[] = GAME_GENRES;
 	whereToPlay: string[] = WHERE_TO_PLAY;
 
@@ -44,6 +49,11 @@ export class GamesEditboxDialog implements OnInit {
 		this.recommendedControl = new FormControl(this.data?.recommended || false);
 		this.checkboxControl = new FormControl(this.data?.checkbox || false);
 		this.starredControl = new FormControl(this.data?.starred || false);
+
+		this.releaseYearControl = new FormControl(this.data?.releaseYear || -1, Validators.compose([Validators.min(-1), Validators.required]));
+		this.studioControl = new FormControl(this.data?.owner || '', Validators.required);
+		this.franchiseOrderControl = new FormControl(this.data?.franchiseOrder || -1, Validators.compose([Validators.min(-1), Validators.required]));
+		this.extraFeaturesControl = new FormControl(this.data?.extraFeatures || [], Validators.required);
 	}
 
 	close() {
@@ -63,6 +73,10 @@ export class GamesEditboxDialog implements OnInit {
 		this.data.multiplayer = this.multiControl.value;
 		this.data.recommended = this.recommendedControl.value;
 		this.data.starred = this.starredControl.value;
+
+		this.data.releaseYear = this.releaseYearControl.value;
+		this.data.owner = this.studioControl.value;
+		this.data.franchiseOrder = this.franchiseOrderControl.value;
 
 		if (this.data.name === '') {
 			this.nameControl.markAllAsTouched();

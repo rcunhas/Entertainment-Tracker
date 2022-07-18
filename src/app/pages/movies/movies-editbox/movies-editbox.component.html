@@ -17,8 +17,25 @@
 			</div>
 
 			<div class="data-input">
+				<label>Year</label>
+				<input type="number" nbInput status="basic" placeholder="Year" [formControl]="releaseYearControl">
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="data-input">
 				<label>Franchise</label>
 				<input type="text" nbInput status="basic" placeholder="Franchise" [formControl]="franchiseControl">
+			</div>
+
+			<div class="data-input">
+				<label>Order</label>
+				<input type="number" nbInput status="basic" placeholder="Order" [formControl]="franchiseOrderControl">
+			</div>
+
+			<div class="data-input">
+				<label>Director</label>
+				<input type="text" nbInput status="basic" placeholder="Director" [formControl]="directorControl">
 			</div>
 		</div>
 
@@ -38,6 +55,15 @@
 			</div>
 
 			<div class="data-input">
+				<label>Movie</label>
+				<nb-select multiple placeholder="Type" [formControl]="typeControl">
+					<nb-option *ngFor="let type of movieTypes" [value]="type">{{type}}</nb-option>
+				</nb-select>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="data-input">
 				<label>Watched</label>
 				<nb-select placeholder="Starred" [formControl]="checkboxControl">
 					<nb-option *ngFor="let type of [
@@ -45,15 +71,6 @@
 					{value: false , text: 'No'},
 					]"
 					[value]="type.value">{{type.text}}</nb-option>
-				</nb-select>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="data-input">
-				<label>Movie</label>
-				<nb-select multiple placeholder="Type" [formControl]="typeControl">
-					<nb-option *ngFor="let type of movieTypes" [value]="type">{{type}}</nb-option>
 				</nb-select>
 			</div>
 
@@ -181,6 +198,10 @@
 		</div>
 
 		<div class="row">
+			<div class="data-input">
+
+			</div>
+
 			<div class="data-input">
 
 			</div>

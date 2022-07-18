@@ -23,6 +23,11 @@ export class MoviesEditboxDialog implements OnInit {
 	starredControl!: FormControl;
 	franchiseControl!: FormControl;
 
+	franchiseOrderControl!: FormControl;
+	releaseYearControl!: FormControl;
+	extraFeaturesControl!: FormControl;
+	directorControl!: FormControl;
+
 	movieGenres: string[] = MOVIE_GENRES;
 	whereToStream: string[] = WHERE_TO_STREAM;
 	movieTypes: string[] = MOVIE_TYPES;
@@ -43,6 +48,11 @@ export class MoviesEditboxDialog implements OnInit {
 		this.watchWithControl = new FormControl(this.data?.watchWithGF || false);
 		this.checkboxControl = new FormControl(this.data?.checkbox || false);
 		this.starredControl = new FormControl(this.data?.starred || false);
+
+		this.releaseYearControl = new FormControl(this.data?.releaseYear || -1, Validators.compose([Validators.min(-1), Validators.required]));
+		this.directorControl = new FormControl(this.data?.owner || '', Validators.required);
+		this.franchiseOrderControl = new FormControl(this.data?.franchiseOrder || -1, Validators.compose([Validators.min(-1), Validators.required]));
+		this.extraFeaturesControl = new FormControl(this.data?.extraFeatures || [], Validators.required);
 	}
 
 	close() {
@@ -61,6 +71,10 @@ export class MoviesEditboxDialog implements OnInit {
 		this.data.type = (this.typeControl.value as any[]).sort((a,b) => a.localeCompare(b));
 		this.data.watchWithGF = this.watchWithControl.value;
 		this.data.starred = this.starredControl.value;
+
+		this.data.releaseYear = this.releaseYearControl.value;
+		this.data.owner = this.directorControl.value;
+		this.data.franchiseOrder = this.franchiseOrderControl.value;
 
 		if (this.data.name === '') {
 			this.nameControl.markAllAsTouched();

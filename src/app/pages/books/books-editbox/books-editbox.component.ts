@@ -20,6 +20,10 @@ export class BooksEditboxDialog implements OnInit {
 	starredControl!: FormControl;
 	franchiseControl!: FormControl;
 
+	franchiseOrderControl!: FormControl;
+	releaseYearControl!: FormControl;
+	extraFeaturesControl!: FormControl;
+
 	bookGenres: string[] = BOOK_GENRES;
 
 	constructor(
@@ -36,6 +40,10 @@ export class BooksEditboxDialog implements OnInit {
 		this.genreControl = new FormControl(this.data?.genre || [], Validators.required);
 		this.checkboxControl = new FormControl(this.data?.checkbox || false);
 		this.starredControl = new FormControl(this.data?.starred || false);
+
+		this.releaseYearControl = new FormControl(this.data?.releaseYear || -1, Validators.compose([Validators.min(-1), Validators.required]));
+		this.franchiseOrderControl = new FormControl(this.data?.franchiseOrder || -1, Validators.compose([Validators.min(-1), Validators.required]));
+		this.extraFeaturesControl = new FormControl(this.data?.extraFeatures || [], Validators.required);
 	}
 
 	close() {
@@ -52,6 +60,9 @@ export class BooksEditboxDialog implements OnInit {
 		this.data.genre = (this.genreControl.value as any[]).sort((a,b) => a.localeCompare(b));
 		this.data.checkbox = this.checkboxControl.value;
 		this.data.starred = this.starredControl.value;
+
+		this.data.releaseYear = this.releaseYearControl.value;
+		this.data.franchiseOrder = this.franchiseOrderControl.value;
 
 		if (this.data.name === '') {
 			this.nameControl.markAllAsTouched();
