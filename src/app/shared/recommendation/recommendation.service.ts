@@ -118,11 +118,27 @@ export class RecommendationService {
 				value.splice(value.length - 1, 1);
 			}
 			const sum = value.reduce((a, b) => a + b, 0);
-			const avg = Math.min( ((sum / value.length) || 0) * (1 + ((value.length/total)/10)), 10);
+			const avg = Math.min(((sum / value.length) || 0) * (1 + ((value.length/total)/10)), 10);
 			userEntries.set(key, Math.round((avg + Number.EPSILON) * 100) / 100)
 		}
+		// const array = Array.from(userEntries.values());
+		// const min = Math.min.apply(null, array);
+		// const max = Math.max.apply(null, array);
+
+		// for (let [key, value] of userEntries.entries()) {
+		// 	userEntries.set(key, this.normalize(value, min, max))
+		// }
+
 		console.log(userEntries);
 
+
 		return userEntries;
+	}
+
+	normalize(number: number, min: number, max: number) {
+		const useMax = ((number - min) + (number - max)) >= 0;
+		number = (useMax ? number + max : number + min) / 2;
+		number = (number - min) / (max - min);
+		return Math.round((number + Number.EPSILON) * 100) / 100;
 	}
 }

@@ -301,6 +301,7 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 					checkbox: false,
 					starred: false,
 					recommendation: -1,
+					recChildren: [],
 				}
 			}
 		}).onClose.subscribe(res => {
@@ -338,6 +339,7 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 					checkbox: data.checkbox,
 					starred: data.starred,
 					recommendation: data.recommendation,
+					recChildren: data.recChildren,
 				}
 			}
 		}).onClose.subscribe((res : IGameList) => {

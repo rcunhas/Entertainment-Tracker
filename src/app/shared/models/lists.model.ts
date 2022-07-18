@@ -7,6 +7,13 @@ export interface IList {
 	starred: boolean;
 	genre: string[];
 	recommendation: number;
+	recChildren: IChildren[];
+}
+
+export interface IChildren {
+	name: string;
+	genres: string[];
+	relevance: number;
 }
 
 export interface IFranchise extends IList {

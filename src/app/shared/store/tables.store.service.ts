@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { IBookList, IGameList, IMovieList } from "../models/lists.model";
+import { IBookList, IChildren, IGameList, IList, IMovieList } from "../models/lists.model";
 import booksList from '../../../files/booksList.json'
 import gamesList from '../../../files/gamesList.json'
 import moviesList from '../../../files/moviesList.json'
@@ -52,6 +52,11 @@ export class TablesStore implements OnInit {
 				return book;
 			})
 		}
+
+		books = books.map(book => {
+			book.recChildren = this.getBookRecChildren(books.slice(), book);
+			return book;
+		})
 		this.setBookData(books);
 	}
 
@@ -88,6 +93,11 @@ export class TablesStore implements OnInit {
 				return game;
 			})
 		}
+
+		games = games.map(game => {
+			game.recChildren = this.getGameRecChildren(games.slice(), game);
+			return game;
+		})
 		this.setGameData(games);
 	}
 
@@ -117,13 +127,18 @@ export class TablesStore implements OnInit {
 
 				[value, entries] = this.updateGenreValues(value, entries, genres, recTable);
 				if (movie.franchise !== '') [value, entries] = this.updateRecValue(value, entries, movie.franchise, recTable, false);
-				// [value, entries] = this.updateArray(value, entries, types, recTable);
 				// [value, entries] = this.updateArray(value, entries, where, recTable);
 
 				movie.recommendation = this.convertToPercentage(value/entries) || -1;
 				return movie;
 			})
 		}
+
+		movies = movies.map(movie => {
+			movie.recChildren = this.getMovieRecChildren(movies.slice(), movie);
+			return movie;
+		})
+
 		this.setMovieData(movies);
 	}
 
@@ -177,7 +192,78 @@ export class TablesStore implements OnInit {
 	}
 
 	convertToPercentage(value: number) {
-		return Math.round((value/10) * 100) ;
+		return Math.round((value/10) * 100);
+	}
+
+	getBookRecChildren(array: IBookList[], entry: IBookList) : IChildren[] {
+		return array.filter(a => {
+			const canGenre = a.genre.some(genre => entry.genre.includes(genre));
+			return canGenre && a.name !== entry.name && !a.checkbox;
+		}).sort((a,b) => {
+			return this.getSortValue(a,b, entry);
+		}).splice(0,5)
+		.map(movie => {
+			return {
+				name: movie.name,
+				genres: movie.genre,
+				relevance: movie.recommendation,
+			}
+		})
+	}
+
+	getGameRecChildren(array: IGameList[], entry: IGameList) : IChildren[] {
+		return array.filter(a => {
+			const canGenre = a.genre.some(genre => entry.genre.includes(genre));
+			const canType = (entry.multiplayer && a.multiplayer) || (entry.singleplayer && a.singleplayer);
+			return canGenre && canType && a.name !== entry.name && !a.checkbox;
+		}).sort((a,b) => {
+			return this.getSortValue(a,b, entry);
+		}).splice(0,5)
+		.map(movie => {
+			return {
+				name: movie.name,
+				genres: movie.genre,
+				relevance: movie.recommendation,
+			}
+		})
+	}
+
+	getMovieRecChildren(array: IMovieList[], entry: IMovieList) : IChildren[] {
+		return array.filter(a => {
+			const canGenre = a.genre.some(genre => entry.genre.includes(genre));
+			const canType = a.type.every(type => entry.type.includes(type)) && entry.type.every(type => a.type.includes(type));
+			return canGenre && canType && a.name !== entry.name;
+		}).sort((a,b) => {
+			return this.getSortValue(a,b, entry);
+		}).splice(0,5)
+		.map(movie => {
+			return {
+				name: movie.name,
+				genres: movie.genre,
+				relevance: movie.recommendation,
+			}
+		})
+	}
+
+	getSortValue(a: IList, b: IList, entry: IList) {
+		const length = entry.genre.length;
+		const aVal = this.getGenreValue(a, entry, length);
+		const bVal = this.getGenreValue(b, entry, length);
+
+		const recCalc =  this.getRecValue(b, bVal, length) - this.getRecValue(a, aVal, length);
+		const genreCalc =  bVal - aVal;
+		return recCalc + genreCalc;
+	}
+
+	getGenreValue(l: IList, entry: IList, length: number) {
+		const franchMultiplier = entry.franchise !== '' ? entry.franchise === l.franchise ? 1 : -1 : 0;
+		const lLength = l.genre.length;
+		const lIncludes = l.genre.filter(g => entry.genre.includes(g)).length;
+		return lIncludes - (lLength - lIncludes) - (length - lIncludes) + franchMultiplier - (length - lLength);
+	}
+
+	getRecValue(l: IList, lVal: number, length: number) {
+		return (l.recommendation * (1 + lVal/length));
 	}
 
 }

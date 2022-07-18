@@ -249,6 +249,7 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 					checkbox: false,
 					starred: false,
 					recommendation: -1,
+					recChildren: [],
 				}
 			}
 		}).onClose.subscribe(res => {
@@ -281,6 +282,7 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 				checkbox: data.checkbox,
 				starred: data.starred,
 				recommendation: data.recommendation,
+				recChildren: data.recChildren,
 			}
 		}}).onClose.subscribe((res: IBookList) => {
 			if (!res) {
