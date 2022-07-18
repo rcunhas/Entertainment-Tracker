@@ -35,13 +35,18 @@ export class TablesStore implements OnInit {
 		const storage = localStorage.getItem('booksList');
 		let books = (storage !== null ? JSON.parse(storage) : booksList) as IBookList[];
 		books = books.sort((a,b) => a.name.localeCompare(b.name));
+
+		books = books.map(book => {
+			return book;
+		})
+
 		const recTable = await this.recService.calculateBooksRecomendation(books.slice());
 		if (recTable != null) {
 			books = books.map(book => {
 				let value = 0;
 				let entries = 0;
 
-				[value, entries] = this.updateRecValue(value, entries, book.author, recTable);
+				[value, entries] = this.updateRecValue(value, entries, book.owner, recTable);
 				if (book.franchise !== '') [value, entries] = this.updateRecValue(value, entries, book.franchise, recTable, false);
 
 				const genres = book.genre.slice();
@@ -74,6 +79,11 @@ export class TablesStore implements OnInit {
 		const storage = localStorage.getItem('gamesList');
 		let games = (storage !== null ? JSON.parse(storage) : gamesList) as IGameList[];
 		games = games.sort((a,b) => a.name.localeCompare(b.name));
+
+		games = games.map(game => {
+			return game;
+		})
+
 		const recTable = await this.recService.calculateGamesRecomendation(games.slice());
 		if (recTable != null) {
 			games = games.map(game => {
@@ -116,6 +126,11 @@ export class TablesStore implements OnInit {
 		const storage = localStorage.getItem('moviesList');
 		let movies = (storage !== null ? JSON.parse(storage) : moviesList) as IMovieList[];
 		movies = movies.sort((a,b) => a.name.localeCompare(b.name));
+
+		movies = movies.map(movie => {
+			return movie;
+		})
+
 		const recTable = await this.recService.calculateMoviesRecomendation(movies.slice());
 		if (recTable != null) {
 			movies = movies.map(movie => {
@@ -204,8 +219,8 @@ export class TablesStore implements OnInit {
 			const hasRead = newOnly ? !a.checkbox : true;
 			return canGenre && a.name !== entry.name && hasRead;
 		}).sort((a,b) => {
-			const aBonus =  entry.author !== '' ? entry.author === a.author ? 1 : -1 : 0;
-			const bBonus =  entry.author !== '' ? entry.author === b.author ? 1 : -1 : 0;
+			const aBonus =  entry.owner !== '' ? entry.owner === a.owner ? 1 : -1 : 0;
+			const bBonus =  entry.owner !== '' ? entry.owner === b.owner ? 1 : -1 : 0;
 
 			return this.getSortValue(a,b, entry, aBonus, bBonus);
 		}).splice(0,5)

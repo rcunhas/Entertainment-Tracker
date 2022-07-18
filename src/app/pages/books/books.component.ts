@@ -27,7 +27,7 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 
 	data : IBookList[] = []
 
-	allColumns: string[] = [ 'Actions', 'name', 'score', 'author', 'genre', 'checkbox', 'starred', 'recommendation'];
+	allColumns: string[] = [ 'Actions', 'name', 'score', 'owner', 'genre', 'checkbox', 'starred', 'recommendation'];
 
 	bookGenres: string[] = BOOK_GENRES;
 
@@ -165,7 +165,7 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 				const lowerCaseFilter = this.globalFilter.trim().toLowerCase();
 				const nameIncludes = data.name != '' && data.name.toLowerCase().includes(lowerCaseFilter);
 				const franchiseIncludes = data.franchise != '' && data.franchise.toLowerCase().includes(lowerCaseFilter);
-				const authorIncludes = data.author != '' && data.author.toLocaleLowerCase().includes(lowerCaseFilter);
+				const authorIncludes = data.owner != '' && data.owner.toLocaleLowerCase().includes(lowerCaseFilter);
 				const genreIncludes = data.genre != [] && data.genre.some(entry => entry.toLocaleLowerCase().includes(lowerCaseFilter));
 
 				globalMatch = nameIncludes || authorIncludes || genreIncludes || franchiseIncludes;
@@ -197,7 +197,7 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 				data: {
 					name: element.name,
 					genre: this.getValue(element, 'genre'),
-					whereTo: element.author,
+					whereTo: element.owner,
 				}
 			}
 		});
@@ -221,7 +221,7 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 				return 'Name';
 			case 'score':
 				return 'Score';
-			case 'author':
+			case 'owner':
 				return 'Author';
 			case 'genre':
 				return 'Genre';
@@ -242,8 +242,10 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 				data : {
 					id: uuid.v4(),
 					name: '',
-					author: '',
 					franchise: '',
+					franchiseOrder: -1,
+					owner: '',
+					releaseYear: -1,
 					score:  -1,
 					genre: [],
 					checkbox: false,
@@ -276,8 +278,10 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 			data: {
 				id: row.id,
 				name: data.name,
-				author: data.author,
 				franchise: data.franchise,
+				franchiseOrder: data.franchiseOrder,
+				owner: data.owner,
+				releaseYear: data.releaseYear,
 				score:  data.score,
 				genre: data.genre,
 				checkbox: data.checkbox,

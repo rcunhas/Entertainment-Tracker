@@ -17,7 +17,7 @@ export class RecommendationService {
 		const featureMap : Map<string, number[]> =  new Map<string,number[]>();
 
 		for (let book of readBooks) {
-			const author = book.author;
+			const author = book.owner;
 			const score = book.score;
 
 			if (book.franchise !== '') this.addEntry(book.franchise, score, featureMap);

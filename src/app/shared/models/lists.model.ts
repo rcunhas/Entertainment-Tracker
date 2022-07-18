@@ -4,6 +4,9 @@ export interface IList {
 	name: string;
 	score: number;
 	franchise: string;
+	franchiseOrder: number;
+	releaseYear: number;
+	owner: string;
 	starred: boolean;
 	genre: string[];
 	recommendation: number;
@@ -21,9 +24,7 @@ export interface IFranchise extends IList {
 	children: IList;
 }
 
-export interface IBookList extends IList {
-	author: string;
-}
+export interface IBookList extends IList {}
 
 export interface IGameList extends IList {
 	whereToPlay: string[];

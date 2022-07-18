@@ -32,7 +32,7 @@ export class BooksEditboxDialog implements OnInit {
 		this.nameControl = new FormControl(this.data?.name || '', Validators.required);
 		this.scoreControl = new FormControl(this.data?.score || -1, Validators.compose([Validators.min(-1), Validators.max(10), Validators.required]));
 		this.franchiseControl = new FormControl(this.data?.franchise || '', Validators.required);
-		this.authorControl = new FormControl(this.data?.author || '', Validators.required);
+		this.authorControl = new FormControl(this.data?.owner || '', Validators.required);
 		this.genreControl = new FormControl(this.data?.genre || [], Validators.required);
 		this.checkboxControl = new FormControl(this.data?.checkbox || false);
 		this.starredControl = new FormControl(this.data?.starred || false);
@@ -48,7 +48,7 @@ export class BooksEditboxDialog implements OnInit {
 		this.data.name = this.nameControl.value;
 		this.data.score = this.scoreControl.value;
 		this.data.franchise = this.franchiseControl.value;
-		this.data.author = this.authorControl.value;
+		this.data.owner = this.authorControl.value;
 		this.data.genre = (this.genreControl.value as any[]).sort((a,b) => a.localeCompare(b));
 		this.data.checkbox = this.checkboxControl.value;
 		this.data.starred = this.starredControl.value;
@@ -65,7 +65,7 @@ export class BooksEditboxDialog implements OnInit {
 			canSubmit = false;
 		}
 
-		if (this.data.author === '') {
+		if (this.data.owner === '') {
 			this.authorControl.markAllAsTouched();
 			this.toastrService.danger('Author cannot be empty', 'Author Control', { position: NbGlobalPhysicalPosition.BOTTOM_RIGHT})
 			canSubmit = false;
