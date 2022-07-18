@@ -204,7 +204,10 @@ export class TablesStore implements OnInit {
 			const hasRead = newOnly ? !a.checkbox : true;
 			return canGenre && a.name !== entry.name && hasRead;
 		}).sort((a,b) => {
-			return this.getSortValue(a,b, entry);
+			const aBonus =  entry.author !== '' ? entry.author === a.author ? 1 : -1 : 0;
+			const bBonus =  entry.author !== '' ? entry.author === b.author ? 1 : -1 : 0;
+
+			return this.getSortValue(a,b, entry, aBonus, bBonus);
 		}).splice(0,5)
 		.map(movie => {
 			return {
@@ -251,25 +254,30 @@ export class TablesStore implements OnInit {
 		})
 	}
 
-	getSortValue(a: IList, b: IList, entry: IList) {
+	getSortValue(a: IList, b: IList, entry: IList, bonusA: number = 0, bonusB: number = 0) {
 		const length = entry.genre.length;
-		const aVal = this.getGenreValue(a, entry, length);
-		const bVal = this.getGenreValue(b, entry, length);
 
-		const recCalc =  this.getRecValue(b, bVal, length) - this.getRecValue(a, aVal, length);
+		const aFranchise =  entry.franchise !== '' ? entry.franchise === a.franchise ? 1 : -1 : 0;
+		const aBonus = aFranchise + bonusA;
+		const aVal = this.getGenreValue(a, entry, length, aBonus);
+
+		const bFranchise =  entry.franchise !== '' ? entry.franchise === b.franchise ? 1 : -1 : 0;
+		const bBonus = bFranchise + bonusB;
+		const bVal = this.getGenreValue(b, entry, length, bBonus);
+
+		const recCalc =  this.getRecValue(b, bVal, bBonus) - this.getRecValue(a, aVal, aBonus);
 		const genreCalc =  bVal - aVal;
 		return recCalc + genreCalc;
 	}
 
-	getGenreValue(l: IList, entry: IList, length: number) {
-		const franchMultiplier = entry.franchise !== '' ? entry.franchise === l.franchise ? 1 : -1 : 0;
+	getGenreValue(l: IList, entry: IList, length: number, bonus: number) {
 		const lLength = l.genre.length;
 		const lIncludes = l.genre.filter(g => entry.genre.includes(g)).length;
-		return lIncludes - (lLength - lIncludes) - (length - lIncludes) + franchMultiplier - (length - lLength);
+		return lIncludes - (lLength - lIncludes) - (length - lIncludes) - ((length - lLength) * length) + bonus;
 	}
 
-	getRecValue(l: IList, lVal: number, length: number) {
-		return (l.recommendation * (1 + lVal/length));
+	getRecValue(l: IList, lVal: number, bonus: number) {
+		return (l.recommendation * (1 + lVal/(5 - bonus))) + lVal;
 	}
 
 }
