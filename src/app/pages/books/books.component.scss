@@ -75,9 +75,10 @@ mat-row {
 
 mat-cell {
 	color: #ffffff;
-	padding: 0px 5px;
 	font-size: 14px;
 	font-weight: 600;
+	text-align: center;
+	justify-content: center;
 }
 
 mat-header-cell {
@@ -96,6 +97,8 @@ mat-header-cell {
 	-moz-hyphens: auto;
 	-webkit-hyphens: auto;
 	hyphens: auto;
+	text-align: center;
+	justify-content: center;
 }
 
 mat-paginator {

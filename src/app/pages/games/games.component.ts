@@ -305,6 +305,7 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 					recommendation: -1,
 					recChildren: [],
 					newRecChildren: [],
+					extraFeatures: [],
 				}
 			}
 		}).onClose.subscribe(res => {
@@ -346,6 +347,7 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 					recommendation: data.recommendation,
 					recChildren: data.recChildren,
 					newRecChildren: data.newRecChildren,
+					extraFeatures: data.extraFeatures,
 				}
 			}
 		}).onClose.subscribe((res : IGameList) => {

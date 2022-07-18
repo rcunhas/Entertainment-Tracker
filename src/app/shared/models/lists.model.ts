@@ -6,6 +6,7 @@ export interface IList {
 	franchise: string;
 	franchiseOrder: number;
 	releaseYear: number;
+	extraFeatures: string[];
 	owner: string;
 	starred: boolean;
 	genre: string[];
