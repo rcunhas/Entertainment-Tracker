@@ -27,7 +27,7 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 
 	data : IBookList[] = []
 
-	allColumns: string[] = ['name', 'score', 'owner', 'genre', 'recommendation', 'actions'];
+	allColumns: string[] = ['name', 'franchise', 'score', 'owner', 'genre', 'recommendation', 'actions'];
 
 	bookGenres: string[] = BOOK_GENRES;
 
@@ -221,6 +221,8 @@ export class BooksComponent implements AfterViewInit, OnInit, OnDestroy {
 				return 'Name';
 			case 'score':
 				return 'Score';
+			case 'franchise':
+				return 'Franchise';
 			case 'owner':
 				return 'Author';
 			case 'genre':

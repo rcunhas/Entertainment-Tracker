@@ -26,7 +26,7 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 
 	data : IMovieList[] = []
 
-	allColumns: string[] = ['name', 'score', 'whereToStream', 'genre', 'type', 'recommendation', 'actions'];
+	allColumns: string[] = ['name', 'franchise', 'score', 'whereToStream', 'genre', 'type', 'recommendation', 'actions'];
 
 	movieGenres: string[] = MOVIE_GENRES;
 	whereToStream: string[] = WHERE_TO_STREAM;
@@ -266,6 +266,8 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 				return 'Name';
 			case 'score':
 				return 'Score';
+			case 'franchise':
+				return 'Franchise';
 			case 'genre':
 				return 'Genre';
 			case 'whereToStream':

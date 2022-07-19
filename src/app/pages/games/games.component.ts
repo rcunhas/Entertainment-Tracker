@@ -28,7 +28,7 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 
 	data : IGameList[] = []
 
-	allColumns: string[] = ['name', 'score', 'whereToPlay', 'genre', 'recommendation', 'actions'];
+	allColumns: string[] = ['name', 'franchise', 'score', 'whereToPlay', 'genre', 'recommendation', 'actions'];
 
 	gameGenres: string[] = GAME_GENRES;
 	whereToPlay: string[] = WHERE_TO_PLAY;
@@ -260,6 +260,8 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 				return 'Name';
 			case 'score':
 				return 'Score';
+			case 'franchise':
+				return 'Franchise';
 			case 'author':
 				return 'Author';
 			case 'genre':

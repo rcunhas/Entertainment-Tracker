@@ -280,9 +280,11 @@ export class TablesStore implements OnInit {
 		const bBonus = bFranchise + bonusB;
 		const bVal = this.getGenreValue(b, entry, length, bBonus);
 
+		const orderBonus = (entry.franchise !== '') && (a.franchise === b.franchise) ? b.franchiseOrder - a.franchiseOrder : 0;
+
 		const recCalc =  this.getRecValue(b, bVal, bBonus) - this.getRecValue(a, aVal, aBonus);
 		const genreCalc =  bVal - aVal;
-		return recCalc + genreCalc;
+		return recCalc + genreCalc - orderBonus;
 	}
 
 	getGenreValue(l: IList, entry: IList, length: number, bonus: number) {
