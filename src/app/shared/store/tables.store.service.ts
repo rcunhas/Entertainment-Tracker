@@ -48,6 +48,7 @@ export class TablesStore implements OnInit {
 
 				[value, entries] = this.updateRecValue(value, entries, book.owner, recTable);
 				if (book.franchise !== '') [value, entries] = this.updateRecValue(value, entries, book.franchise, recTable, false);
+				// if (book.releaseYear !== -1) [value, entries] = this.updateRecValue(value, entries, book.releaseYear.toString(), recTable, false);
 
 				const genres = book.genre.slice();
 
@@ -96,6 +97,8 @@ export class TablesStore implements OnInit {
 				if (game.singleplayer) [value, entries] = this.updateRecValue(value, entries, 'SinglePlayer', recTable);
 				if (game.multiplayer) [value, entries] = this.updateRecValue(value, entries, 'MultiPlayer', recTable);
 				if (game.franchise !== '') [value, entries] = this.updateRecValue(value, entries, game.franchise, recTable, false);
+				if (game.owner !== '') [value, entries] = this.updateRecValue(value, entries, game.owner, recTable, false);
+				// if (game.releaseYear !== -1) [value, entries] = this.updateRecValue(value, entries, game.releaseYear.toString(), recTable, false);
 
 				[value, entries] = this.updateGenreValues(value, entries, genres, recTable);
 				// [value, entries] = this.updateArray(value, entries, where, recTable);
@@ -144,7 +147,9 @@ export class TablesStore implements OnInit {
 
 				[value, entries] = this.updateGenreValues(value, entries, genres, recTable);
 				if (movie.franchise !== '') [value, entries] = this.updateRecValue(value, entries, movie.franchise, recTable, false);
-				// [value, entries] = this.updateArray(value, entries, where, recTable);
+				if (movie.owner !== '') [value, entries] = this.updateRecValue(value, entries, movie.owner, recTable, false);
+				if (movie.studio !== '') [value, entries] = this.updateRecValue(value, entries, movie.studio, recTable, false);
+				// if (movie.releaseYear !== -1) [value, entries] = this.updateRecValue(value, entries, movie.releaseYear.toString(), recTable, false);
 
 				movie.recommendation = this.convertToPercentage(value/entries) || -1;
 				return movie;
@@ -280,7 +285,7 @@ export class TablesStore implements OnInit {
 		const bBonus = bFranchise + bonusB;
 		const bVal = this.getGenreValue(b, entry, length, bBonus);
 
-		const orderBonus = (entry.franchise !== '') && (a.franchise === b.franchise) ? b.franchiseOrder - a.franchiseOrder : 0;
+		const orderBonus = (entry.franchise !== '') && (a.franchise === b.franchise) && b.franchise === entry.franchise ? entry.franchiseOrder === 1 ? b.franchiseOrder - a.franchiseOrder : a.franchiseOrder - b.franchiseOrder  : 0;
 
 		const recCalc =  this.getRecValue(b, bVal, bBonus) - this.getRecValue(a, aVal, aBonus);
 		const genreCalc =  bVal - aVal;

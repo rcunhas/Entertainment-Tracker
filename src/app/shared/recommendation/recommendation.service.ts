@@ -21,6 +21,8 @@ export class RecommendationService {
 			const score = book.score;
 
 			if (book.franchise !== '') this.addEntry(book.franchise, score, featureMap);
+			if (book.releaseYear !== -1) this.addEntry(book.releaseYear.toString(), score, featureMap)
+
 			this.addEntry(author, score, featureMap);
 
 			const genres = book.genre.slice();
@@ -45,6 +47,8 @@ export class RecommendationService {
 			if (game.singleplayer) this.addEntry('SinglePlayer', score, featureMap);
 			if (game.multiplayer) this.addEntry('MultiPlayer', score, featureMap);
 			if (game.franchise !== '') this.addEntry(game.franchise, score, featureMap);
+			if (game.owner !== '') this.addEntry(game.owner, score, featureMap)
+			if (game.releaseYear !== -1) this.addEntry(game.releaseYear.toString(), score, featureMap)
 
 			const genres = game.genre.slice();
 			this.calculateGenres(genres, score, featureMap);
@@ -65,9 +69,11 @@ export class RecommendationService {
 			const score = movie.score;
 
 			if (movie.franchise !== '') this.addEntry(movie.franchise, score, featureMap);
+			if (movie.owner !== '') this.addEntry(movie.owner, score, featureMap)
+			if (movie.studio !== '') this.addEntry(movie.studio, score, featureMap)
+			if (movie.releaseYear !== -1) this.addEntry(movie.releaseYear.toString(), score, featureMap)
 
 			this.calculateArray(movie.whereToStream.slice(), score, featureMap);
-			// this.calculateArray(movie.type.slice(), score, featureMap);
 
 			let genres = movie.genre.slice();
 			genres.push(...movie.type.slice());

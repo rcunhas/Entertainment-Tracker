@@ -27,6 +27,7 @@ export class MoviesEditboxDialog implements OnInit {
 	releaseYearControl!: FormControl;
 	extraFeaturesControl!: FormControl;
 	directorControl!: FormControl;
+	studioControl!: FormControl;
 
 	movieGenres: string[] = MOVIE_GENRES;
 	whereToStream: string[] = WHERE_TO_STREAM;
@@ -51,6 +52,7 @@ export class MoviesEditboxDialog implements OnInit {
 
 		this.releaseYearControl = new FormControl(this.data?.releaseYear || -1, Validators.compose([Validators.min(-1), Validators.required]));
 		this.directorControl = new FormControl(this.data?.owner || '', Validators.required);
+		this.studioControl = new FormControl(this.data?.studio || '', Validators.required);
 		this.franchiseOrderControl = new FormControl(this.data?.franchiseOrder || -1, Validators.compose([Validators.min(-1), Validators.required]));
 		this.extraFeaturesControl = new FormControl(this.data?.extraFeatures || [], Validators.required);
 	}
@@ -74,6 +76,7 @@ export class MoviesEditboxDialog implements OnInit {
 
 		this.data.releaseYear = this.releaseYearControl.value;
 		this.data.owner = this.directorControl.value;
+		this.data.studio = this.studioControl.value;
 		this.data.franchiseOrder = this.franchiseOrderControl.value;
 
 		if (this.data.name === '') {

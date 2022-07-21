@@ -26,7 +26,7 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 
 	data : IMovieList[] = []
 
-	allColumns: string[] = ['name', 'franchise', 'score', 'whereToStream', 'genre', 'type', 'recommendation', 'actions'];
+	allColumns: string[] = ['name', 'franchise', 'owner', 'studio', 'score', 'whereToStream', 'genre', 'type', 'recommendation', 'actions'];
 
 	movieGenres: string[] = MOVIE_GENRES;
 	whereToStream: string[] = WHERE_TO_STREAM;
@@ -206,10 +206,12 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 				const lowerCaseFilter = this.globalFilter.trim().toLowerCase();
 				const nameIncludes = data.name != '' && data.name.toLowerCase().includes(lowerCaseFilter);
 				const franchiseIncludes = data.franchise != '' && data.franchise.toLowerCase().includes(lowerCaseFilter);
+				const studioIncludes = data.studio != '' && data.studio.toLowerCase().includes(lowerCaseFilter);
+				const ownerIncludes = data.owner != '' && data.owner.toLowerCase().includes(lowerCaseFilter);
 				const whereIncludes = data.whereToStream != [] && data.whereToStream.some(entry => entry.toLocaleLowerCase().includes(lowerCaseFilter));
 				const genreIncludes = data.genre != [] && data.genre.some(entry => entry.toLocaleLowerCase().includes(lowerCaseFilter));
 
-				globalMatch = nameIncludes || whereIncludes || genreIncludes || franchiseIncludes;
+				globalMatch = nameIncludes || whereIncludes || genreIncludes || franchiseIncludes || ownerIncludes || studioIncludes;
 			}
 
 			return globalMatch && selectMatch;
@@ -268,6 +270,10 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 				return 'Score';
 			case 'franchise':
 				return 'Franchise';
+			case 'owner':
+				return 'Director';
+			case 'studio':
+				return 'Studio';
 			case 'genre':
 				return 'Genre';
 			case 'whereToStream':
@@ -299,6 +305,7 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 					franchise: '',
 					franchiseOrder: -1,
 					owner: '',
+					studio: '',
 					releaseYear: -1,
 					watchWithGF: false,
 					whereToStream: [],
@@ -339,6 +346,7 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 				franchise: data.franchise,
 				franchiseOrder: data.franchiseOrder,
 				owner: data.owner,
+				studio: data.studio,
 				releaseYear: data.releaseYear,
 				watchWithGF: data.watchWithGF,
 				whereToStream: data.whereToStream,

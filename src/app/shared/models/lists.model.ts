@@ -37,6 +37,7 @@ export interface IGameList extends IList {
 export interface IMovieList extends IList {
 	whereToStream: string[];
 	type: string[];
+	studio: string;
 	watchWithGF: boolean;
 }
 

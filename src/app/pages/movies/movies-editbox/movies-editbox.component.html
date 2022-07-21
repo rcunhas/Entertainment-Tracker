@@ -41,6 +41,19 @@
 
 		<div class="row">
 			<div class="data-input">
+				<label>Studio</label>
+				<input type="text" nbInput status="basic" placeholder="Studio" [formControl]="studioControl">
+			</div>
+
+			<div class="data-input">
+			</div>
+
+			<div class="data-input">
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="data-input">
 				<label>Where To Stream</label>
 				<nb-select multiple placeholder="Where To Stream" [formControl]="streamControl">
 					<nb-option *ngFor="let location of whereToStream" [value]="location">{{location}}</nb-option>

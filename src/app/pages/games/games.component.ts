@@ -28,7 +28,7 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 
 	data : IGameList[] = []
 
-	allColumns: string[] = ['name', 'franchise', 'score', 'whereToPlay', 'genre', 'recommendation', 'actions'];
+	allColumns: string[] = ['name', 'franchise', 'owner', 'score', 'whereToPlay', 'genre', 'recommendation', 'actions'];
 
 	gameGenres: string[] = GAME_GENRES;
 	whereToPlay: string[] = WHERE_TO_PLAY;
@@ -204,10 +204,11 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 				const lowerCaseFilter = this.globalFilter.trim().toLowerCase();
 				const nameIncludes = data.name != '' && data.name.toLowerCase().includes(lowerCaseFilter);
 				const franchiseIncludes = data.franchise != '' && data.franchise.toLowerCase().includes(lowerCaseFilter);
+				const ownerIncludes = data.owner != '' && data.owner.toLowerCase().includes(lowerCaseFilter);
 				const whereIncludes = data.whereToPlay != [] && data.whereToPlay.some(entry => entry.toLocaleLowerCase().includes(lowerCaseFilter));
 				const genreIncludes = data.genre != [] && data.genre.some(entry => entry.toLocaleLowerCase().includes(lowerCaseFilter));
 
-				globalMatch = nameIncludes || whereIncludes || genreIncludes || franchiseIncludes;
+				globalMatch = nameIncludes || whereIncludes || genreIncludes || franchiseIncludes || ownerIncludes;
 			}
 
 			return globalMatch && selectMatch;
@@ -262,6 +263,8 @@ export class GamesComponent implements AfterViewInit, OnInit, OnDestroy {
 				return 'Score';
 			case 'franchise':
 				return 'Franchise';
+			case 'owner':
+				return 'Studio';
 			case 'author':
 				return 'Author';
 			case 'genre':
