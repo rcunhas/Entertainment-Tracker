@@ -1,11 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { NbDialogRef, NbToastrService, NbGlobalPhysicalPosition } from '@nebular/theme';
+import { Subscription } from 'rxjs';
 import { GAME_GENRES, IGameList, WHERE_TO_PLAY } from 'src/app/shared/models/lists.model';
 import { BooksEditboxDialog } from '../../books/books-editbox/books-editbox.component';
 
 @Component({
   selector: 'app-games-editbox',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './games-editbox.component.html',
   styleUrls: ['./games-editbox.component.scss']
 })
@@ -29,13 +31,36 @@ export class GamesEditboxDialog implements OnInit {
 	extraFeaturesControl!: FormControl;
 	studioControl!: FormControl;
 
+	characterControl!: FormControl;
+	plotControl!: FormControl;
+	endingControl!: FormControl;
+	gameplayControl!: FormControl;
+	performanceControl!: FormControl;
+	graphicsControl!: FormControl;
+	overallControll!: FormControl;
+
+	scoreData = {
+		character: 0,
+		plot: 0,
+		ending: 0,
+		gameplay: 0,
+		performance: 0,
+		graphics: 0,
+		overall: 0,
+	}
+
+	subscriptions: Subscription;
+
 	gameGenres: string[] = GAME_GENRES;
 	whereToPlay: string[] = WHERE_TO_PLAY;
+
+	flipped=false;
 
 	constructor(
 		protected ref: NbDialogRef<BooksEditboxDialog>,
 		private toastrService: NbToastrService
 	) {
+		this.subscriptions = new Subscription();
 	}
 
 	ngOnInit(): void {
@@ -54,6 +79,46 @@ export class GamesEditboxDialog implements OnInit {
 		this.studioControl = new FormControl(this.data?.owner || '', Validators.required);
 		this.franchiseOrderControl = new FormControl(this.data?.franchiseOrder || -1, Validators.compose([Validators.min(-1), Validators.required]));
 		this.extraFeaturesControl = new FormControl(this.data?.extraFeatures || [], Validators.required);
+
+		this.characterControl = new FormControl(this.scoreData.character, Validators.compose([Validators.min(-1), Validators.max(10), Validators.required]));
+		this.plotControl = new FormControl(this.scoreData.plot, Validators.compose([Validators.min(-1), Validators.max(10), Validators.required]));
+		this.endingControl = new FormControl(this.scoreData.ending, Validators.compose([Validators.min(-1), Validators.max(10), Validators.required]));
+		this.gameplayControl = new FormControl(this.scoreData.gameplay, Validators.compose([Validators.min(-1), Validators.max(10), Validators.required]));
+		this.performanceControl = new FormControl(this.scoreData.performance, Validators.compose([Validators.min(-1), Validators.max(10), Validators.required]));
+		this.graphicsControl = new FormControl(this.scoreData.graphics, Validators.compose([Validators.min(-1), Validators.max(10), Validators.required]));
+		this.overallControll = new FormControl(this.scoreData.overall, Validators.compose([Validators.min(-1), Validators.max(10), Validators.required]));
+
+		this.initializeWatchers();
+	}
+
+	initializeWatchers(): void {
+		const charSub = this.characterControl.valueChanges.subscribe(value => this.calculateScore());
+		const plotSub = this.plotControl.valueChanges.subscribe(value => this.calculateScore());
+		const endgSub = this.endingControl.valueChanges.subscribe(value => this.calculateScore());
+		const gameSub = this.gameplayControl.valueChanges.subscribe(value => this.calculateScore());
+		const perfSub = this.performanceControl.valueChanges.subscribe(value => this.calculateScore());
+		const grapSub = this.graphicsControl.valueChanges.subscribe(value => this.calculateScore());
+		const overSub = this.overallControll.valueChanges.subscribe(value => this.calculateScore());
+
+		this.subscriptions.add(charSub);
+		this.subscriptions.add(plotSub);
+		this.subscriptions.add(endgSub);
+		this.subscriptions.add(gameSub);
+		this.subscriptions.add(perfSub);
+		this.subscriptions.add(grapSub);
+		this.subscriptions.add(overSub);
+	}
+
+	calculateScore() {
+		const score = (this.characterControl.value * 0.15) +
+		(this.plotControl.value * 0.25) +
+		(this.endingControl.value * 0.15) +
+		(this.gameplayControl.value * 0.15) +
+		(this.performanceControl.value * 0.10) +
+		(this.graphicsControl.value * 0.10) +
+		(this.overallControll.value * 0.10);
+
+		this.scoreControl.setValue(Math.round((score + Number.EPSILON) * 100) / 100)
 	}
 
 	close() {

@@ -1,240 +1,312 @@
-<nb-card>
-	<nb-card-header>
-		Game Info
-	</nb-card-header>
+<nb-flip-card [showToggleButton]="false" [flipped]="flipped">
+	<nb-card-front>
+		<nb-card>
+			<nb-card-header>
+				Game Info
+			</nb-card-header>
 
-	<nb-card-body>
+			<nb-card-body>
+				<div class="row">
+					<div class="data-input">
+						<label>Name</label>
+						<input type="text" nbInput style="width: 250px;" status="basic" placeholder="Name"
+							[formControl]="nameControl">
+					</div>
 
-		<div class="row">
-			<div class="data-input">
-				<label>Name</label>
-				<input type="text" nbInput style="width: 250px;" status="basic" placeholder="Name" [formControl]="nameControl">
-			</div>
+					<div class="data-input">
+						<label>Score</label>
+						<input type="number" nbInput style="width: 250px;" status="basic" placeholder="Score"
+							[formControl]="scoreControl">
+						<button nbButton ghost (click)="flipped=true">
+							<nb-icon icon="edit-outline"></nb-icon>
+						</button>
+					</div>
 
-			<div class="data-input">
-				<label>Score</label>
-				<input type="number" nbInput style="width: 250px;" status="basic" placeholder="Score" [formControl]="scoreControl">
-			</div>
+					<div class="data-input">
+						<label>Year</label>
+						<input type="number" nbInput status="basic" placeholder="Year"
+							[formControl]="releaseYearControl">
+					</div>
+				</div>
 
-			<div class="data-input">
-				<label>Year</label>
-				<input type="number" nbInput status="basic" placeholder="Year" [formControl]="releaseYearControl">
-			</div>
-		</div>
+				<div class="row">
+					<div class="data-input">
+						<label>Franchise</label>
+						<input type="text" nbInput status="basic" placeholder="Franchise"
+							[formControl]="franchiseControl">
+					</div>
 
-		<div class="row">
-			<div class="data-input">
-				<label>Franchise</label>
-				<input type="text" nbInput status="basic" placeholder="Franchise" [formControl]="franchiseControl">
-			</div>
+					<div class="data-input">
+						<label>Order</label>
+						<input type="number" nbInput status="basic" placeholder="Order"
+							[formControl]="franchiseOrderControl">
+					</div>
 
-			<div class="data-input">
-				<label>Order</label>
-				<input type="number" nbInput status="basic" placeholder="Order" [formControl]="franchiseOrderControl">
-			</div>
+					<div class="data-input">
+						<label>Studio</label>
+						<input type="text" nbInput status="basic" placeholder="Studio" [formControl]="studioControl">
+					</div>
+				</div>
 
-			<div class="data-input">
-				<label>Studio</label>
-				<input type="text" nbInput status="basic" placeholder="Studio" [formControl]="studioControl">
-			</div>
-		</div>
+				<div class="row">
+					<div class="data-input">
+						<label>Where to Play</label>
+						<nb-select multiple placeholder="Where To Play" [formControl]="playControl">
+							<nb-option *ngFor="let location of whereToPlay" [value]="location">{{location}}</nb-option>
+						</nb-select>
+					</div>
 
-		<div class="row">
-			<div class="data-input">
-				<label>Where to Play</label>
-				<nb-select multiple placeholder="Where To Play" [formControl]="playControl">
-					<nb-option *ngFor="let location of whereToPlay" [value]="location">{{location}}</nb-option>
-				</nb-select>
-			</div>
+					<div class="data-input">
+						<label>Genre</label>
+						<nb-select multiple placeholder="Genre" [formControl]="genreControl">
+							<nb-option *ngFor="let genre of gameGenres" [value]="genre">{{genre}}</nb-option>
+						</nb-select>
+					</div>
 
-			<div class="data-input">
-				<label>Genre</label>
-				<nb-select multiple placeholder="Genre" [formControl]="genreControl">
-					<nb-option *ngFor="let genre of gameGenres" [value]="genre">{{genre}}</nb-option>
-				</nb-select>
-			</div>
+					<div class="data-input">
+						<label>Played</label>
+						<nb-select placeholder="Played" [formControl]="checkboxControl">
+							<nb-option *ngFor="let type of [
+							{value: true , text: 'Yes'},
+							{value: false , text: 'No'},
+							]" [value]="type.value">{{type.text}}</nb-option>
+						</nb-select>
+					</div>
+				</div>
 
-			<div class="data-input">
-				<label>Played</label>
-				<nb-select placeholder="Played" [formControl]="checkboxControl">
-					<nb-option *ngFor="let type of [
-					{value: true , text: 'Yes'},
-					{value: false , text: 'No'},
-					]"
-					[value]="type.value">{{type.text}}</nb-option>
-				</nb-select>
-			</div>
-		</div>
+				<div class="row">
+					<div class="data-input">
+						<label>SinglePlayer</label>
+						<nb-select placeholder="SinglePlayer" [formControl]="singleControl">
+							<nb-option *ngFor="let type of [
+							{value: true , text: 'Yes'},
+							{value: false , text: 'No'},
+							]" [value]="type.value">{{type.text}}</nb-option>
+						</nb-select>
+					</div>
 
-		<div class="row">
-			<div class="data-input">
-				<label>SinglePlayer</label>
-				<nb-select placeholder="SinglePlayer" [formControl]="singleControl">
-					<nb-option *ngFor="let type of [
-					{value: true , text: 'Yes'},
-					{value: false , text: 'No'},
-					]"
-					[value]="type.value">{{type.text}}</nb-option>
-				</nb-select>
-			</div>
+					<div class="data-input">
+						<label>MultiPlayer</label>
+						<nb-select placeholder="MultiPlayer" [formControl]="multiControl">
+							<nb-option *ngFor="let type of [
+							{value: true , text: 'Yes'},
+							{value: false , text: 'No'},
+							]" [value]="type.value">{{type.text}}</nb-option>
+						</nb-select>
+					</div>
 
-			<div class="data-input">
-				<label>MultiPlayer</label>
-				<nb-select placeholder="MultiPlayer" [formControl]="multiControl">
-					<nb-option *ngFor="let type of [
-					{value: true , text: 'Yes'},
-					{value: false , text: 'No'},
-					]"
-					[value]="type.value">{{type.text}}</nb-option>
-				</nb-select>
-			</div>
+					<div class="data-input">
+						<label>Recommended</label>
+						<nb-select placeholder="Recommended" [formControl]="recommendedControl">
+							<nb-option *ngFor="let type of [
+							{value: true , text: 'Yes'},
+							{value: false , text: 'No'},
+							]" [value]="type.value">{{type.text}}</nb-option>
+						</nb-select>
+					</div>
+				</div>
 
-			<div class="data-input">
-				<label>Recommended</label>
-				<nb-select placeholder="Recommended" [formControl]="recommendedControl">
-					<nb-option *ngFor="let type of [
-					{value: true , text: 'Yes'},
-					{value: false , text: 'No'},
-					]"
-					[value]="type.value">{{type.text}}</nb-option>
-				</nb-select>
-			</div>
-		</div>
+				<div class="row">
+					<div class="data-input">
+						<label>Starred</label>
+						<nb-select placeholder="Starred" [formControl]="starredControl">
+							<nb-option *ngFor="let type of [
+							{value: true , text: 'Yes'},
+							{value: false , text: 'No'},
+							]" [value]="type.value">{{type.text}}</nb-option>
+						</nb-select>
+					</div>
 
-		<div class="row">
-			<div class="data-input">
-				<label>Starred</label>
-				<nb-select placeholder="Starred" [formControl]="starredControl">
-					<nb-option *ngFor="let type of [
-					{value: true , text: 'Yes'},
-					{value: false , text: 'No'},
-					]"
-					[value]="type.value">{{type.text}}</nb-option>
-				</nb-select>
-			</div>
+					<div class="data-input">
 
-			<div class="data-input">
+					</div>
 
-			</div>
+					<div class="data-input">
 
-			<div class="data-input">
+					</div>
+				</div>
 
-			</div>
-		</div>
+				<div class="row">
+					<nb-accordion>
+						<nb-accordion-item [disabled]="data.recChildren.length === 0">
+							<nb-accordion-item-header>Similar Games</nb-accordion-item-header>
+							<nb-accordion-item-body>
+								<div class="row">
+									<div class="data-input">
+										<div class="string-fields">
+											Name
+										</div>
+									</div>
 
-		<div class="row">
-			<nb-accordion>
-				<nb-accordion-item [disabled]="data.recChildren.length === 0">
-					<nb-accordion-item-header>Similar Games</nb-accordion-item-header>
-					<nb-accordion-item-body>
-						<div class="row">
-							<div class="data-input">
-								<div class="string-fields">
-									Name
-								</div>
-							</div>
+									<div class="data-input">
+										<div class="string-fields">
+											Genres
+										</div>
+									</div>
 
-							<div class="data-input">
-								<div class="string-fields">
-									Genres
-								</div>
-							</div>
-
-							<div class="data-input">
-								<div class="string-fields">
-									Relevance
-								</div>
-							</div>
-						</div>
-						<ng-container *ngFor="let rec of data.recChildren" class="recChildren">
-							<div class="row">
-								<div class="data-input">
-									<div class="string-fields">
-										{{rec.name}}
+									<div class="data-input">
+										<div class="string-fields">
+											Relevance
+										</div>
 									</div>
 								</div>
+								<ng-container *ngFor="let rec of data.recChildren" class="recChildren">
+									<div class="row">
+										<div class="data-input">
+											<div class="string-fields">
+												{{rec.name}}
+											</div>
+										</div>
 
-								<div class="data-input">
-									<div class="string-fields">
-										{{rec.genres.join()}}
+										<div class="data-input">
+											<div class="string-fields">
+												{{rec.genres.join()}}
+											</div>
+										</div>
+
+										<div class="data-input">
+											<div class="string-fields">
+												{{rec.relevance}}
+											</div>
+										</div>
+									</div>
+								</ng-container>
+							</nb-accordion-item-body>
+						</nb-accordion-item>
+					</nb-accordion>
+				</div>
+
+				<div class="row">
+					<nb-accordion>
+						<nb-accordion-item [disabled]="data.newRecChildren.length === 0">
+							<nb-accordion-item-header>Similar Games (New Only)</nb-accordion-item-header>
+							<nb-accordion-item-body>
+								<div class="row">
+									<div class="data-input">
+										<div class="string-fields">
+											Name
+										</div>
+									</div>
+
+									<div class="data-input">
+										<div class="string-fields">
+											Genres
+										</div>
+									</div>
+
+									<div class="data-input">
+										<div class="string-fields">
+											Relevance
+										</div>
 									</div>
 								</div>
+								<ng-container *ngFor="let rec of data.newRecChildren" class="recChildren">
+									<div class="row">
+										<div class="data-input">
+											<div class="string-fields">
+												{{rec.name}}
+											</div>
+										</div>
 
-								<div class="data-input">
-									<div class="string-fields">
-										{{rec.relevance}}
+										<div class="data-input">
+											<div class="string-fields">
+												{{rec.genres.join()}}
+											</div>
+										</div>
+
+										<div class="data-input">
+											<div class="string-fields">
+												{{rec.relevance}}
+											</div>
+										</div>
 									</div>
-								</div>
-							</div>
-						</ng-container>
-					</nb-accordion-item-body>
-				</nb-accordion-item>
-			</nb-accordion>
-		</div>
+								</ng-container>
+							</nb-accordion-item-body>
+						</nb-accordion-item>
+					</nb-accordion>
+				</div>
 
-		<div class="row">
-			<nb-accordion>
-				<nb-accordion-item [disabled]="data.newRecChildren.length === 0">
-					<nb-accordion-item-header>Similar Games (New Only)</nb-accordion-item-header>
-					<nb-accordion-item-body>
-						<div class="row">
-							<div class="data-input">
-								<div class="string-fields">
-									Name
-								</div>
-							</div>
+				<div class="row">
+					<div class="data-input">
 
-							<div class="data-input">
-								<div class="string-fields">
-									Genres
-								</div>
-							</div>
+					</div>
 
-							<div class="data-input">
-								<div class="string-fields">
-									Relevance
-								</div>
-							</div>
-						</div>
-						<ng-container *ngFor="let rec of data.newRecChildren" class="recChildren">
-							<div class="row">
-								<div class="data-input">
-									<div class="string-fields">
-										{{rec.name}}
-									</div>
-								</div>
+					<div class="data-input">
 
-								<div class="data-input">
-									<div class="string-fields">
-										{{rec.genres.join()}}
-									</div>
-								</div>
+					</div>
+				</div>
+			</nb-card-body>
 
-								<div class="data-input">
-									<div class="string-fields">
-										{{rec.relevance}}
-									</div>
-								</div>
-							</div>
-						</ng-container>
-					</nb-accordion-item-body>
-				</nb-accordion-item>
-			</nb-accordion>
-		</div>
+			<nb-card-footer>
+				<button nbButton status="danger" style="margin-right: 10px;" (click)="close()">Cancel</button>
+				<button nbButton status="success" (click)="submit()">Submit</button>
+			</nb-card-footer>
+		</nb-card>
+	</nb-card-front>
+	<nb-card-back>
+		<nb-card>
+			<nb-card-header>
+				Score Calculation
+				Total Score: {{scoreControl.value}}
+			</nb-card-header>
 
-		<div class="row">
-			<div class="data-input">
+			<nb-card-body>
+				<div class="row">
+					<div class="data-input">
+						<label>Characters - 15%</label>
+						<input type="text" nbInput style="width: 250px;" status="basic" placeholder="Characters"
+							[formControl]="characterControl">
+					</div>
 
-			</div>
+					<div class="data-input">
+						<label>Plot - 25%</label>
+						<input type="number" nbInput style="width: 250px;" status="basic" placeholder="Plot"
+							[formControl]="plotControl">
+					</div>
 
-			<div class="data-input">
+					<div class="data-input">
+						<label>Ending - 15%</label>
+						<input type="number" nbInput status="basic" placeholder="Ending" [formControl]="endingControl">
+					</div>
+				</div>
 
-			</div>
-		</div>
-	</nb-card-body>
+				<div class="row">
+					<div class="data-input">
+						<label>Gameplay - 15%</label>
+						<input type="text" nbInput style="width: 250px;" status="basic" placeholder="Gameplay"
+							[formControl]="gameplayControl">
+					</div>
 
-	<nb-card-footer>
-		<button nbButton status="danger" style="margin-right: 10px;" (click)="close()">Cancel</button>
-		<button nbButton status="success" (click)="submit()">Submit</button>
-	</nb-card-footer>
-  </nb-card>
+					<div class="data-input">
+						<label>Performance - 10%</label>
+						<input type="number" nbInput style="width: 250px;" status="basic" placeholder="Performance"
+							[formControl]="performanceControl">
+					</div>
+
+					<div class="data-input">
+						<label>Graphics - 10%</label>
+						<input type="number" nbInput status="basic" placeholder="Graphics" [formControl]="graphicsControl">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="data-input">
+						<label>Overall - 10%</label>
+						<input type="text" nbInput style="width: 250px;" status="basic" placeholder="Gameplay"
+							[formControl]="overallControll">
+					</div>
+
+					<div class="data-input">
+					</div>
+
+					<div class="data-input">
+					</div>
+				</div>
+			</nb-card-body>
+
+			<nb-card-footer>
+				<button nbButton status="danger" style="margin-right: 10px;" (click)="flipped=false">Back</button>
+			</nb-card-footer>
+		</nb-card>
+	</nb-card-back>
+</nb-flip-card>
