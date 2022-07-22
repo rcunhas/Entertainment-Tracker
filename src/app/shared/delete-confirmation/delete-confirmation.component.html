@@ -1,0 +1,9 @@
+<nb-card>
+	<nb-card-header>
+		Do you really want to delete?
+	</nb-card-header>
+	<nb-card-footer>
+		<button nbButton class="button" status="danger" style="margin-right: 15px;" (click)="cancel()">Cancel</button>
+  		<button nbButton class="verify-button" status="success" (click)="confirm()" cdkFocusInitial>Confirm</button>
+	</nb-card-footer>
+</nb-card>

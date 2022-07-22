@@ -13,6 +13,7 @@ import * as uuid from 'uuid';
 import { FormControl } from '@angular/forms';
 import { combineLatest, Subscription } from 'rxjs';
 import { TablesStore } from 'src/app/shared/store/tables.store.service';
+import { DeleteConfirmationDialog } from 'src/app/shared/delete-confirmation/delete-confirmation.component';
 
 @Component({
 	selector: 'app-movies',
@@ -372,9 +373,14 @@ export class MoviesComponent implements AfterViewInit, OnInit, OnDestroy {
 	}
 
 	deleteEntry(row: IMovieList) {
-		const index = this.data.findIndex(entry => entry.id === row.id);
-		this.data.splice(index, 1);
-		this.saveToLocalStorage();
+		this.dialogService.open(DeleteConfirmationDialog)
+		.onClose.subscribe((res : boolean) => {
+			if (res) {
+				const index = this.data.findIndex(entry => entry.id === row.id);
+				this.data.splice(index, 1);
+				this.saveToLocalStorage();
+			}
+		})
 	}
 
 	saveToLocalStorage() {

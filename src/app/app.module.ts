@@ -22,6 +22,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DeleteConfirmationDialog } from './shared/delete-confirmation/delete-confirmation.component';
 
 @NgModule({
 	declarations: [
@@ -33,6 +34,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 		GamesEditboxDialog,
 		MoviesEditboxDialog,
 		RandomDialog,
+		DeleteConfirmationDialog,
 	],
 	imports: [
 		BrowserModule,
